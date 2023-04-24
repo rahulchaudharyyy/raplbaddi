@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include raplbaddi *.css
+recursive-include raplbaddi *.csv
+recursive-include raplbaddi *.html
+recursive-include raplbaddi *.ico
+recursive-include raplbaddi *.js
+recursive-include raplbaddi *.json
+recursive-include raplbaddi *.md
+recursive-include raplbaddi *.png
+recursive-include raplbaddi *.py
+recursive-include raplbaddi *.svg
+recursive-include raplbaddi *.txt
+recursive-exclude raplbaddi *.pyc
