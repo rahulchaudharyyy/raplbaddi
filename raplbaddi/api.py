@@ -2,9 +2,8 @@ import frappe
 
 @frappe.whitelist()
 def get_customer_details(customer):
-    address = frappe.db.sql(f"""
-        SELECT customer_address, customer_phone
+    return frappe.db.sql(f"""
+        SELECT customer_address, customer_phone_number, serial_no, brand, model
         FROM `tabSupport Customer`
-        WHERE customer_name='{customer}'
+        WHERE name='{customer}'
     """, as_dict=True)
-    return address

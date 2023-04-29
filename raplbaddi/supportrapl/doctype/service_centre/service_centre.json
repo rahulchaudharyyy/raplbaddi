@@ -1,0 +1,180 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:service_centre_name",
+ "creation": "2023-04-28 09:45:38.134462",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "service_centre_name",
+  "user",
+  "address",
+  "state",
+  "column_break_bzyxv",
+  "district",
+  "phone_no",
+  "country",
+  "banking_tab",
+  "bank_name",
+  "bank_account_no",
+  "column_break_ucnnc",
+  "ifsc_code",
+  "upi_id",
+  "rates_section",
+  "kilometer_category",
+  "fixed_rate",
+  "column_break_pfsvv",
+  "per_kilometer_rate",
+  "single_rate"
+ ],
+ "fields": [
+  {
+   "fieldname": "service_centre_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Service Centre Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "phone_no",
+   "fieldtype": "Data",
+   "label": "Phone No",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bank_account_no",
+   "fieldtype": "Data",
+   "label": "Bank Account No",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ifsc_code",
+   "fieldtype": "Data",
+   "label": "IFSC Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "upi_id",
+   "fieldtype": "Data",
+   "label": "UPI-Gpay-Paytm-PhonePe",
+   "reqd": 1
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Link",
+   "label": "State",
+   "options": "States of India",
+   "reqd": 1
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Data",
+   "label": "District",
+   "reqd": 1
+  },
+  {
+   "default": "India",
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "column_break_bzyxv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ucnnc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bank_name",
+   "fieldtype": "Data",
+   "label": "Bank Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "banking_tab",
+   "fieldtype": "Tab Break",
+   "label": "Banking"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Data",
+   "label": "Address",
+   "reqd": 1
+  },
+  {
+   "default": "3",
+   "fieldname": "per_kilometer_rate",
+   "fieldtype": "Select",
+   "label": "Per Kilometer Rate",
+   "options": "3\n4"
+  },
+  {
+   "default": "0",
+   "fieldname": "single_rate",
+   "fieldtype": "Check",
+   "label": "Have Single Rate ?"
+  },
+  {
+   "default": "10",
+   "fieldname": "kilometer_category",
+   "fieldtype": "Select",
+   "label": "Kilometer Category",
+   "options": "10\n20\n30\n40\n50"
+  },
+  {
+   "default": "250",
+   "fieldname": "fixed_rate",
+   "fieldtype": "Select",
+   "label": "Fixed Rate",
+   "options": "250\n275\n300\n350\n375\n450"
+  },
+  {
+   "fieldname": "rates_section",
+   "fieldtype": "Section Break",
+   "label": "Rates"
+  },
+  {
+   "fieldname": "column_break_pfsvv",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-04-29 14:52:38.261721",
+ "modified_by": "Administrator",
+ "module": "SupportRapl",
+ "name": "Service Centre",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,222 @@
+{
+ "actions": [],
+ "autoname": "format:RS{MM}{YY}{#}",
+ "creation": "2023-04-29 12:46:27.860546",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "status",
+  "column_break_9bolz",
+  "expected_visit_date",
+  "customer_details_section",
+  "customer_name",
+  "customer_phone_number",
+  "customer_address",
+  "column_break_utfyp",
+  "state",
+  "district",
+  "pin_code",
+  "complaint_tab",
+  "product",
+  "model",
+  "serial_number",
+  "column_break_isjsk",
+  "issue_type",
+  "product_photo",
+  "invoice_date",
+  "service_centre_tab",
+  "service_centre",
+  "payment_done",
+  "column_break_d5wze",
+  "kilometer",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Name",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_phone_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Phone Number",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_address",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Address",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "complaint_tab",
+   "fieldtype": "Tab Break",
+   "label": "Product"
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Select",
+   "label": "Product",
+   "options": "Geyser\nDesert Air Cooler",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "serial_number",
+   "fieldtype": "Data",
+   "label": "Serial Number",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_centre_tab",
+   "fieldtype": "Tab Break",
+   "label": "Service Centre"
+  },
+  {
+   "fieldname": "service_centre",
+   "fieldtype": "Link",
+   "label": "Service Centre",
+   "options": "Service Centre",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "product_photo",
+   "fieldtype": "Attach Image",
+   "label": "Product Photo",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "payment_done",
+   "fieldtype": "Select",
+   "label": "Payment Done",
+   "options": "Unpaid\nPaid",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Data",
+   "label": "State",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Data",
+   "label": "District",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "pin_code",
+   "fieldtype": "Data",
+   "label": "Pin Code",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_utfyp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "issue_type",
+   "fieldtype": "Link",
+   "label": "Issue Type",
+   "options": "Issue Type",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_isjsk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "invoice_date",
+   "fieldtype": "Date",
+   "label": "Invoice Date",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "kilometer",
+   "fieldtype": "Data",
+   "label": "Kilometer",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_d5wze",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Open\nClosed"
+  },
+  {
+   "fieldname": "customer_details_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Details"
+  },
+  {
+   "fieldname": "expected_visit_date",
+   "fieldtype": "Date",
+   "label": "Expected Visit Date",
+   "permlevel": 2
+  },
+  {
+   "fieldname": "column_break_9bolz",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-04-29 17:22:39.428917",
+ "modified_by": "Administrator",
+ "module": "SupportRapl",
+ "name": "IssueRapl",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
