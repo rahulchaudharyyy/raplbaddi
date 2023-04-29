@@ -13,6 +13,7 @@
   "address",
   "state",
   "column_break_bzyxv",
+  "pincode",
   "district",
   "phone_no",
   "country",
@@ -150,11 +151,17 @@
   {
    "fieldname": "column_break_pfsvv",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pincode",
+   "fieldtype": "Data",
+   "label": "Pincode",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-29 14:52:38.261721",
+ "modified": "2023-04-29 18:05:59.682110",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "Service Centre",
