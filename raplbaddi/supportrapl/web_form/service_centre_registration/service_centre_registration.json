@@ -24,7 +24,7 @@
  "list_columns": [],
  "login_required": 1,
  "max_attachment_size": 0,
- "modified": "2023-04-29 18:06:38.731647",
+ "modified": "2023-04-29 18:18:10.221033",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "service-centre-registration",
@@ -97,6 +97,18 @@
    "options": "",
    "read_only": 0,
    "reqd": 0,
+   "show_in_filter": 0
+  },
+  {
+   "allow_read_on_all_link_options": 0,
+   "fieldname": "pincode",
+   "fieldtype": "Data",
+   "hidden": 0,
+   "label": "Pincode",
+   "max_length": 0,
+   "max_value": 0,
+   "read_only": 0,
+   "reqd": 1,
    "show_in_filter": 0
   },
   {
@@ -210,73 +222,6 @@
    "max_value": 0,
    "read_only": 0,
    "reqd": 1,
-   "show_in_filter": 0
-  },
-  {
-   "allow_read_on_all_link_options": 0,
-   "fieldname": "pincode",
-   "fieldtype": "Data",
-   "hidden": 0,
-   "label": "Pincode",
-   "max_length": 0,
-   "max_value": 0,
-   "read_only": 0,
-   "reqd": 1,
-   "show_in_filter": 0
-  },
-  {
-   "allow_read_on_all_link_options": 0,
-   "default": "10",
-   "fieldname": "kilometer_category",
-   "fieldtype": "Select",
-   "hidden": 0,
-   "label": "Kilometer Category",
-   "max_length": 0,
-   "max_value": 0,
-   "options": "10\n20\n30\n40\n50",
-   "read_only": 0,
-   "reqd": 0,
-   "show_in_filter": 0
-  },
-  {
-   "allow_read_on_all_link_options": 0,
-   "default": "250",
-   "fieldname": "fixed_rate",
-   "fieldtype": "Select",
-   "hidden": 0,
-   "label": "Fixed Rate",
-   "max_length": 0,
-   "max_value": 0,
-   "options": "250\n275\n300\n350\n375\n450",
-   "read_only": 0,
-   "reqd": 0,
-   "show_in_filter": 0
-  },
-  {
-   "allow_read_on_all_link_options": 0,
-   "default": "3",
-   "fieldname": "per_kilometer_rate",
-   "fieldtype": "Select",
-   "hidden": 0,
-   "label": "Per Kilometer Rate",
-   "max_length": 0,
-   "max_value": 0,
-   "options": "3\n4",
-   "read_only": 0,
-   "reqd": 0,
-   "show_in_filter": 0
-  },
-  {
-   "allow_read_on_all_link_options": 0,
-   "default": "0",
-   "fieldname": "single_rate",
-   "fieldtype": "Check",
-   "hidden": 0,
-   "label": "Have Single Rate ?",
-   "max_length": 0,
-   "max_value": 0,
-   "read_only": 0,
-   "reqd": 0,
    "show_in_filter": 0
   }
  ]
