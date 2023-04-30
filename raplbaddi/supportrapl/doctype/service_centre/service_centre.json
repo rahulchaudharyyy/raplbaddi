@@ -18,6 +18,7 @@
   "phone_no",
   "country",
   "banking_tab",
+  "account_holder_name",
   "bank_name",
   "bank_account_no",
   "column_break_ucnnc",
@@ -45,30 +46,35 @@
    "in_list_view": 1,
    "label": "User",
    "options": "User",
+   "permlevel": 1,
    "reqd": 1
   },
   {
    "fieldname": "phone_no",
    "fieldtype": "Data",
    "label": "Phone No",
+   "permlevel": 2,
    "reqd": 1
   },
   {
    "fieldname": "bank_account_no",
    "fieldtype": "Data",
    "label": "Bank Account No",
+   "permlevel": 2,
    "reqd": 1
   },
   {
    "fieldname": "ifsc_code",
    "fieldtype": "Data",
    "label": "IFSC Code",
+   "permlevel": 2,
    "reqd": 1
   },
   {
    "fieldname": "upi_id",
    "fieldtype": "Data",
-   "label": "UPI-Gpay-Paytm-PhonePe",
+   "label": "Gpay / PhonePe / Paytm Number",
+   "permlevel": 2,
    "reqd": 1
   },
   {
@@ -76,12 +82,15 @@
    "fieldtype": "Link",
    "label": "State",
    "options": "States of India",
+   "permlevel": 7,
    "reqd": 1
   },
   {
    "fieldname": "district",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "District",
+   "options": "Districts of India",
+   "permlevel": 7,
    "reqd": 1
   },
   {
@@ -89,7 +98,8 @@
    "fieldname": "country",
    "fieldtype": "Link",
    "label": "Country",
-   "options": "Country"
+   "options": "Country",
+   "permlevel": 7
   },
   {
    "fieldname": "column_break_bzyxv",
@@ -103,6 +113,7 @@
    "fieldname": "bank_name",
    "fieldtype": "Data",
    "label": "Bank Name",
+   "permlevel": 2,
    "reqd": 1
   },
   {
@@ -114,6 +125,7 @@
    "fieldname": "address",
    "fieldtype": "Data",
    "label": "Address",
+   "permlevel": 2,
    "reqd": 1
   },
   {
@@ -121,32 +133,37 @@
    "fieldname": "per_kilometer_rate",
    "fieldtype": "Select",
    "label": "Per Kilometer Rate",
-   "options": "3\n4"
+   "options": "3\n4",
+   "permlevel": 3
   },
   {
    "default": "0",
    "fieldname": "single_rate",
    "fieldtype": "Check",
-   "label": "Have Single Rate ?"
+   "label": "Have Single Rate ?",
+   "permlevel": 3
   },
   {
    "default": "10",
    "fieldname": "kilometer_category",
    "fieldtype": "Select",
    "label": "Kilometer Category",
-   "options": "10\n20\n30\n40\n50"
+   "options": "10\n20\n30\n40\n50",
+   "permlevel": 3
   },
   {
    "default": "250",
    "fieldname": "fixed_rate",
    "fieldtype": "Select",
    "label": "Fixed Rate",
-   "options": "250\n275\n300\n350\n375\n450"
+   "options": "250\n275\n300\n350\n375\n450",
+   "permlevel": 3
   },
   {
    "fieldname": "rates_section",
    "fieldtype": "Section Break",
-   "label": "Rates"
+   "label": "Rates",
+   "permlevel": 3
   },
   {
    "fieldname": "column_break_pfsvv",
@@ -156,12 +173,20 @@
    "fieldname": "pincode",
    "fieldtype": "Data",
    "label": "Pincode",
+   "permlevel": 2,
+   "reqd": 1
+  },
+  {
+   "fieldname": "account_holder_name",
+   "fieldtype": "Data",
+   "label": "Account Holder Name",
+   "permlevel": 2,
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-29 18:05:59.682110",
+ "modified": "2023-04-30 12:02:30.656024",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "Service Centre",
@@ -179,6 +204,70 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 2,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 3,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 4,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 7,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1
   }
  ],
  "sort_field": "modified",

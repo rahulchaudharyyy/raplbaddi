@@ -8,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "status",
+  "service_delivered",
   "column_break_9bolz",
   "expected_visit_date",
   "customer_details_section",
@@ -31,7 +32,9 @@
   "payment_done",
   "column_break_d5wze",
   "kilometer",
-  "amount"
+  "amount",
+  "feedback_tab",
+  "customer_confirmation"
  ],
  "fields": [
   {
@@ -114,15 +117,17 @@
   },
   {
    "fieldname": "state",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "State",
+   "options": "States of India",
    "permlevel": 1,
    "reqd": 1
   },
   {
    "fieldname": "district",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "District",
+   "options": "Districts of India",
    "permlevel": 1,
    "reqd": 1
   },
@@ -152,21 +157,22 @@
   {
    "fieldname": "invoice_date",
    "fieldtype": "Date",
-   "label": "Invoice Date",
+   "label": "Date of Purchase",
    "permlevel": 1
   },
   {
    "fieldname": "amount",
    "fieldtype": "Currency",
    "label": "Amount",
+   "permlevel": 3,
    "read_only": 1
   },
   {
+   "default": "0",
    "fieldname": "kilometer",
    "fieldtype": "Data",
    "label": "Kilometer",
-   "permlevel": 1,
-   "reqd": 1
+   "permlevel": 3
   },
   {
    "fieldname": "column_break_d5wze",
@@ -176,7 +182,8 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Open\nClosed"
+   "options": "Open\nClosed",
+   "permlevel": 1
   },
   {
    "fieldname": "customer_details_section",
@@ -192,11 +199,32 @@
   {
    "fieldname": "column_break_9bolz",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "No",
+   "fieldname": "service_delivered",
+   "fieldtype": "Select",
+   "label": "Service Delivered",
+   "options": "No\nYes",
+   "permlevel": 2,
+   "reqd": 1
+  },
+  {
+   "fieldname": "feedback_tab",
+   "fieldtype": "Tab Break",
+   "label": "Feedback"
+  },
+  {
+   "fieldname": "customer_confirmation",
+   "fieldtype": "Select",
+   "label": "Customer Confirmation",
+   "options": "Not Taken\nPositive\nNegative",
+   "permlevel": 3
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-29 17:22:39.428917",
+ "modified": "2023-04-30 12:07:19.264753",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
@@ -214,6 +242,113 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Service Center",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Service Center",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 2,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Service Center",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 5,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Service Center",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 6,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Service Center",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 2,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 3,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 4,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1
   }
  ],
  "sort_field": "modified",

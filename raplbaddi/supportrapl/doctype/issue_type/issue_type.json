@@ -2,40 +2,38 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "field:state",
- "creation": "2023-04-28 15:29:43.328697",
- "default_view": "List",
+ "autoname": "Prompt",
+ "creation": "2017-10-06 12:53:34.714153",
  "doctype": "DocType",
+ "document_type": "Setup",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "state",
-  "code"
+  "product",
+  "description"
  ],
  "fields": [
   {
-   "fieldname": "state",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "State",
-   "reqd": 1,
-   "unique": 1
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
   },
   {
-   "fieldname": "code",
-   "fieldtype": "Data",
+   "fieldname": "product",
+   "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Code",
+   "label": "Product",
+   "options": "Geyser\nDesert Air Cooler",
    "reqd": 1
   }
  ],
- "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-30 09:54:36.975851",
+ "modified": "2023-04-30 11:00:09.182789",
  "modified_by": "Administrator",
- "module": "DataRapl",
- "name": "States of India",
- "naming_rule": "By fieldname",
+ "module": "SupportRapl",
+ "name": "Issue Type",
+ "name_case": "Title Case",
+ "naming_rule": "Set by user",
  "owner": "Administrator",
  "permissions": [
   {
@@ -51,25 +49,22 @@
    "write": 1
   },
   {
+   "create": 1,
+   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Support Team",
-   "share": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Service Center",
-   "share": 1
+   "select": 1,
+   "share": 1,
+   "write": 1
   }
  ],
+ "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }

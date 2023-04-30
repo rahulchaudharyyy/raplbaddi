@@ -7,3 +7,4 @@ def get_customer_details(customer):
         FROM `tabSupport Customer`
         WHERE name='{customer}'
     """, as_dict=True)
+

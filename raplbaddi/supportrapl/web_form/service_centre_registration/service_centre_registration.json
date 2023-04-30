@@ -12,7 +12,7 @@
  "apply_document_permissions": 0,
  "breadcrumbs": "",
  "button_label": "Save",
- "client_script": "frappe.web_form.after_load = function() {\n    // Make an AJAX request to fetch the current user's details\n    frappe.call({\n        method: 'frappe.client.get',\n        args: {\n            doctype: 'User',\n            filters: { name: frappe.session.user },\n            fieldname: ['email']\n        },\n        callback: function(response) {\n            var currentUserEmail = response.message.email;\n            console.log(response)\n            frappe.web_form.set_value('user', currentUserEmail);\n        }\n    });\n};\n",
+ "client_script": "frappe.web_form.after_load = function() {\n    // Make an AJAX request to fetch the current user's details\n    frappe.call({\n        method: 'frappe.client.get',\n        args: {\n            doctype: 'User',\n            filters: { name: frappe.session.user },\n            fieldname: ['email']\n        },\n        callback: function(response) {\n            var currentUserEmail = response.message.email;\n            console.log(response)\n            frappe.web_form.set_value('user', currentUserEmail);\n        }\n    });\n};",
  "creation": "2023-04-28 14:32:01.821497",
  "currency": "INR",
  "doc_type": "Service Centre",
@@ -24,7 +24,7 @@
  "list_columns": [],
  "login_required": 1,
  "max_attachment_size": 0,
- "modified": "2023-04-29 18:18:10.221033",
+ "modified": "2023-04-30 13:56:35.151747",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "service-centre-registration",
@@ -35,6 +35,9 @@
  "show_attachments": 0,
  "show_list": 0,
  "show_sidebar": 1,
+ "success_message": "You have successfully created Service Centre",
+ "success_title": "",
+ "success_url": "https://raplbaddi.com/app/support-team",
  "title": "Service Centre Registration",
  "web_form_fields": [
   {
@@ -52,13 +55,13 @@
   {
    "allow_read_on_all_link_options": 0,
    "fieldname": "user",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "hidden": 0,
    "label": "Email Address",
    "max_length": 0,
    "max_value": 0,
-   "options": "User",
-   "read_only": 0,
+   "options": "",
+   "read_only": 1,
    "reqd": 1,
    "show_in_filter": 0
   },
@@ -125,13 +128,14 @@
    "show_in_filter": 0
   },
   {
-   "allow_read_on_all_link_options": 0,
+   "allow_read_on_all_link_options": 1,
    "fieldname": "district",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "hidden": 0,
    "label": "District",
    "max_length": 0,
    "max_value": 0,
+   "options": "Districts of India",
    "read_only": 0,
    "reqd": 1,
    "show_in_filter": 0
@@ -161,6 +165,18 @@
    "options": "",
    "read_only": 0,
    "reqd": 0,
+   "show_in_filter": 0
+  },
+  {
+   "allow_read_on_all_link_options": 0,
+   "fieldname": "account_holder_name",
+   "fieldtype": "Data",
+   "hidden": 0,
+   "label": "Account Holder Name",
+   "max_length": 0,
+   "max_value": 0,
+   "read_only": 0,
+   "reqd": 1,
    "show_in_filter": 0
   },
   {
@@ -217,7 +233,7 @@
    "fieldname": "upi_id",
    "fieldtype": "Data",
    "hidden": 0,
-   "label": "Gpay-Paytm-PhonePe",
+   "label": "Gpay / PhonePe / Paytm Number",
    "max_length": 0,
    "max_value": 0,
    "read_only": 0,
