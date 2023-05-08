@@ -2,29 +2,31 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "field:district",
- "creation": "2023-04-30 09:26:02.277409",
+ "autoname": "field:model",
+ "creation": "2023-04-30 17:58:09.548780",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "district"
+  "model"
  ],
  "fields": [
   {
-   "fieldname": "district",
+   "fieldname": "model",
    "fieldtype": "Data",
-   "label": "District",
+   "in_list_view": 1,
+   "label": "Model",
+   "reqd": 1,
    "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-30 16:00:07.190822",
+ "modified": "2023-04-30 17:58:33.038995",
  "modified_by": "Administrator",
- "module": "DataRapl",
- "name": "Districts of India",
+ "module": "Raplbaddi",
+ "name": "Cooler Model",
  "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
@@ -41,22 +43,16 @@
    "write": 1
   },
   {
+   "create": 1,
+   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Support Team",
-   "share": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "report": 1,
    "role": "Service Center",
-   "select": 1,
-   "share": 1
+   "share": 1,
+   "write": 1
   },
   {
    "email": 1,
@@ -67,6 +63,18 @@
    "report": 1,
    "role": "Service Center",
    "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1,
+   "write": 1
   }
  ],
  "sort_field": "modified",

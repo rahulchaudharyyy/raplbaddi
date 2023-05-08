@@ -1,0 +1,45 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-05-06 17:54:26.248731",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "spare_parts",
+  "quantity",
+  "service_centre"
+ ],
+ "fields": [
+  {
+   "fieldname": "spare_parts",
+   "fieldtype": "Link",
+   "label": "Spare Parts",
+   "options": "Spare Parts"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Int",
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "service_centre",
+   "fieldtype": "Link",
+   "label": "Service Centre",
+   "options": "Service Centre"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-05-07 13:35:25.181802",
+ "modified_by": "Administrator",
+ "module": "SupportRapl",
+ "name": "Spare",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
