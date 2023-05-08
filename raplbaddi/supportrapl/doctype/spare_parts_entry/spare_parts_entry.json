@@ -1,0 +1,59 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-05-08 12:18:00.075298",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "source_warehouse",
+  "target_warehouse",
+  "stale_or_fresh",
+  "spare_part",
+  "quantity"
+ ],
+ "fields": [
+  {
+   "fieldname": "source_warehouse",
+   "fieldtype": "Select",
+   "label": "Source Warehouse",
+   "options": "Store\nService Centre"
+  },
+  {
+   "fieldname": "target_warehouse",
+   "fieldtype": "Select",
+   "label": "Target Warehouse",
+   "options": "Service Centre\nStore"
+  },
+  {
+   "fieldname": "stale_or_fresh",
+   "fieldtype": "Select",
+   "label": "Stale or Fresh",
+   "options": "Stale\nFresh"
+  },
+  {
+   "fieldname": "spare_part",
+   "fieldtype": "Link",
+   "label": "Spare Part",
+   "options": "Spare Parts"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Data",
+   "label": "Quantity"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-05-08 12:41:58.407402",
+ "modified_by": "Administrator",
+ "module": "SupportRapl",
+ "name": "Spare Parts Entry",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

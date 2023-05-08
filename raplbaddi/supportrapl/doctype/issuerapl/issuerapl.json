@@ -39,7 +39,8 @@
   "feedback_tab",
   "customer_confirmation",
   "section_break_ohopw",
-  "spare_parts_used"
+  "spare_tab",
+  "spare_parts_entry"
  ],
  "fields": [
   {
@@ -258,15 +259,20 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "spare_parts_used",
+   "fieldname": "spare_tab",
+   "fieldtype": "Tab Break",
+   "label": "Spare"
+  },
+  {
+   "fieldname": "spare_parts_entry",
    "fieldtype": "Table",
-   "label": "Spare Parts Used",
-   "options": "Spare"
+   "label": "Spare Parts Entry",
+   "options": "Spare Parts Entry"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-06 17:55:52.559289",
+ "modified": "2023-05-08 12:36:03.446976",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
