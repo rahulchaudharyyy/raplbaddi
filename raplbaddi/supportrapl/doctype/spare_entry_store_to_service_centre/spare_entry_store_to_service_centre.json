@@ -1,0 +1,70 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:SPSS-{DD}{MM}{YY}{#}",
+ "creation": "2023-05-09 09:54:40.532164",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "service_centre",
+  "column_break_lotnh",
+  "purpose",
+  "section_break_wddrx",
+  "entry_spare_parts"
+ ],
+ "fields": [
+  {
+   "fieldname": "service_centre",
+   "fieldtype": "Link",
+   "label": "Service Centre",
+   "options": "Service Centre"
+  },
+  {
+   "fieldname": "purpose",
+   "fieldtype": "Select",
+   "label": "Purpose",
+   "options": "Stock Reconciliation\nOpening Stock"
+  },
+  {
+   "fieldname": "column_break_lotnh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_wddrx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "entry_spare_parts",
+   "fieldtype": "Table",
+   "label": "Entry Spare Parts",
+   "options": "Entry Spare Parts"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-05-10 12:34:59.480898",
+ "modified_by": "Administrator",
+ "module": "SupportRapl",
+ "name": "Spare Entry Store to Service Centre",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

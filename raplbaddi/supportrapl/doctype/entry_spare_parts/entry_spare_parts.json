@@ -1,0 +1,46 @@
+{
+ "actions": [],
+ "autoname": "autoincrement",
+ "creation": "2023-05-09 11:43:07.900966",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "spare_part",
+  "quantity",
+  "spare_condition"
+ ],
+ "fields": [
+  {
+   "fieldname": "spare_part",
+   "fieldtype": "Link",
+   "label": "Spare Part",
+   "options": "Spare Parts"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Data",
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "spare_condition",
+   "fieldtype": "Select",
+   "label": "Spare Condition",
+   "options": "Old\nNew"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-05-09 12:34:44.734641",
+ "modified_by": "Administrator",
+ "module": "SupportRapl",
+ "name": "Entry Spare Parts",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -31,6 +31,7 @@
   "product_photo",
   "invoice_date",
   "service_centre_tab",
+  "service_centre_phone_number",
   "service_centre",
   "payment_done",
   "column_break_d5wze",
@@ -268,11 +269,17 @@
    "fieldtype": "Table",
    "label": "Spare Parts Entry",
    "options": "Spare Parts Entry"
+  },
+  {
+   "fetch_from": "service_centre.phone_no",
+   "fieldname": "service_centre_phone_number",
+   "fieldtype": "Data",
+   "label": "Service Centre Phone Number"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-08 12:36:03.446976",
+ "modified": "2023-05-12 14:22:00.850500",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",

@@ -1,0 +1,109 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{DD}-{MM}-{YY}-{brand_name}-{#}",
+ "creation": "2023-05-06 12:11:17.467748",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "brand_name",
+  "column_break_jjxmq",
+  "date_of_change",
+  "remarks",
+  "section_break_zityj",
+  "brand_changing_item"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series"
+  },
+  {
+   "fieldname": "brand_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Brand Name",
+   "options": "Brand",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_jjxmq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_of_change",
+   "fieldtype": "Date",
+   "label": "Date of Change",
+   "reqd": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "section_break_zityj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "brand_changing_item",
+   "fieldtype": "Table",
+   "label": "Brand Changing Item",
+   "options": "Brand Changing Item"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-05-10 10:28:23.598577",
+ "modified_by": "Administrator",
+ "module": "Production Rapl",
+ "name": "Brand Changing Entry",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
