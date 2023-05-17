@@ -27,8 +27,7 @@
   "element_tested",
   "element_type_name",
   "total_quantity",
-  "column_break_7rphx",
-  "element_not_tested",
+  "column_break_k6nm9",
   "remarks",
   "daily_production_item_section",
   "daily_production_item",
@@ -139,10 +138,6 @@
    "read_only_depends_on": "eval:doc.item ==\"Geyser\";"
   },
   {
-   "fieldname": "column_break_7rphx",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "remarks",
    "fieldtype": "Data",
    "label": "Remarks"
@@ -178,25 +173,23 @@
    "depends_on": "eval:doc.item ==\"Element\";",
    "fieldname": "element_tested",
    "fieldtype": "Int",
-   "label": "Element Tested"
+   "label": "Number of Element Tested"
   },
   {
    "depends_on": "eval:doc.item ==\"Element\";",
-   "fieldname": "element_not_tested",
-   "fieldtype": "Int",
-   "label": "Element Not Tested",
-   "read_only_depends_on": "eval:doc.item ==\"Element\";"
-  },
-  {
    "fetch_from": "element_type.item_name",
    "fieldname": "element_type_name",
    "fieldtype": "Data",
    "label": "Element Type Name"
+  },
+  {
+   "fieldname": "column_break_k6nm9",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-17 14:09:53.322496",
+ "modified": "2023-05-17 14:18:43.567405",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Daily Production Entry",
