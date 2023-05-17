@@ -8,7 +8,8 @@ frappe.query_reports["Daily Production Report"] = {
 			"fieldname": "item",
 			"label": "Item",
 			"fieldtype": "Select",
-			"options": "Geyser\nDesert Air Cooler\nElement"
+			"options": "Geyser\nDesert Air Cooler\nElement",
+			"default": "Geyser"
 		},
 		{
 			"fieldname": "start_date",
