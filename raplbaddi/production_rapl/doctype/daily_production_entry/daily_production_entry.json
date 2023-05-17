@@ -44,6 +44,8 @@
   {
    "fieldname": "item",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Item",
    "options": "Geyser\nElement\nDesert Air Cooler",
    "reqd": 1
@@ -59,7 +61,7 @@
    "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "capacity",
    "fieldtype": "Select",
-   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Capacity",
    "mandatory_depends_on": "eval:doc.item ==\"Geyser\";",
    "options": "\n3\n6\n10\n15\n25\n35\n50\n70\n100"
@@ -68,7 +70,7 @@
    "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "brand_name",
    "fieldtype": "Link",
-   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Brand Name",
    "mandatory_depends_on": "eval:doc.item ==\"Geyser\";",
    "options": "Brand"
@@ -194,7 +196,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-17 12:13:01.172970",
+ "modified": "2023-05-17 14:09:53.322496",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Daily Production Entry",
