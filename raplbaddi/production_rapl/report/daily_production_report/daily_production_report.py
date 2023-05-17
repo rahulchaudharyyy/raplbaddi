@@ -28,6 +28,7 @@ def get_columns(filters):
     item = filters.get("item")
     if item == "Geyser":
         add = [
+            {"label": "Model Name", "fieldtype": "Data", "width": 150},
             {"label": "Brand Name", "fieldtype": "Data", "width": 150},
             {"label": "Capacity", "fieldtype": "Data", "width": 150},
         ]
