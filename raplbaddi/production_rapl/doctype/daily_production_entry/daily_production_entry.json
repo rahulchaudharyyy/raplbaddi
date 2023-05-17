@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "naming_series:",
  "creation": "2023-04-30 16:32:19.736195",
@@ -87,7 +88,7 @@
   {
    "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "from",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Serial No From",
    "mandatory_depends_on": "eval:doc.item ==\"Geyser\";"
@@ -95,7 +96,7 @@
   {
    "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "to",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Serial No To",
    "mandatory_depends_on": "eval:doc.item ==\"Geyser\";"
   },
@@ -114,13 +115,13 @@
   },
   {
    "fieldname": "workforce",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Workforce"
   },
   {
    "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "production_duration",
-   "fieldtype": "Data",
+   "fieldtype": "Float",
    "label": "Production Duration"
   },
   {
@@ -129,7 +130,7 @@
   },
   {
    "fieldname": "total_quantity",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Total Quantity",
    "mandatory_depends_on": "eval:doc.item ==\"Element\";",
    "read_only_depends_on": "eval:doc.item ==\"Geyser\";"
@@ -185,7 +186,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-16 13:31:57.347750",
+ "modified": "2023-05-17 11:42:03.272141",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Daily Production Entry",
