@@ -15,6 +15,7 @@
   "brand_name",
   "model_name",
   "column_break_l2kot",
+  "element_type",
   "from",
   "to",
   "production_line",
@@ -22,8 +23,10 @@
   "workforce",
   "production_duration",
   "section_break_abtzp",
+  "element_tested",
   "total_quantity",
   "column_break_7rphx",
+  "element_not_tested",
   "remarks",
   "daily_production_item_section",
   "daily_production_item",
@@ -40,63 +43,71 @@
    "fieldname": "item",
    "fieldtype": "Select",
    "label": "Item",
-   "options": "Geyser\nDesert Air Cooler",
+   "options": "Geyser\nElement\nDesert Air Cooler",
    "reqd": 1
   },
   {
+   "default": "Today",
    "fieldname": "date_of_production",
    "fieldtype": "Date",
    "label": "Date of Production",
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "capacity",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Capacity",
-   "options": "\n3\n6\n10\n15\n25\n35\n50\n70\n100",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.item ==\"Geyser\";",
+   "options": "\n3\n6\n10\n15\n25\n35\n50\n70\n100"
   },
   {
+   "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "brand_name",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Brand Name",
-   "options": "Brand",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.item ==\"Geyser\";",
+   "options": "Brand"
   },
   {
+   "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "model_name",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Model Name",
-   "options": "Geyser Model",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.item ==\"Geyser\";",
+   "options": "Geyser Model"
   },
   {
    "fieldname": "column_break_l2kot",
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "from",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Serial No From",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.item ==\"Geyser\";"
   },
   {
+   "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "to",
    "fieldtype": "Data",
    "label": "Serial No To",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.item ==\"Geyser\";"
   },
   {
+   "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "production_line",
    "fieldtype": "Select",
    "label": "Production Line",
    "options": "\n1\n2\n3\n4\n5\n6"
   },
   {
+   "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "contractor_name",
    "fieldtype": "Data",
    "label": "Contractor Name"
@@ -107,6 +118,7 @@
    "label": "Workforce"
   },
   {
+   "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "production_duration",
    "fieldtype": "Data",
    "label": "Production Duration"
@@ -119,7 +131,8 @@
    "fieldname": "total_quantity",
    "fieldtype": "Data",
    "label": "Total Quantity",
-   "read_only": 1
+   "mandatory_depends_on": "eval:doc.item ==\"Element\";",
+   "read_only_depends_on": "eval:doc.item ==\"Geyser\";"
   },
   {
    "fieldname": "column_break_7rphx",
@@ -131,6 +144,7 @@
    "label": "Remarks"
   },
   {
+   "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "daily_production_item_section",
    "fieldtype": "Section Break",
    "label": "Daily Production Item"
@@ -147,11 +161,31 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Month Prefix"
+  },
+  {
+   "depends_on": "eval:doc.item ==\"Element\";",
+   "fieldname": "element_type",
+   "fieldtype": "Link",
+   "label": "Element Type",
+   "options": "Item"
+  },
+  {
+   "depends_on": "eval:doc.item ==\"Element\";",
+   "fieldname": "element_tested",
+   "fieldtype": "Int",
+   "label": "Element Tested"
+  },
+  {
+   "depends_on": "eval:doc.item ==\"Element\";",
+   "fieldname": "element_not_tested",
+   "fieldtype": "Int",
+   "label": "Element Not Tested",
+   "read_only_depends_on": "eval:doc.item ==\"Element\";"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-12 16:34:40.445358",
+ "modified": "2023-05-16 13:31:57.347750",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Daily Production Entry",
