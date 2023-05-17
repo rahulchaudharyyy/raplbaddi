@@ -25,6 +25,7 @@
   "production_duration",
   "section_break_abtzp",
   "element_tested",
+  "element_type_name",
   "total_quantity",
   "column_break_7rphx",
   "element_not_tested",
@@ -168,6 +169,7 @@
    "fieldname": "element_type",
    "fieldtype": "Link",
    "label": "Element Type",
+   "mandatory_depends_on": "eval:doc.item ==\"Element\";",
    "options": "Item"
   },
   {
@@ -182,11 +184,17 @@
    "fieldtype": "Int",
    "label": "Element Not Tested",
    "read_only_depends_on": "eval:doc.item ==\"Element\";"
+  },
+  {
+   "fetch_from": "element_type.item_name",
+   "fieldname": "element_type_name",
+   "fieldtype": "Data",
+   "label": "Element Type Name"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-17 11:42:03.272141",
+ "modified": "2023-05-17 12:13:01.172970",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Daily Production Entry",

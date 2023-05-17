@@ -7,7 +7,7 @@ import frappe
 def execute(filters=None):
     columns, data = [], []
     data = get_data(filters)
-    return get_columns(), data
+    return get_columns(filters), data
 
 
 def get_data(filters):
@@ -18,15 +18,27 @@ def get_data(filters):
     return result
 
 
-def get_columns():
-    columns = [
+def get_columns(filters):
+    columns = []
+    common = [
         {"label": "Date of Production", "fieldtype": "Date", "width": 150},
         {"label": "Item", "fieldtype": "Data", "width": 150},
-        {"label": "Capacity", "fieldtype": "Data", "width": 150},
-        {"label": "Brand Name", "fieldtype": "Data", "width": 150},
         {"label": "Total Quantity", "fieldtype": "Int", "width": 150},
-        {"label": "Element Type", "fieldtype": "Data", "width": 150},
     ]
+    item = filters.get("item")
+    if item == "Geyser":
+        add = [
+            {"label": "Brand Name", "fieldtype": "Data", "width": 150},
+            {"label": "Capacity", "fieldtype": "Data", "width": 150},
+        ]
+        columns.extend(common)
+        columns.extend(add)
+    elif item == "Element":
+        add = [
+            {"label": "Element Type Name", "fieldtype": "Data", "width": 150},
+        ]
+        columns.extend(common)
+        columns.extend(add)
     return columns
 
 
