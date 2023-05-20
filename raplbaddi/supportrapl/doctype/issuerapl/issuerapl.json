@@ -1,0 +1,432 @@
+{
+ "actions": [],
+ "autoname": "format:RAPL{MM}{YY}{#}",
+ "creation": "2023-04-29 12:46:27.860546",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "status",
+  "service_delivered",
+  "column_break_9bolz",
+  "expected_visit_date",
+  "customer_details_section",
+  "customer_name",
+  "customer_phone_number",
+  "customer_address",
+  "column_break_utfyp",
+  "state",
+  "district",
+  "pin_code",
+  "complaint_tab",
+  "product",
+  "capacity",
+  "brand_name",
+  "model",
+  "cooler_model",
+  "column_break_isjsk",
+  "serial_number",
+  "issue_type",
+  "product_photo",
+  "invoice_date",
+  "service_centre_tab",
+  "service_centre_phone_number",
+  "service_centre",
+  "payment_done",
+  "column_break_d5wze",
+  "kilometer",
+  "amount",
+  "feedback_tab",
+  "customer_confirmation",
+  "section_break_ohopw",
+  "spare_tab",
+  "spare_parts_entry"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Name",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_phone_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Phone Number",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_address",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Address",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "complaint_tab",
+   "fieldtype": "Tab Break",
+   "label": "Product"
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Select",
+   "label": "Product",
+   "options": "Geyser\nDesert Air Cooler",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "default": "-",
+   "fieldname": "model",
+   "fieldtype": "Link",
+   "label": "Geyser Model",
+   "options": "Geyser Model",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "serial_number",
+   "fieldtype": "Data",
+   "label": "Serial Number",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_centre_tab",
+   "fieldtype": "Tab Break",
+   "label": "Service Centre"
+  },
+  {
+   "fieldname": "service_centre",
+   "fieldtype": "Link",
+   "label": "Service Centre",
+   "options": "Service Centre",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "product_photo",
+   "fieldtype": "Attach Image",
+   "label": "Product Photo",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "payment_done",
+   "fieldtype": "Select",
+   "label": "Payment Done",
+   "options": "Unpaid\nPaid",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Link",
+   "label": "State",
+   "options": "States of India",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Link",
+   "label": "District",
+   "options": "Districts of India",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "pin_code",
+   "fieldtype": "Data",
+   "label": "Pin Code",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_utfyp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "issue_type",
+   "fieldtype": "Link",
+   "label": "Issue Type",
+   "options": "Issue Type",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_isjsk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "invoice_date",
+   "fieldtype": "Date",
+   "label": "Date of Purchase",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "permlevel": 3,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "kilometer",
+   "fieldtype": "Data",
+   "label": "Kilometer",
+   "permlevel": 3
+  },
+  {
+   "fieldname": "column_break_d5wze",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Status",
+   "options": "Open\nClosed",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "customer_details_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Details"
+  },
+  {
+   "fieldname": "expected_visit_date",
+   "fieldtype": "Date",
+   "label": "Expected Visit Date",
+   "permlevel": 2
+  },
+  {
+   "fieldname": "column_break_9bolz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "No",
+   "fieldname": "service_delivered",
+   "fieldtype": "Select",
+   "label": "Service Delivered",
+   "options": "No\nYes",
+   "permlevel": 2,
+   "reqd": 1
+  },
+  {
+   "fieldname": "feedback_tab",
+   "fieldtype": "Tab Break",
+   "label": "Feedback"
+  },
+  {
+   "fieldname": "customer_confirmation",
+   "fieldtype": "Select",
+   "label": "Customer Confirmation",
+   "options": "Not Taken\nPositive\nNegative",
+   "permlevel": 3
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Select",
+   "label": "Capacity",
+   "options": "00\n03\n06\n10\n15\n25\n35\n50\n70\n100",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "brand_name",
+   "fieldtype": "Link",
+   "label": "Brand Name",
+   "options": "Brand",
+   "permlevel": 1
+  },
+  {
+   "default": "-",
+   "fieldname": "cooler_model",
+   "fieldtype": "Link",
+   "label": "Cooler Model",
+   "options": "Cooler Model",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_ohopw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "spare_tab",
+   "fieldtype": "Tab Break",
+   "label": "Spare"
+  },
+  {
+   "fieldname": "spare_parts_entry",
+   "fieldtype": "Table",
+   "label": "Spare Parts Entry",
+   "options": "Spare Parts Entry"
+  },
+  {
+   "fetch_from": "service_centre.phone_no",
+   "fieldname": "service_centre_phone_number",
+   "fieldtype": "Data",
+   "label": "Service Centre Phone Number"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-05-12 14:22:00.850500",
+ "modified_by": "Administrator",
+ "module": "SupportRapl",
+ "name": "IssueRapl",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Service Center",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Service Center",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 2,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Service Center",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 5,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Service Center",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 6,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Service Center",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 7,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Service Center",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 2,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 3,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 4,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 7,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Support Team",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
