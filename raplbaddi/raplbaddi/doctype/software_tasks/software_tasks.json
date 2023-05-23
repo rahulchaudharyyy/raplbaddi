@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{priority}-{assigned_to}-{#}",
+ "autoname": "hash",
  "creation": "2023-05-23 11:35:49.349308",
  "default_view": "List",
  "doctype": "DocType",
@@ -63,11 +63,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-23 12:14:12.033607",
+ "modified": "2023-05-23 12:21:19.439267",
  "modified_by": "Administrator",
  "module": "Raplbaddi",
  "name": "Software Tasks",
- "naming_rule": "Expression",
+ "naming_rule": "Random",
  "owner": "Administrator",
  "permissions": [
   {
