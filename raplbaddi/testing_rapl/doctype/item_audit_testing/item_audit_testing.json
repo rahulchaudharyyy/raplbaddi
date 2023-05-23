@@ -1,0 +1,69 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-05-20 17:02:30.136809",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "serial_number",
+  "column_break_casuw",
+  "geyser_detail",
+  "section_break_lmcvo",
+  "parameters_table"
+ ],
+ "fields": [
+  {
+   "fieldname": "serial_number",
+   "fieldtype": "Link",
+   "label": "Serial Number",
+   "options": "Daily Production Item"
+  },
+  {
+   "fieldname": "parameters_table",
+   "fieldtype": "Table",
+   "label": "Parameters Table",
+   "options": "Item Testing Parameters"
+  },
+  {
+   "fieldname": "geyser_detail",
+   "fieldtype": "Text",
+   "is_virtual": 1,
+   "label": "Geyser Detail",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_casuw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_lmcvo",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-05-20 17:41:24.490515",
+ "modified_by": "Administrator",
+ "module": "Testing Rapl",
+ "name": "Item Audit Testing",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
