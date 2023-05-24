@@ -3,7 +3,7 @@
  "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:party_name",
- "creation": "2023-05-24 14:02:32.391839",
+ "creation": "2023-05-24 16:19:12.296717",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -43,11 +43,6 @@
    "options": "Online Marketing Status"
   },
   {
-   "fieldname": "remarks",
-   "fieldtype": "Text",
-   "label": "Remarks"
-  },
-  {
    "fieldname": "primary_phone_number",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -61,14 +56,19 @@
   {
    "fieldname": "section_break_zifso",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Text",
+   "label": "Remarks"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-24 14:27:29.344019",
+ "modified": "2023-05-24 16:19:57.614800",
  "modified_by": "Administrator",
  "module": "SalesRapl",
- "name": "Online Marketing",
+ "name": "Online Marketing Doc",
  "name_case": "Title Case",
  "naming_rule": "By fieldname",
  "owner": "Administrator",
