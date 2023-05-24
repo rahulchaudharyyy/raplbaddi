@@ -7,13 +7,13 @@
  "engine": "InnoDB",
  "field_order": [
   "expense_type",
+  "from",
+  "to",
   "quantity",
   "rate",
   "amount",
   "unit_of_expense",
-  "attach",
-  "from",
-  "to"
+  "attach"
  ],
  "fields": [
   {
@@ -52,13 +52,12 @@
   {
    "fieldname": "from",
    "fieldtype": "Data",
-   "label": "From",
-   "mandatory_depends_on": "doc.expense_type==\"Distance Travelled\";"
+   "label": "From Town"
   },
   {
    "fieldname": "to",
    "fieldtype": "Data",
-   "label": "To"
+   "label": "To Town"
   },
   {
    "fetch_from": "expense_type.rates",
@@ -71,7 +70,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-05-11 15:49:30.706661",
+ "modified": "2023-05-23 18:36:44.420975",
  "modified_by": "Administrator",
  "module": "SalesRapl",
  "name": "Daily Sales Expenses",
