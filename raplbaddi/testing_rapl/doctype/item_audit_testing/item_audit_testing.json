@@ -44,7 +44,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-25 10:22:37.156306",
+ "modified": "2023-05-25 13:44:53.966627",
  "modified_by": "Administrator",
  "module": "Testing Rapl",
  "name": "Item Audit Testing",
@@ -61,6 +61,18 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Software Operator",
    "share": 1,
    "write": 1
   }
