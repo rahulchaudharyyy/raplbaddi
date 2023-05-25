@@ -1,6 +1,6 @@
 {
  "actions": [],
- "allow_rename": 1,
+ "autoname": "field:serial_number",
  "creation": "2023-05-20 17:02:30.136809",
  "default_view": "List",
  "doctype": "DocType",
@@ -18,7 +18,8 @@
    "fieldname": "serial_number",
    "fieldtype": "Link",
    "label": "Serial Number",
-   "options": "Daily Production Item"
+   "options": "Daily Production Item",
+   "unique": 1
   },
   {
    "fieldname": "parameters_table",
@@ -29,7 +30,6 @@
   {
    "fieldname": "geyser_detail",
    "fieldtype": "Text",
-   "is_virtual": 1,
    "label": "Geyser Detail",
    "read_only": 1
   },
@@ -44,10 +44,12 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-20 17:41:24.490515",
+ "modified": "2023-05-25 10:22:37.156306",
  "modified_by": "Administrator",
  "module": "Testing Rapl",
  "name": "Item Audit Testing",
+ "name_case": "Title Case",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

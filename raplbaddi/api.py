@@ -8,3 +8,9 @@ def get_customer_details(customer):
         WHERE name='{customer}'
     """, as_dict=True)
 
+@frappe.whitelist()
+def get_dpi_parent(sno):
+       return frappe.db.sql(f"""
+        SELECT parent FROM `tabDaily Production Item` as dpi
+        WHERE dpi.name='{sno}'
+    """, as_dict=True)
