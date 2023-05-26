@@ -21,7 +21,7 @@
    "fieldname": "daily_production_entry",
    "fieldtype": "Link",
    "label": "Daily Production Entry",
-   "options": "Daily Production Entry"
+   "options": "Production Entry"
   },
   {
    "fieldname": "serial_number",
@@ -60,10 +60,10 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-26 11:10:02.435247",
+ "modified": "2023-05-26 12:21:18.853813",
  "modified_by": "Administrator",
  "module": "Production Rapl",
- "name": "Daily Production Geyser",
+ "name": "Serial Number Geyser",
  "name_case": "Title Case",
  "naming_rule": "By fieldname",
  "owner": "Administrator",

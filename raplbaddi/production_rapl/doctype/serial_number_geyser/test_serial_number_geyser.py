@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestDailyProductionGeyser(FrappeTestCase):
+class TestSerialNumberGeyser(FrappeTestCase):
 	pass

@@ -1,0 +1,101 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "creation": "2023-05-26 12:23:37.209977",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "serial_number",
+  "brand_name",
+  "column_break_dxhjm",
+  "model_name",
+  "capacity",
+  "date_of_production",
+  "section_break_ncn7n",
+  "item_testing_parameters"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "fieldtype": "Select",
+   "label": "Item",
+   "options": "Geyser\nDesert Air Cooler\nElement"
+  },
+  {
+   "fieldname": "serial_number",
+   "fieldtype": "Link",
+   "label": "Serial Number",
+   "options": "Serial Number Geyser"
+  },
+  {
+   "fetch_from": "serial_number.brand_name",
+   "fieldname": "brand_name",
+   "fieldtype": "Data",
+   "label": "Brand Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_dxhjm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "serial_number.model_name",
+   "fieldname": "model_name",
+   "fieldtype": "Data",
+   "label": "Model Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "serial_number.capacity",
+   "fieldname": "capacity",
+   "fieldtype": "Data",
+   "label": "Capacity",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "serial_number.date_of_production",
+   "fieldname": "date_of_production",
+   "fieldtype": "Data",
+   "label": "Date of Production",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_ncn7n",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "item_testing_parameters",
+   "fieldtype": "Table",
+   "label": " Item Testing Parameters",
+   "options": "Item Testing Parameters"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-05-26 12:48:39.682221",
+ "modified_by": "Administrator",
+ "module": "Testing Rapl",
+ "name": "Item Testing Entry",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
