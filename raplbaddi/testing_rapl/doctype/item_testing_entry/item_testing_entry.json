@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_import": 1,
- "allow_rename": 1,
+ "autoname": "field:serial_number",
  "creation": "2023-05-26 12:23:37.209977",
  "default_view": "List",
  "doctype": "DocType",
@@ -29,7 +29,8 @@
    "fieldname": "serial_number",
    "fieldtype": "Link",
    "label": "Serial Number",
-   "options": "Serial Number Geyser"
+   "options": "Serial Number Geyser",
+   "unique": 1
   },
   {
    "fetch_from": "serial_number.brand_name",
@@ -76,10 +77,12 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-26 12:48:39.682221",
+ "modified": "2023-05-26 16:10:37.180213",
  "modified_by": "Administrator",
  "module": "Testing Rapl",
  "name": "Item Testing Entry",
+ "name_case": "Title Case",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
