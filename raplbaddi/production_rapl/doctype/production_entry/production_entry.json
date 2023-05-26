@@ -2,8 +2,8 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "naming_series:",
- "creation": "2023-04-30 16:32:19.736195",
+ "autoname": "format:DPE{#}",
+ "creation": "2023-05-26 11:58:01.318283",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -86,6 +86,14 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.item ==\"Element\";",
+   "fieldname": "element_type",
+   "fieldtype": "Link",
+   "label": "Element Type",
+   "mandatory_depends_on": "eval:doc.item ==\"Element\";",
+   "options": "Item"
+  },
+  {
    "depends_on": "eval:doc.item ==\"Geyser\";",
    "fieldname": "from",
    "fieldtype": "Int",
@@ -129,26 +137,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "total_quantity",
-   "fieldtype": "Int",
-   "label": "Total Quantity",
-   "mandatory_depends_on": "eval:doc.item ==\"Element\";",
-   "read_only_depends_on": "eval:doc.item ==\"Geyser\";"
-  },
-  {
-   "fieldname": "remarks",
-   "fieldtype": "Data",
-   "label": "Remarks"
-  },
-  {
-   "depends_on": "eval:doc.item ==\"Element\";",
-   "fieldname": "element_type",
-   "fieldtype": "Link",
-   "label": "Element Type",
-   "mandatory_depends_on": "eval:doc.item ==\"Element\";",
-   "options": "Item"
-  },
-  {
    "depends_on": "eval:doc.item ==\"Element\";",
    "fieldname": "element_tested",
    "fieldtype": "Int",
@@ -162,34 +150,39 @@
    "label": "Element Type Name"
   },
   {
+   "fieldname": "total_quantity",
+   "fieldtype": "Int",
+   "label": "Total Quantity",
+   "mandatory_depends_on": "eval:doc.item ==\"Element\";",
+   "read_only_depends_on": "eval:doc.item ==\"Geyser\";"
+  },
+  {
    "fieldname": "column_break_k6nm9",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "options": "Daily Production Entry"
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "Remarks"
   },
   {
    "fieldname": "amended_from",
    "fieldtype": "Link",
    "label": "Amended From",
-   "options": "Daily Production Entry"
+   "no_copy": 1,
+   "options": "Production Entry",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
-<<<<<<< Updated upstream
- "modified": "2023-05-25 14:46:07.766080",
-=======
- "modified": "2023-05-26 10:56:38.926951",
->>>>>>> Stashed changes
+ "modified": "2023-05-26 11:59:34.827679",
  "modified_by": "Administrator",
  "module": "Production Rapl",
- "name": "Daily Production Entry",
- "naming_rule": "By \"Naming Series\" field",
+ "name": "Production Entry",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
@@ -202,6 +195,30 @@
    "report": 1,
    "role": "System Manager",
    "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock Manager",
    "share": 1,
    "write": 1
   }
