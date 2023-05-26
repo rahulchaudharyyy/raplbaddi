@@ -29,9 +29,7 @@
   "total_quantity",
   "column_break_k6nm9",
   "remarks",
-  "daily_production_item_section",
-  "daily_production_item",
-  "month_prefix"
+  "amended_from"
  ],
  "fields": [
   {
@@ -143,25 +141,6 @@
    "label": "Remarks"
   },
   {
-   "depends_on": "eval:doc.item ==\"Geyser\";",
-   "fieldname": "daily_production_item_section",
-   "fieldtype": "Section Break",
-   "label": "Daily Production Item"
-  },
-  {
-   "columns": 6,
-   "fieldname": "daily_production_item",
-   "fieldtype": "Table",
-   "label": "Daily Production Item",
-   "options": "Daily Production Item"
-  },
-  {
-   "fieldname": "month_prefix",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Month Prefix"
-  },
-  {
    "depends_on": "eval:doc.item ==\"Element\";",
    "fieldname": "element_type",
    "fieldtype": "Link",
@@ -185,11 +164,28 @@
   {
    "fieldname": "column_break_k6nm9",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "options": "Daily Production Entry"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "options": "Daily Production Entry"
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
+<<<<<<< Updated upstream
  "modified": "2023-05-25 14:46:07.766080",
+=======
+ "modified": "2023-05-26 10:56:38.926951",
+>>>>>>> Stashed changes
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Daily Production Entry",
