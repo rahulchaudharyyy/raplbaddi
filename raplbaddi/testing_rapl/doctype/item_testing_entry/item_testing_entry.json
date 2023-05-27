@@ -16,7 +16,8 @@
   "capacity",
   "date_of_production",
   "section_break_ncn7n",
-  "item_testing_parameters"
+  "item_testing_parameters",
+  "status"
  ],
  "fields": [
   {
@@ -73,11 +74,17 @@
    "fieldtype": "Table",
    "label": " Item Testing Parameters",
    "options": "Item Testing Parameters"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Enabled\nDisabled"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-26 16:10:37.180213",
+ "modified": "2023-05-27 15:25:33.083815",
  "modified_by": "Administrator",
  "module": "Testing Rapl",
  "name": "Item Testing Entry",
@@ -100,5 +107,14 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [
+  {
+   "color": "Green",
+   "title": "Enabled"
+  },
+  {
+   "color": "Red",
+   "title": "Disabled"
+  }
+ ]
 }

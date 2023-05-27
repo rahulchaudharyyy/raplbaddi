@@ -46,7 +46,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-05-27 15:18:57.957780",
+ "modified": "2023-05-27 15:27:05.098046",
  "modified_by": "Administrator",
  "module": "Testing Rapl",
  "name": "Testing",
@@ -68,10 +68,12 @@
  "sequence_id": 12.1,
  "shortcuts": [
   {
-   "color": "Grey",
+   "color": "Green",
    "doc_view": "List",
+   "format": "{} Enabled",
    "label": "Item Testing Entry",
    "link_to": "Item Testing Entry",
+   "stats_filter": "{\"status\":[\"=\",\"Enabled\"]}",
    "type": "DocType"
   },
   {
