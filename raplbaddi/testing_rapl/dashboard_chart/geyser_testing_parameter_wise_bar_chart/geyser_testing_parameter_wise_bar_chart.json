@@ -1,0 +1,32 @@
+{
+ "chart_name": "Geyser Testing Parameter Wise Bar Chart",
+ "chart_type": "Report",
+ "creation": "2023-05-27 14:03:12.840458",
+ "custom_options": "{\"x_field\": \"parameter\", \"chart_type\": \"Bar\", \"y_axis_fields\": [{\"idx\": 1, \"__islocal\": true, \"name\": \"row 1\", \"y_field\": \"frequency\"}], \"y_fields\": [\"frequency\"], \"colors\": [null]}",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "filters_json": "{\"item\":\"Geyser\",\"start_date\":\"2023-01-01\",\"end_date\":\"2023-12-31\"}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "modified": "2023-05-27 15:18:02.075407",
+ "modified_by": "Administrator",
+ "module": "Testing Rapl",
+ "name": "Geyser Testing Parameter Wise Bar Chart",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "report_name": "Detailed Report Geyser Testing",
+ "roles": [],
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "parameter",
+ "y_axis": [
+  {
+   "y_field": "frequency"
+  }
+ ]
+}

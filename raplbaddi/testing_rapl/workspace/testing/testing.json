@@ -1,0 +1,88 @@
+{
+ "charts": [
+  {
+   "chart_name": "Geyser Testing Parameter Wise Bar Chart",
+   "label": "Geyser Testing Parameter Wise Bar Chart"
+  }
+ ],
+ "content": "[{\"id\":\"Gn-7243uMV\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Testing <br></b></span>\",\"col\":12}},{\"id\":\"rr7b-CoJEz\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Faults Geyser\",\"col\":3}},{\"id\":\"gKmRVvfTlm\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Testing Entry\",\"col\":3}},{\"id\":\"NvzUzHTGdJ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Geyser Testing Parameters\",\"col\":3}},{\"id\":\"JSSaYRAaj4\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Geyser Testing Parameter Wise Bar Chart\",\"col\":12}},{\"id\":\"C62TIoLXe6\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":4}}]",
+ "creation": "2023-05-27 14:14:39.423746",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "getting-started",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Testing",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reports",
+   "link_count": 2,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Over View Report",
+   "link_count": 0,
+   "link_to": "Detailed Report Geyser Testing",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Individual Serial Number",
+   "link_count": 0,
+   "link_to": "Individual Geyser Testing",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2023-05-27 15:18:57.957780",
+ "modified_by": "Administrator",
+ "module": "Testing Rapl",
+ "name": "Testing",
+ "number_cards": [
+  {
+   "label": "Total Faults Geyser",
+   "number_card_name": "Total Faults Geyser"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Unit 2"
+  }
+ ],
+ "sequence_id": 12.1,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Item Testing Entry",
+   "link_to": "Item Testing Entry",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "format": "{} Enabled",
+   "label": "Geyser Testing Parameters",
+   "link_to": "Geyser Testing Parameters",
+   "stats_filter": "{\"status\":[\"=\",\"Enabled\"]}",
+   "type": "DocType"
+  }
+ ],
+ "title": "Testing"
+}
