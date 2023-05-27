@@ -2,7 +2,7 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "format:DPE{#}",
+ "autoname": "naming_series:",
  "creation": "2023-05-26 11:58:01.318283",
  "default_view": "List",
  "doctype": "DocType",
@@ -36,7 +36,8 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "hidden": 1,
-   "label": "Series"
+   "label": "Series",
+   "options": "DPE"
   },
   {
    "fieldname": "item",
@@ -178,11 +179,11 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-05-26 14:07:52.053097",
+ "modified": "2023-05-26 18:01:01.285430",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Production Entry",
- "naming_rule": "Expression",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
