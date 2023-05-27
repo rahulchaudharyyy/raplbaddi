@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 /* eslint-disable */
 
-frappe.query_reports["Detailed Report Geyser Testing"] = {
+frappe.query_reports["Individual Geyser Testing"] = {
 	"filters": [
 		{
 			"fieldname": "item",

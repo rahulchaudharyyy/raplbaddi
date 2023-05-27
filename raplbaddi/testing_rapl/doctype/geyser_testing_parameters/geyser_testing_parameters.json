@@ -8,7 +8,8 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "parameter"
+  "parameter",
+  "status"
  ],
  "fields": [
   {
@@ -16,11 +17,17 @@
    "fieldtype": "Data",
    "label": "Parameter",
    "unique": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Enabled\nDisabled"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-20 17:27:43.853308",
+ "modified": "2023-05-27 14:25:50.213477",
  "modified_by": "Administrator",
  "module": "Testing Rapl",
  "name": "Geyser Testing Parameters",
