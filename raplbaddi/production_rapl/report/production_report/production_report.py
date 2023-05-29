@@ -22,8 +22,10 @@ def get_columns(filters):
     columns = []
     common = [
         {"label": "Date of Production", "fieldtype": "Date", "width": 150},
-        {"label": "Item", "fieldtype": "Data", "width": 150},
-        {"label": "Total Quantity", "fieldtype": "Int", "width": 150},
+        {"label": "Item", "fieldtype": "Data", "width": 80},
+    ]
+    total = [
+        {"label": "Total Quantity", "fieldtype": "Int", "width": 140},
     ]
     item = filters.get("item")
     if item == "Geyser":
@@ -34,6 +36,7 @@ def get_columns(filters):
         ]
         columns.extend(common)
         columns.extend(add)
+        columns.extend(total)
     elif item == "Element":
         add = [
             {"label": "Element Type Name", "fieldtype": "Data", "width": 150},
@@ -41,6 +44,7 @@ def get_columns(filters):
         ]
         columns.extend(common)
         columns.extend(add)
+        columns.extend(total)
     return columns
 
 

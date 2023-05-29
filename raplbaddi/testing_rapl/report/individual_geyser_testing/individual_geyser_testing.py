@@ -16,6 +16,7 @@ def get_data(filters):
             parent,
             parameter,
             remark,
+            capacity,
             brand_name,
             model_name,
             fault
@@ -38,6 +39,7 @@ def get_columns(filters):
         {"label": "Parameter", "fieldname": "parameter", "fieldtype": "Data", "width": 150},
         {"label": "Brand", "fieldname": "brand_name", "fieldtype": "Data", "width": 150},
         {"label": "Model", "fieldname": "model_name", "fieldtype": "Data", "width": 150},
+        {"label": "Capacity", "fieldname": "capacity", "fieldtype": "Data", "width": 150},
         {"label": "Remark", "fieldname": "remark", "fieldtype": "Data", "width": 150},
         {"label": "Have Fault ?", "fieldname": "fault", "fieldtype": "Int", "width": 150},
     ]

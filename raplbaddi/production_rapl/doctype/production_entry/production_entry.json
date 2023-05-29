@@ -179,7 +179,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-05-26 18:01:01.285430",
+ "modified": "2023-05-29 09:04:10.366790",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Production Entry",
@@ -236,6 +236,20 @@
    "report": 1,
    "role": "Software Operator",
    "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Production",
+   "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],
