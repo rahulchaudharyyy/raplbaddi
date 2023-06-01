@@ -9,7 +9,9 @@
  "field_order": [
   "geyser",
   "box_type",
-  "plain_type"
+  "plain_type",
+  "geyser_name",
+  "plain_box_name"
  ],
  "fields": [
   {
@@ -29,12 +31,25 @@
    "fieldtype": "Link",
    "label": "Plain Type",
    "options": "Item"
+  },
+  {
+   "fetch_from": "geyser.item_name",
+   "fieldname": "geyser_name",
+   "fieldtype": "Data",
+   "label": "Geyser Name"
+  },
+  {
+   "fetch_from": "plain_type.item_name",
+   "fieldname": "plain_box_name",
+   "fieldtype": "Data",
+   "label": "Plain Box Name",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-05-31 10:30:18.814069",
+ "modified": "2023-06-01 12:32:39.308793",
  "modified_by": "Administrator",
  "module": "SalesRapl",
  "name": "Sale Order Item Boxes",
