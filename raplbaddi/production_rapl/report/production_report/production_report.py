@@ -56,6 +56,12 @@ def get_conditions(filters):
     if filters and filters.get("brand_name"):
         brand_name = filters.get("brand_name")
         conditions += f" AND brand_name='{brand_name}'"
+    if filters and filters.get("geyser_model"):
+        geyser_model = filters.get("geyser_model")
+        conditions += f" AND model_name='{geyser_model}'"
+    if filters and filters.get("capacity"):
+        capacitye = filters.get("capacity")
+        conditions += f" AND capacity='{capacity}'"
     if filters and filters.get("start_date"):
         start_date = filters.get("start_date")
         conditions += f" AND date_of_production >= '{start_date}'"

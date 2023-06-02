@@ -15,13 +15,13 @@ frappe.query_reports["Production Report"] = {
 			"fieldname": "start_date",
 			"label": "Starting Date of Production",
 			"fieldtype": "Date",
-			"default": dateutil.year_start()
+			"default": frappe.datetime.year_start()
 		},
 		{
 			"fieldname": "end_date",
 			"label": "Ending Date of Production",
 			"fieldtype": "Date",
-			"default": dateutil.year_end()
+			"default": frappe.datetime.year_end()
 		},
 		{
 			"fieldname": "brand_name",
@@ -29,5 +29,23 @@ frappe.query_reports["Production Report"] = {
 			"fieldtype": "Link",
 			"options": "Brand"
 		},
-	]
+		{
+			"fieldname": "geyser_model",
+			"label": "Geyser Model",
+			"fieldtype": "Link",
+			"options": "Geyser Model"
+		},
+		{
+			"fieldname": "capacity",
+			"label": "Geyser Capacity",
+			"fieldtype": "Link",
+			"options": "Geyser Capacity"
+		},
+		// {
+		// 	"fieldname":"month",
+		// 	"label": __("Month"),
+		// 	"fieldtype": "Select",
+		// 	"options": " \nJan\nFeb\nMar\nApr\nMay\nJun\nJul\nAug\nSep\nOct\nNov\nDec",
+		// },
+	],
 };
