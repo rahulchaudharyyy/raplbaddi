@@ -41,11 +41,14 @@ frappe.query_reports["Production Report"] = {
 			"fieldtype": "Link",
 			"options": "Geyser Capacity"
 		},
+	],
+};
+
+
+
 		// {
 		// 	"fieldname":"month",
 		// 	"label": __("Month"),
 		// 	"fieldtype": "Select",
 		// 	"options": " \nJan\nFeb\nMar\nApr\nMay\nJun\nJul\nAug\nSep\nOct\nNov\nDec",
 		// },
-	],
-};
