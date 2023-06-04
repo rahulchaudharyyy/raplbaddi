@@ -11,7 +11,7 @@ def execute(filters=None):
 
 def get_data(filters):
     query = f"""
-    SELECT model_name AS 'Model Name', capacity AS 'Capacity', SUM(total_quantity) AS "Total Quantity"
+    SELECT model_name AS 'model', capacity AS 'capacity', SUM(total_quantity) AS "total"
     FROM `tabProduction Entry`
     WHERE {get_conditions(filters)}
     GROUP BY model_name, capacity;
@@ -22,9 +22,9 @@ def get_data(filters):
 
 def get_columns(filters):
     columns = [
-        {"label": "Model Name", "fieldtype": "Data", "width": 150},
-        {"label": "Capacity", "fieldtype": "Data", "width": 80},
-        {"label": "Total Quantity", "fieldtype": "Int", "width": 140},
+        {"label": "Model Name", "fieldtype": "Data", "width": 150, "fieldname": "model"},
+        {"label": "Capacity", "fieldtype": "Data", "width": 80, "fieldname": "capacity"},
+        {"label": "Total Quantity", "fieldtype": "Int", "width": 140, "fieldname": "total"},
     ]
     return columns
 
@@ -63,7 +63,7 @@ def get_conditions(filters):
     conditions = "1=1"
     if filters and filters.get("item"):
         item = filters.get("item")
-        conditions += f" AND item != '{item}'"
+        conditions += f" AND item = '{item}'"
     if filters and filters.get("month"):
         month = get_month_number(filters.get("month"))
         conditions += f" AND MONTH(date_of_production) = {month}"

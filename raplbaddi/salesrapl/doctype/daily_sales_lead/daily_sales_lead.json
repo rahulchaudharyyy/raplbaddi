@@ -9,7 +9,8 @@
   "party_name",
   "town",
   "contact_number",
-  "remarks"
+  "remarks",
+  "district"
  ],
  "fields": [
   {
@@ -21,8 +22,9 @@
   },
   {
    "fieldname": "town",
-   "fieldtype": "Data",
-   "label": "Town"
+   "fieldtype": "Link",
+   "label": "Town",
+   "options": "POI"
   },
   {
    "fieldname": "contact_number",
@@ -33,12 +35,20 @@
    "fieldname": "remarks",
    "fieldtype": "Text",
    "label": "Remarks"
+  },
+  {
+   "fetch_from": "town.district",
+   "fieldname": "district",
+   "fieldtype": "Link",
+   "label": "District",
+   "mandatory_depends_on": "!doc.town",
+   "options": "District India"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-05-23 18:18:28.895562",
+ "modified": "2023-06-04 11:05:47.992159",
  "modified_by": "Administrator",
  "module": "SalesRapl",
  "name": "Daily Sales Lead",

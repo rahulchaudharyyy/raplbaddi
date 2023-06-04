@@ -8,27 +8,31 @@
  "engine": "InnoDB",
  "field_order": [
   "geyser",
+  "geyser_name",
   "box_type",
   "plain_type",
-  "geyser_name",
   "plain_box_name"
  ],
  "fields": [
   {
    "fieldname": "geyser",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Geyser",
-   "options": "Item"
+   "options": "Item",
+   "reqd": 1
   },
   {
    "fieldname": "box_type",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Box Type",
    "options": "Printed\nPlain"
   },
   {
    "fieldname": "plain_type",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Plain Type",
    "options": "Item"
   },
@@ -36,12 +40,15 @@
    "fetch_from": "geyser.item_name",
    "fieldname": "geyser_name",
    "fieldtype": "Data",
-   "label": "Geyser Name"
+   "in_list_view": 1,
+   "label": "Geyser Name",
+   "read_only": 1
   },
   {
    "fetch_from": "plain_type.item_name",
    "fieldname": "plain_box_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Plain Box Name",
    "read_only": 1
   }
@@ -49,7 +56,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-06-01 12:32:39.308793",
+ "modified": "2023-06-04 12:15:03.028148",
  "modified_by": "Administrator",
  "module": "SalesRapl",
  "name": "Sale Order Item Boxes",
