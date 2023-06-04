@@ -4,3 +4,4 @@ DataRapl
 Production Rapl
 SalesRapl
 Testing Rapl
+Stock Rapl
