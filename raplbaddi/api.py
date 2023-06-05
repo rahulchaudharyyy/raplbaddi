@@ -14,3 +14,9 @@ def get_dpi_parent(sno):
         SELECT parent FROM `tabDaily Production Item` as dpi
         WHERE dpi.name='{sno}'
     """, as_dict=True)
+
+@frappe.whitelist()
+def get_last_so_of_customer(customer=None):
+    filter =  {'customer': customer}
+    so = frappe.get_last_doc('Sales Order', filters=filter)
+    return so
