@@ -973,7 +973,7 @@
    "columns": 0,
    "creation": "2023-05-30 13:01:36.129112",
    "default": null,
-   "depends_on": "eval:doc.item_group == 'Geyser Unit'",
+   "depends_on": "eval:doc.item_group == 'Geyser Unit' || doc.item_group == 'Packing Boxes'",
    "description": null,
    "docstatus": 0,
    "dt": "Item",
