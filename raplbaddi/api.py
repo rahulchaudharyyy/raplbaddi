@@ -18,5 +18,8 @@ def get_dpi_parent(sno):
 @frappe.whitelist()
 def get_last_so_of_customer(customer=None):
     filter =  {'customer': customer}
-    so = frappe.get_last_doc('Sales Order', filters=filter)
-    return so
+    try:
+        so = frappe.get_last_doc('Sales Order', filters=filter)
+        return so
+    except:
+        return "Doc not found"
