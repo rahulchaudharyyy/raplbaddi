@@ -40,7 +40,6 @@ def get_columns(filters):
     elif item == "Element":
         add = [
             {"label": "Element Type Name", "fieldtype": "Data", "width": 150},
-            {"label": "Element Type Name", "fieldtype": "Data", "width": 150},
         ]
         columns.extend(common)
         columns.extend(add)
