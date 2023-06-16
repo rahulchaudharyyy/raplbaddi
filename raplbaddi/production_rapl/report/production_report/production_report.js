@@ -23,24 +23,6 @@ frappe.query_reports["Production Report"] = {
 			"fieldtype": "Date",
 			"default": frappe.datetime.year_end()
 		},
-		{
-			"fieldname": "brand_name",
-			"label": "Brand Name",
-			"fieldtype": "Link",
-			"options": "Brand"
-		},
-		{
-			"fieldname": "geyser_model",
-			"label": "Geyser Model",
-			"fieldtype": "Link",
-			"options": "Geyser Model"
-		},
-		{
-			"fieldname": "capacity",
-			"label": "Geyser Capacity",
-			"fieldtype": "Link",
-			"options": "Geyser Capacity"
-		},
 	],
 };
 

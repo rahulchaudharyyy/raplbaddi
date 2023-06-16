@@ -5,3 +5,4 @@ Production Rapl
 SalesRapl
 Testing Rapl
 Stock Rapl
+Purchase Rapl

@@ -1,0 +1,115 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "prompt",
+ "creation": "2023-06-16 09:36:22.091366",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "serial_number",
+  "new_serial_number",
+  "date",
+  "old_brand_name",
+  "column_break_aac3s",
+  "new_brand_name",
+  "capacity",
+  "date_of_production",
+  "model_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "serial_number",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Serial Number",
+   "mandatory_depends_on": "eval:!doc.new_serial_number",
+   "options": "Serial Number Geyser",
+   "unique": 1
+  },
+  {
+   "fetch_from": "serial_number.brand_name",
+   "fieldname": "old_brand_name",
+   "fieldtype": "Link",
+   "label": "Brand Name",
+   "options": "Brand",
+   "read_only_depends_on": "eval:doc.serial_number"
+  },
+  {
+   "fieldname": "column_break_aac3s",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "new_brand_name",
+   "fieldtype": "Link",
+   "label": "New Brand Name",
+   "options": "Brand",
+   "read_only_depends_on": "eval:!doc.serial_number"
+  },
+  {
+   "fetch_from": "serial_number.capacity",
+   "fieldname": "capacity",
+   "fieldtype": "Select",
+   "label": "Capacity",
+   "options": "\n3\n6\n10\n15\n25\n35\n50\n70\n100",
+   "read_only": 1,
+   "read_only_depends_on": "eval:doc.serial_number"
+  },
+  {
+   "depends_on": "eval:doc.serial_number",
+   "fetch_from": "serial_number.date_of_production",
+   "fieldname": "date_of_production",
+   "fieldtype": "Data",
+   "label": "Date of Production",
+   "read_only": 1,
+   "read_only_depends_on": "eval:doc.serial_number"
+  },
+  {
+   "fetch_from": "serial_number.model_name",
+   "fieldname": "model_name",
+   "fieldtype": "Link",
+   "label": "Model Name",
+   "options": "Geyser Model",
+   "read_only_depends_on": "eval:doc.serial_number"
+  },
+  {
+   "depends_on": "eval:!doc.serial_number",
+   "fieldname": "new_serial_number",
+   "fieldtype": "Data",
+   "label": "New Serial Number",
+   "mandatory_depends_on": "eval:!doc.serial_number"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-06-16 13:27:33.783365",
+ "modified_by": "Administrator",
+ "module": "Production Rapl",
+ "name": "Geyser Serial Number Change",
+ "naming_rule": "Set by user",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
