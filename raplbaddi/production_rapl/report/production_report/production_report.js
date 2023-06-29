@@ -23,6 +23,11 @@ frappe.query_reports["Production Report"] = {
 			"fieldtype": "Date",
 			"default": frappe.datetime.year_end()
 		},
+		{
+			"fieldname": "group_by_item_model_capacity_brand",
+			"label": "Group By Item Model Capcity Brand",
+			"fieldtype": "Check"
+		},
 	],
 };
 

@@ -34,7 +34,12 @@
   "vehicle_tab",
   "vehicle_number",
   "column_break_oc62q",
-  "place"
+  "place",
+  "wa_tab",
+  "approver_phone_number",
+  "auditor_number",
+  "msg_to_approver",
+  "msg_to_auditor"
  ],
  "fields": [
   {
@@ -97,13 +102,15 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Amount",
-   "permlevel": 1
+   "permlevel": 1,
+   "reqd": 1
   },
   {
    "fieldname": "party_name",
    "fieldtype": "Data",
    "label": "Party Name",
-   "permlevel": 1
+   "permlevel": 1,
+   "reqd": 1
   },
   {
    "depends_on": "eval:doc.approval == \"Approved\" && doc.attach_screenshots",
@@ -201,11 +208,41 @@
   {
    "fieldname": "section_break_m7ofi",
    "fieldtype": "Section Break"
+  },
+  {
+   "default": "8679808182",
+   "fieldname": "approver_phone_number",
+   "fieldtype": "Data",
+   "label": "Approver Phone Number"
+  },
+  {
+   "default": "7807997140",
+   "fieldname": "auditor_number",
+   "fieldtype": "Data",
+   "label": "Auditor Number"
+  },
+  {
+   "fieldname": "wa_tab",
+   "fieldtype": "Tab Break",
+   "hidden": 1,
+   "label": "WA"
+  },
+  {
+   "default": "0",
+   "fieldname": "msg_to_approver",
+   "fieldtype": "Check",
+   "label": "Msg To Approver"
+  },
+  {
+   "default": "0",
+   "fieldname": "msg_to_auditor",
+   "fieldtype": "Check",
+   "label": "Msg To Auditor"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-06-08 16:02:54.528316",
+ "modified": "2023-06-26 16:39:25.377904",
  "modified_by": "Administrator",
  "module": "Raplbaddi",
  "name": "Payments Rapl",

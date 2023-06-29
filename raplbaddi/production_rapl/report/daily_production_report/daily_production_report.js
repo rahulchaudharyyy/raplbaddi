@@ -29,5 +29,10 @@ frappe.query_reports["Daily Production Report"] = {
 			"fieldtype": "Link",
 			"options": "Brand"
 		},
+		{
+			"fieldname": "group_by_brand_model_capacity",
+			"label": "Group By Brand, Model and Capacity",
+			"fieldtype": "Check"
+		},
 	]
 };

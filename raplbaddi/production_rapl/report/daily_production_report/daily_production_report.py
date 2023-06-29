@@ -57,4 +57,6 @@ def get_conditions(filters):
     if filters and filters.get("end_date"):
         end_date = filters.get("end_date")
         conditions += f" AND date_of_production <= '{end_date}'"
+    if filters and filters.get("item") == "Geyser" and filters.get("group_by_brand_model_capacity")
+        conditions += f" GROUP BY item, brand_name, model_name, capacity"
     return conditions

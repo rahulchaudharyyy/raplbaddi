@@ -22,7 +22,7 @@ def execute(filters=None):
 
 def get_data(filters):
     query = f"""
-    SELECT * FROM `tabProduction Entry`as pe WHERE {get_conditions(filters)} AND pe.docstatus = 1
+    SELECT * FROM `tabProduction Entry`as pe WHERE {get_conditions(filters)}
     """
     result = frappe.db.sql(query, as_dict=True)
     return result
@@ -60,7 +60,7 @@ def get_columns(filters):
 
 
 def get_conditions(filters):
-    conditions = "1=1"
+    conditions = "pe.docstatus = 1"
     if filters and filters.get("item"):
         item = filters.get("item")
         conditions += f" AND item='{item}'"
@@ -79,4 +79,6 @@ def get_conditions(filters):
     if filters and filters.get("end_date"):
         end_date = filters.get("end_date")
         conditions += f" AND date_of_production <= '{end_date}'"
+    if filters and filters.get("group_by_item_model_capacity_brand") and filters.get("item") == "Geyser":
+        conditions += f" GROUP BY item, brand_name, model_name, capacity"
     return conditions
