@@ -1,31 +1,54 @@
 # Copyright (c) 2023, Nishant Bhickta and contributors
 # For license information, please see license.txt
-
 import frappe
 
 def execute(filters=None):
     columns, data = [], []
     data = get_data(filters)
-    return get_columns(filters), data
+    return get_columns(filters), data, get_message(filters, data)
 
-# def get_message(filters):
-#     query = f"""
-#     SELECT SUM(manpower) as Manpower, date_of_production, item, production_line as Line FROM `tabDaily Work Force and Line` as dwl WHERE {get_conditions(filters)} GROUP BY production_line 
-#     """
-#     result = frappe.db.sql(query, as_dict=True)
-#     messages = []
-#     for entry in result:
-#         res = " had ".join([f"{k}: {entry[k]}" for k in ['Line', 'Manpower'] if k in entry])
-#         messages.append(res)
-#     return " ;  ".join(messages)
-
+def get_message(filters, data):
+    sum1, sum2, sum3 = (0, 0, 0)
+    for d in data:
+        if d['production_line'] == '1':
+            sum1 += d['total_quantity']
+        if d['production_line'] == '2':
+            sum2 += d['total_quantity']
+        if d['production_line'] == '3':
+            sum3 += d['total_quantity']
+    ret = f"""
+    <h3 style="display: inline;">
+        <li>Line One = {sum1}</li>
+        <li>Line One = {sum2}</li>
+        <li>Line One = {sum3}</li>
+    </h3>
+    """
+    return ret
 
 def get_data(filters):
     query = f"""
-    SELECT * FROM `tabProduction Entry`as pe WHERE {get_conditions(filters)}
+    SELECT
+        date_of_production,
+        production_line,
+        manpower,
+        item
+        {get_total_quantity(filters)} as total_quantity,
+        capacity,
+        brand_name,
+        model_name
+    FROM
+        `tabProduction Entry`as pe
+    WHERE
+        {get_conditions(filters)}
     """
     result = frappe.db.sql(query, as_dict=True)
     return result
+
+def get_total_quantity(filters):
+    if filters and filters.get("group_by_item_model_capacity_brand"):
+        return f", SUM(total_quantity)"
+    else:
+        return f", total_quantity"
 
 
 def get_columns(filters):
@@ -34,7 +57,7 @@ def get_columns(filters):
         {"label": "Date of Production", "fieldname": "date_of_production", "fieldtype": "Date", "width": 150},
         {"label": "Line", "fieldname": "production_line", "fieldtype": "Data", "width": 50},
         {"label": "Workforce", "fieldname": "manpower", "fieldtype": "Data", "width": 50},
-        {"label": "Item", "fieldtype": "Data", "width": 80},
+        {"label": "Item", "fieldname": "item", "fieldtype": "Data", "width": 80},
     ]
     total = [
         {"label": "Quantity", "fieldname": "total_quantity", "fieldtype": "Int", "width": 140},
@@ -43,15 +66,15 @@ def get_columns(filters):
     if item == "Geyser":
         add = [
             {"label": "Litre", "fieldname": "capacity", "fieldtype": "Data", "width": 150},
-            {"label": "Model Name", "fieldtype": "Data", "width": 150},
-            {"label": "Brand Name", "fieldtype": "Data", "width": 150},
+            {"label": "Model Name", "fieldname": "model_name", "fieldtype": "Data", "width": 150},
+            {"label": "Brand Name", "fieldname": "brand_name", "fieldtype": "Data", "width": 150},
         ]
         columns.extend(common)
         columns.extend(add)
         columns.extend(total)
     elif item == "Element":
         add = [
-            {"label": "Element Type Name", "fieldtype": "Data", "width": 150},
+            {"label": "Element Type Name", "fieldname": "element_type_name", "fieldtype": "Data", "width": 150},
         ]
         columns.extend(common)
         columns.extend(add)

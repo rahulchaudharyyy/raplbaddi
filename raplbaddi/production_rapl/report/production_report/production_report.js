@@ -28,9 +28,17 @@ frappe.query_reports["Production Report"] = {
 			"label": "Group By Item Model Capcity Brand",
 			"fieldtype": "Check"
 		},
+		// {
+		// 	"fieldname": "Test",
+		// 	"label": __("Test"),
+		// 	"fieldtype": "Button",
+		// 	"options": test
+		// }
 	],
+	// test: function(){
+	// 	console.log("object");
+	// }
 };
-
 
 
 		// {
