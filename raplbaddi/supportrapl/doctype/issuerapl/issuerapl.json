@@ -26,8 +26,6 @@
   "model",
   "cooler_model",
   "column_break_isjsk",
-  "serial_number",
-  "serial_number_category",
   "issue_type",
   "product_photo",
   "invoice_date",
@@ -90,12 +88,6 @@
    "mandatory_depends_on": "eval:doc.product == \"Geyser\"",
    "options": "Geyser Model",
    "permlevel": 1
-  },
-  {
-   "fieldname": "serial_number",
-   "fieldtype": "Dynamic Link",
-   "label": "Serial Number",
-   "options": "serial_number_category"
   },
   {
    "fieldname": "service_centre_tab",
@@ -277,17 +269,11 @@
    "label": "Geyser Capacity",
    "mandatory_depends_on": "eval:doc.product == \"Geyser\"",
    "options": "Geyser Capacity"
-  },
-  {
-   "fieldname": "serial_number_category",
-   "fieldtype": "Link",
-   "label": "Serial Number Category",
-   "options": "DocType"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-06-24 17:11:32.186792",
+ "modified": "2023-06-30 10:49:23.760684",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",

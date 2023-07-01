@@ -1,0 +1,68 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format:{packing_box_name} - {line_number}",
+ "creation": "2023-06-30 12:59:16.439198",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "packing_box",
+  "packing_box_name",
+  "line_number"
+ ],
+ "fields": [
+  {
+   "fieldname": "packing_box",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Packing Box",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "packing_box.item_name",
+   "fieldname": "packing_box_name",
+   "fieldtype": "Data",
+   "label": "Packing Box Name",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "line_number",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Line Number",
+   "options": "Packing Box Lines",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-06-30 13:31:09.648934",
+ "modified_by": "Administrator",
+ "module": "Stock Rapl",
+ "name": "PB Linewise Location",
+ "name_case": "Title Case",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
