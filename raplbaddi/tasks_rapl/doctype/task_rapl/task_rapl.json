@@ -1,0 +1,94 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "autoname": "format:{frequency}-{work_category}: {work}",
+ "creation": "2023-07-01 12:37:15.166505",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "work",
+  "work_category",
+  "frequency",
+  "user_kaccha",
+  "user_pakka",
+  "user_assistant"
+ ],
+ "fields": [
+  {
+   "fieldname": "work",
+   "fieldtype": "Text",
+   "label": "Work"
+  },
+  {
+   "fieldname": "work_category",
+   "fieldtype": "Link",
+   "label": "Work Category",
+   "options": "Task Category"
+  },
+  {
+   "fieldname": "frequency",
+   "fieldtype": "Link",
+   "label": "Frequency",
+   "options": "Tasks Frequency"
+  },
+  {
+   "fieldname": "user_pakka",
+   "fieldtype": "Link",
+   "label": "User Pakka",
+   "options": "User"
+  },
+  {
+   "fieldname": "user_assistant",
+   "fieldtype": "Link",
+   "label": "User Assistant",
+   "options": "User"
+  },
+  {
+   "fieldname": "user_kaccha",
+   "fieldtype": "Link",
+   "label": "User Kaccha",
+   "options": "User"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-07-04 17:47:52.223660",
+ "modified_by": "Administrator",
+ "module": "Tasks Rapl",
+ "name": "Task Rapl",
+ "name_case": "Title Case",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "work"
+}

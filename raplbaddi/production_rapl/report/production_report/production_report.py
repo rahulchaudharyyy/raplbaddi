@@ -19,8 +19,8 @@ def get_message(filters, data):
     ret = f"""
     <h3 style="display: inline;">
         <li>Line One = {sum1}</li>
-        <li>Line One = {sum2}</li>
-        <li>Line One = {sum3}</li>
+        <li>Line Two= {sum2}</li>
+        <li>Line Three= {sum3}</li>
     </h3>
     """
     return ret

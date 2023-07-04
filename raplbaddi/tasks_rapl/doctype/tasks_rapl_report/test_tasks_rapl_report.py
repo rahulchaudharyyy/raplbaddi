@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestTaskUserRole(FrappeTestCase):
+class TestTasksRaplReport(FrappeTestCase):
 	pass

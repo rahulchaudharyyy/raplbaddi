@@ -16,12 +16,14 @@
   {
    "fieldname": "from_town",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "From Town",
    "options": "POI"
   },
   {
    "fieldname": "to_town",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "To Town",
    "options": "POI"
   },
@@ -29,6 +31,7 @@
    "fetch_from": "from_town.district",
    "fieldname": "from_district",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "From District",
    "mandatory_depends_on": "!doc.from_town",
    "options": "District India"
@@ -37,6 +40,7 @@
    "fetch_from": "to_town.district",
    "fieldname": "to_district",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "To District",
    "mandatory_depends_on": "!doc.to_town",
    "options": "District India"
@@ -45,7 +49,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-06-04 11:07:27.523603",
+ "modified": "2023-07-03 19:15:57.844082",
  "modified_by": "Administrator",
  "module": "SalesRapl",
  "name": "Town Visits Sales Rapl",

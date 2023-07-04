@@ -1,42 +1,33 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2023-07-01 12:37:15.166505",
+ "autoname": "field:title",
+ "creation": "2023-07-04 15:43:23.298592",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "department",
-  "assigned_to",
-  "task_category"
+  "title"
  ],
  "fields": [
   {
-   "fieldname": "department",
-   "fieldtype": "Link",
-   "label": "Department",
-   "options": "Department"
-  },
-  {
-   "fieldname": "assigned_to",
-   "fieldtype": "Link",
-   "label": "Assigned To",
-   "options": "Task User Role"
-  },
-  {
-   "fieldname": "task_category",
-   "fieldtype": "Link",
-   "label": "Task Category",
-   "options": "Task Category"
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1,
+   "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-07-01 12:37:15.166505",
+ "modified": "2023-07-04 15:43:23.298592",
  "modified_by": "Administrator",
  "module": "Tasks Rapl",
- "name": "Task Lists Rapl",
+ "name": "Tasks Frequency",
+ "name_case": "Title Case",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
