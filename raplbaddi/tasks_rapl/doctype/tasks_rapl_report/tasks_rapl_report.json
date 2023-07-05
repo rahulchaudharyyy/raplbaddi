@@ -7,8 +7,12 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "user",
+  "date",
+  "section_break_v5v8d",
   "frequency",
+  "column_break_zjlj8",
+  "user",
+  "section_break_6em1f",
   "tasks_rapl_table"
  ],
  "fields": [
@@ -32,11 +36,30 @@
    "fieldtype": "Table",
    "label": "Tasks Rapl Table",
    "options": "Tasks Rapl Table"
+  },
+  {
+   "fieldname": "column_break_zjlj8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_v5v8d",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_6em1f",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-07-04 16:12:27.579191",
+ "modified": "2023-07-05 10:10:48.354742",
  "modified_by": "Administrator",
  "module": "Tasks Rapl",
  "name": "Tasks Rapl Report",

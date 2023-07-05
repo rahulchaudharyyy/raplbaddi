@@ -37,4 +37,18 @@ def price_list_of_customer(customer=None):
         )
         return price_list
     except:
-        return "Doc not found"
+        return "Doc not Found"
+
+@frappe.whitelist()
+def get_task(user=None, frequency=None):
+    try:
+        task = frappe.db.sql(f"""
+            SELECT name
+            FROM `tabTask Rapl`
+            WHERE '{user}' IN (user_kaccha, user_pakka, user_assistant) AND frequency = '{frequency}';
+        """, as_dict=True
+        )
+        return task
+    except:
+        return "No Task Found"
+
