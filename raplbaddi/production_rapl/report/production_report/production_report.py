@@ -35,7 +35,8 @@ def get_data(filters):
         {get_total_quantity(filters)} as total_quantity,
         capacity,
         brand_name,
-        model_name
+        model_name,
+        element_type_name
     FROM
         `tabProduction Entry`as pe
     WHERE

@@ -19,6 +19,8 @@
   {
    "fieldname": "user",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "User",
    "options": "User",
    "read_only": 1
@@ -59,7 +61,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
+<<<<<<< Updated upstream
  "modified": "2023-07-05 10:10:48.354742",
+=======
+ "modified": "2023-07-06 11:13:12.378613",
+>>>>>>> Stashed changes
  "modified_by": "Administrator",
  "module": "Tasks Rapl",
  "name": "Tasks Rapl Report",
@@ -77,6 +83,32 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+<<<<<<< Updated upstream
+=======
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "if_owner": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Task User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Task Manager",
+   "share": 1,
+   "write": 1
+>>>>>>> Stashed changes
   }
  ],
  "sort_field": "modified",
