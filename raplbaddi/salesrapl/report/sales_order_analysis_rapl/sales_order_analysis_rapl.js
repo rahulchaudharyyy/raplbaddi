@@ -5,6 +5,20 @@
 frappe.query_reports["Sales Order Analysis Rapl"] = {
 	"filters": [
 		{
+			"fieldname": "sales_person",
+			"label": __("Sales Person"),
+			"fieldtype": "Link",
+			"width": "80",
+			"options": "Sales Person",
+		},
+		{
+			"fieldname": "all",
+			"label": __("All"),
+			"fieldtype": "Check",
+			"width": "80",
+			"hidden": !frappe.session.user == "Sales Manager"
+		},
+		{
 			"fieldname": "company",
 			"label": __("Company"),
 			"fieldtype": "Link",

@@ -53,6 +53,9 @@ def get_conditions(filters):
 	if filters.get("status"):
 		conditions += " and so.status in %(status)s"
 
+	if not filters.get("all") and filters.get("sales_person"):
+		conditions += " and so.sales_person = %(sales_person)s"
+
 	return conditions
 
 
