@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 frappe.query_reports["Sales Order Analysis Rapl"] = {
+	roles: [ 'Sales Rapl', 'Sales User' ],
 	"filters": [
 		{
 			"fieldname": "sales_person",
@@ -10,13 +11,14 @@ frappe.query_reports["Sales Order Analysis Rapl"] = {
 			"fieldtype": "Link",
 			"width": "80",
 			"options": "Sales Person",
+			"reqd": 1,
 		},
 		{
 			"fieldname": "all",
 			"label": __("All"),
 			"fieldtype": "Check",
 			"width": "80",
-			"hidden": !frappe.session.user == "Sales Manager"
+			"hidden": !frappe.user.has_role("Sales Manager")
 		},
 		{
 			"fieldname": "company",
@@ -28,7 +30,7 @@ frappe.query_reports["Sales Order Analysis Rapl"] = {
 			"default": frappe.defaults.get_default("company")
 		},
 		{
-			"fieldname":"from_date",
+			"fieldname": "from_date",
 			"label": __("From Date"),
 			"fieldtype": "Date",
 			"width": "80",
@@ -36,7 +38,7 @@ frappe.query_reports["Sales Order Analysis Rapl"] = {
 			"default": frappe.datetime.add_months(frappe.datetime.get_today(), -1),
 		},
 		{
-			"fieldname":"to_date",
+			"fieldname": "to_date",
 			"label": __("To Date"),
 			"fieldtype": "Date",
 			"width": "80",
@@ -49,10 +51,10 @@ frappe.query_reports["Sales Order Analysis Rapl"] = {
 			"fieldtype": "MultiSelectList",
 			"width": "80",
 			"options": "Sales Order",
-			"get_data": function(txt) {
+			"get_data": function (txt) {
 				return frappe.db.get_link_options("Sales Order", txt);
 			},
-			"get_query": () =>{
+			"get_query": () => {
 				return {
 					filters: { "docstatus": 1 }
 				}
@@ -63,10 +65,10 @@ frappe.query_reports["Sales Order Analysis Rapl"] = {
 			"label": __("Status"),
 			"fieldtype": "MultiSelectList",
 			"width": "80",
-			get_data: function(txt) {
+			get_data: function (txt) {
 				let status = ["To Bill", "To Deliver", "To Deliver and Bill", "Completed"]
 				let options = []
-				for (let option of status){
+				for (let option of status) {
 					options.push({
 						"value": option,
 						"label": __(option),

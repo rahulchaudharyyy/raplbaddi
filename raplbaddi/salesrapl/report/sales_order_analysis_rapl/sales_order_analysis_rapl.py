@@ -55,6 +55,12 @@ def get_conditions(filters):
 
 	if not filters.get("all") and filters.get("sales_person"):
 		conditions += " and so.sales_person = %(sales_person)s"
+	elif filters.get("all") and filters.get("sales_person"):
+		conditions += " and so.sales_person = %(sales_person)s"
+	else:
+		conditions += " and 1"
+		
+	
 
 	return conditions
 

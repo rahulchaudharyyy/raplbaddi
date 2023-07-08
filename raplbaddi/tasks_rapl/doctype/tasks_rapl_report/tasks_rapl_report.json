@@ -61,11 +61,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
-<<<<<<< Updated upstream
- "modified": "2023-07-05 10:10:48.354742",
-=======
- "modified": "2023-07-06 11:13:12.378613",
->>>>>>> Stashed changes
+ "modified": "2023-07-08 15:32:49.747013",
  "modified_by": "Administrator",
  "module": "Tasks Rapl",
  "name": "Tasks Rapl Report",
@@ -83,8 +79,6 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
-<<<<<<< Updated upstream
-=======
   },
   {
    "create": 1,
@@ -108,10 +102,10 @@
    "role": "Task Manager",
    "share": 1,
    "write": 1
->>>>>>> Stashed changes
   }
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "date"
 }
