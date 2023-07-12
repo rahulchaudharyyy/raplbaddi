@@ -162,12 +162,14 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "production_line",
    "fieldtype": "Link",
    "label": "Production Line",
    "options": "Production Lines"
   },
   {
+   "allow_on_submit": 1,
    "fetch_from": "production_line.contractor_name",
    "fieldname": "contractor_name",
    "fieldtype": "Data",
@@ -183,7 +185,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-06-12 16:17:30.790893",
+ "modified": "2023-07-11 12:38:23.835707",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Production Entry",
@@ -244,6 +246,7 @@
    "write": 1
   },
   {
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -252,6 +255,7 @@
    "read": 1,
    "report": 1,
    "role": "Production",
+   "select": 1,
    "share": 1,
    "submit": 1,
    "write": 1

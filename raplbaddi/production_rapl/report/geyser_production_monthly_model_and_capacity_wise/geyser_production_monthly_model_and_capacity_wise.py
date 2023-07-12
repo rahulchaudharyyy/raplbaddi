@@ -11,10 +11,10 @@ def execute(filters=None):
 
 def get_data(filters):
     query = f"""
-    SELECT model_name AS 'model', capacity AS 'capacity', SUM(total_quantity) AS "total"
+    SELECT model_name AS 'model', capacity AS 'capacity', SUM(total_quantity) AS "total", production_line AS 'production_line'
     FROM `tabProduction Entry`
     WHERE {get_conditions(filters)}
-    GROUP BY model_name, capacity;
+    GROUP BY model_name, capacity, production_line;
     """
     result = frappe.db.sql(query, as_dict=True)
     return result
@@ -25,6 +25,7 @@ def get_columns(filters):
         {"label": "Model Name", "fieldtype": "Data", "width": 150, "fieldname": "model"},
         {"label": "Capacity", "fieldtype": "Data", "width": 80, "fieldname": "capacity"},
         {"label": "Total Quantity", "fieldtype": "Int", "width": 140, "fieldname": "total"},
+        {"label": "Production Line", "fieldtype": "Data", "width": 140, "fieldname": "production_line"},
     ]
     return columns
 
