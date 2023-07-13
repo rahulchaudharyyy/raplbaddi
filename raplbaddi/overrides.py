@@ -1,9 +1,12 @@
 from erpnext.selling.doctype.sales_order.sales_order import get_item_defaults, get_item_group_defaults
+
 from frappe.model.utils import get_fetch_values
 from frappe.contacts.doctype.address.address import get_company_address
 from frappe.utils import flt, cstr
 from frappe.model.mapper import get_mapped_doc
 import frappe
+
+from erpnext.controllers.stock_controller import StockController
 
 @frappe.whitelist()
 def make_delivery_note(source_name, target_doc=None, skip_item_mapping=False):
