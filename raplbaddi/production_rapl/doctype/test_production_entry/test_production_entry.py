@@ -6,9 +6,9 @@ from frappe.model.document import Document
 
 class TestProductionEntry(Document):
 	def on_submit(self):
-		manufacture(items=self.get("items"), name=self.get("name"), date=self.get("date_of_production"))
+		date = self.get("date_of_production")
+		manufacture(items=self.get("items"), name=self.get("name"), date=date)
 		print(self.get("name"))
-		print(self.get("date_of_production"))
 
 @frappe.whitelist()
 def manufacture(items, name, date):
@@ -19,6 +19,7 @@ def manufacture(items, name, date):
 	s.company = "Real Appliances Private Limited"
 	s.stock_entry_type = "Geyser Manufactured"
 	s.production_entry = name
+	s.set_posting_time = 1
 	s.posting_date = date
 	
 	# items
