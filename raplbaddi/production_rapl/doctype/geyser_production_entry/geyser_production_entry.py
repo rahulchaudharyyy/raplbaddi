@@ -4,7 +4,7 @@
 import frappe
 from frappe.model.document import Document
 
-class TestProductionEntry(Document):
+class GeyserProductionEntry(Document):
 	def on_submit(self):
 		date = self.get("date_of_production")
 		manufacture(items=self.get("items"), name=self.get("name"), date=date)

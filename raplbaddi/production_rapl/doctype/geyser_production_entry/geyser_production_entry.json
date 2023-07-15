@@ -15,7 +15,6 @@
   "date_of_production",
   "contactor_name",
   "section_break_vlp2z",
-  "add_items",
   "items",
   "amended_from"
  ],
@@ -62,20 +61,15 @@
    "fieldname": "items",
    "fieldtype": "Table",
    "label": "Items",
-   "options": "Test Production Entry Table",
+   "options": "Geyser Production Entry Table",
    "reqd": 1
-  },
-  {
-   "fieldname": "add_items",
-   "fieldtype": "Button",
-   "label": "Add Items"
   },
   {
    "fieldname": "amended_from",
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Test Production Entry",
+   "options": "Geyser Production Entry",
    "print_hide": 1,
    "read_only": 1
   }
@@ -83,10 +77,10 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-07-14 16:15:44.858564",
+ "modified": "2023-07-15 18:00:32.967537",
  "modified_by": "Administrator",
  "module": "Production Rapl",
- "name": "Test Production Entry",
+ "name": "Geyser Production Entry",
  "name_case": "Title Case",
  "naming_rule": "Expression",
  "owner": "Administrator",
