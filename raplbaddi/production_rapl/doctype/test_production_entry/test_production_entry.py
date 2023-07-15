@@ -6,27 +6,27 @@ from frappe.model.document import Document
 
 class TestProductionEntry(Document):
 	def on_submit(self):
-		manufacture({"items": self.items})
+		manufacture(items=self.get("items"), name=self.get("name"))
+		print(self.get("name"))
+	
 
 @frappe.whitelist()
-def manufacture(args):
+def manufacture(items, name):
 	"""Helper function to make a Stock Entry
 	:items: Item to be moved
 	"""
-	
-
 	s = frappe.new_doc("Stock Entry")
-	args = frappe._dict(args)
 	s.company = "Real Appliances Private Limited"
 	s.stock_entry_type = "Geyser Manufactured"
-	s.purpose = "Manufacture"
+	s.production_entry = name
 	
 	# items
-	for item in args.items:
+	for item in items:
 		s.append('items', {
-			"item_code": item['item_code'],
-			"qty": item['qty'],
-			"t_warehouse": item['brand'] + " RAPL",
+			"item_code": item.item,
+			"qty": item.qty,
+			"t_warehouse": item.brand + " - RAPL",
+			"is_finished_item": 1
 		})
 
 	# insert
