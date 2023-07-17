@@ -11,7 +11,7 @@ frappe.query_reports["Sales Order Analysis Rapl"] = {
 			"fieldtype": "Link",
 			"width": "80",
 			"options": "Sales Person",
-			"reqd": 1,
+			"reqd": 0,
 		},
 		{
 			"fieldname": "all",
