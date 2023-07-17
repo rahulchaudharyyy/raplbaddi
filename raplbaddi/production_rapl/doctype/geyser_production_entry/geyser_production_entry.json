@@ -15,6 +15,7 @@
   "date_of_production",
   "contactor_name",
   "section_break_vlp2z",
+  "total",
   "items",
   "amended_from"
  ],
@@ -72,12 +73,18 @@
    "options": "Geyser Production Entry",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "total",
+   "fieldtype": "Int",
+   "label": "Total",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-07-15 18:00:32.967537",
+ "modified": "2023-07-17 09:14:09.702103",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Geyser Production Entry",

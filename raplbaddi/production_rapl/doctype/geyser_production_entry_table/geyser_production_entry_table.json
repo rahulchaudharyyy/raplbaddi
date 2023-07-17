@@ -56,7 +56,6 @@
    "fieldtype": "Autocomplete",
    "in_list_view": 1,
    "label": "To Serial",
-   "options": "eval:doc.from_serial + 3",
    "reqd": 1
   },
   {
@@ -71,7 +70,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-07-15 18:06:40.384443",
+ "modified": "2023-07-17 09:20:19.809523",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Geyser Production Entry Table",
