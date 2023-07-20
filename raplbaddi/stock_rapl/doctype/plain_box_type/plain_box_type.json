@@ -26,7 +26,7 @@
    "link_fieldname": "plain_box_type"
   }
  ],
- "modified": "2023-06-24 10:05:14.695916",
+ "modified": "2023-07-19 11:57:16.367246",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "Plain Box Type",
@@ -53,6 +53,18 @@
    "report": 1,
    "role": "Packing Box Clerk",
    "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Rapl",
+   "share": 1,
+   "write": 1
   }
  ],
  "sort_field": "modified",
