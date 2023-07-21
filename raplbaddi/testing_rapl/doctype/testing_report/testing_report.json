@@ -1,0 +1,99 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-07-21 10:39:06.915570",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "department",
+  "date",
+  "edit_posting_time",
+  "column_break_nuwdn",
+  "item",
+  "fetch_parameters",
+  "item_name",
+  "section_break_g9pns",
+  "items"
+ ],
+ "fields": [
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Department",
+   "options": "Department",
+   "reqd": 1
+  },
+  {
+   "default": "Now",
+   "fieldname": "date",
+   "fieldtype": "Datetime",
+   "label": "Date",
+   "read_only_depends_on": "eval:!doc.edit_posting_time"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "label": "Item",
+   "options": "Item"
+  },
+  {
+   "fetch_from": "item.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_nuwdn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Testing Report Table"
+  },
+  {
+   "fieldname": "fetch_parameters",
+   "fieldtype": "Button",
+   "label": "Fetch Parameters"
+  },
+  {
+   "fieldname": "section_break_g9pns",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "edit_posting_time",
+   "fieldtype": "Check",
+   "label": "Edit Posting Time"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-07-21 12:22:26.586936",
+ "modified_by": "Administrator",
+ "module": "Testing Rapl",
+ "name": "Testing Report",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
