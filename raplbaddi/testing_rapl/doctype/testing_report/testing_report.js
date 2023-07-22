@@ -15,6 +15,7 @@ frappe.ui.form.on('Testing Report', {
 	department(frm) {
 		let department_map = {
 			"Element : T - RAPL": "Element Unit",
+			"Tank: T - RAPL": "Tank Metal",
 			"Paintshop : T - RAPL": "Geyser Unit",
 		};
 

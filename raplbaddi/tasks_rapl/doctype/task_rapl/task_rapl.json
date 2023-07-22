@@ -13,7 +13,8 @@
   "frequency",
   "user_kaccha",
   "user_pakka",
-  "user_assistant"
+  "user_assistant",
+  "description"
  ],
  "fields": [
   {
@@ -24,37 +25,48 @@
   {
    "fieldname": "work_category",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Work Category",
    "options": "Task Category"
   },
   {
    "fieldname": "frequency",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Frequency",
    "options": "Tasks Frequency"
   },
   {
    "fieldname": "user_pakka",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "User Pakka",
    "options": "User"
   },
   {
    "fieldname": "user_assistant",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "User Assistant",
    "options": "User"
   },
   {
    "fieldname": "user_kaccha",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "User Kaccha",
    "options": "User"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "label": "Description"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-07-04 17:47:52.223660",
+ "modified": "2023-07-22 09:16:13.328702",
  "modified_by": "Administrator",
  "module": "Tasks Rapl",
  "name": "Task Rapl",

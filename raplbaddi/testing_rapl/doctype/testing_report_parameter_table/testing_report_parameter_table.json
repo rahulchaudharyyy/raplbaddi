@@ -1,0 +1,51 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-07-21 17:52:12.148540",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "parameter",
+  "defected_qty",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "parameter",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Parameter",
+   "options": "Testing Parameters",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "defected_qty",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Defected Qty",
+   "reqd": 1
+  },
+  {
+   "default": "NA",
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Remarks",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-07-21 17:52:21.413337",
+ "modified_by": "Administrator",
+ "module": "Testing Rapl",
+ "name": "Testing Report Parameter Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

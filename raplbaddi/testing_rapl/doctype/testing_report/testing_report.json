@@ -15,7 +15,8 @@
   "fetch_parameters",
   "item_name",
   "section_break_g9pns",
-  "items"
+  "items",
+  "parameters"
  ],
  "fields": [
   {
@@ -54,7 +55,7 @@
    "fieldname": "items",
    "fieldtype": "Table",
    "label": "Items",
-   "options": "Testing Report Table"
+   "options": "Testing Report Item Table"
   },
   {
    "fieldname": "fetch_parameters",
@@ -70,11 +71,17 @@
    "fieldname": "edit_posting_time",
    "fieldtype": "Check",
    "label": "Edit Posting Time"
+  },
+  {
+   "fieldname": "parameters",
+   "fieldtype": "Table",
+   "label": "Parameters",
+   "options": "Testing Report Parameter Table"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-07-21 12:22:26.586936",
+ "modified": "2023-07-21 18:28:55.521989",
  "modified_by": "Administrator",
  "module": "Testing Rapl",
  "name": "Testing Report",

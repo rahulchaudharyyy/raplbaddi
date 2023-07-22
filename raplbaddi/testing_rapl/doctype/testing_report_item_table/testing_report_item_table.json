@@ -1,0 +1,49 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-07-20 18:09:56.510818",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "qty_tested",
+  "item_type",
+  "item"
+ ],
+ "fields": [
+  {
+   "allow_in_quick_entry": 1,
+   "columns": 1,
+   "default": "0",
+   "fieldname": "qty_tested",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Qty Tested",
+   "reqd": 1
+  },
+  {
+   "fieldname": "item_type",
+   "fieldtype": "Link",
+   "label": "Item Type",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Dynamic Link",
+   "label": "Item",
+   "options": "item_type"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-07-21 18:52:34.742067",
+ "modified_by": "Administrator",
+ "module": "Testing Rapl",
+ "name": "Testing Report Item Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
