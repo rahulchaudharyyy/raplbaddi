@@ -8,15 +8,15 @@
  "engine": "InnoDB",
  "field_order": [
   "department",
-  "date",
-  "edit_posting_time",
-  "column_break_nuwdn",
   "item",
   "fetch_parameters",
+  "column_break_nuwdn",
   "item_name",
+  "qty_tested",
+  "date",
+  "edit_posting_time",
   "section_break_g9pns",
-  "items",
-  "parameters"
+  "items"
  ],
  "fields": [
   {
@@ -33,19 +33,6 @@
    "fieldtype": "Datetime",
    "label": "Date",
    "read_only_depends_on": "eval:!doc.edit_posting_time"
-  },
-  {
-   "fieldname": "item",
-   "fieldtype": "Link",
-   "label": "Item",
-   "options": "Item"
-  },
-  {
-   "fetch_from": "item.item_name",
-   "fieldname": "item_name",
-   "fieldtype": "Data",
-   "label": "Item Name",
-   "read_only": 1
   },
   {
    "fieldname": "column_break_nuwdn",
@@ -73,15 +60,27 @@
    "label": "Edit Posting Time"
   },
   {
-   "fieldname": "parameters",
-   "fieldtype": "Table",
-   "label": "Parameters",
-   "options": "Testing Report Parameter Table"
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "label": "Item",
+   "options": "Item"
+  },
+  {
+   "fetch_from": "item.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "qty_tested",
+   "fieldtype": "Int",
+   "label": "Qty Tested"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-07-21 18:28:55.521989",
+ "modified": "2023-07-22 12:52:10.986967",
  "modified_by": "Administrator",
  "module": "Testing Rapl",
  "name": "Testing Report",
