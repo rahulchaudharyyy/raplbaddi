@@ -88,6 +88,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "depends_on": "eval:doc.item ==\"Element\";",
    "fieldname": "element_type",
    "fieldtype": "Link",
@@ -130,6 +131,7 @@
    "label": "Number of Element Tested"
   },
   {
+   "allow_on_submit": 1,
    "depends_on": "eval:doc.item ==\"Element\";",
    "fetch_from": "element_type.item_name",
    "fieldname": "element_type_name",
@@ -185,7 +187,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-07-11 12:38:23.835707",
+ "modified": "2023-07-22 11:41:13.930146",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Production Entry",
