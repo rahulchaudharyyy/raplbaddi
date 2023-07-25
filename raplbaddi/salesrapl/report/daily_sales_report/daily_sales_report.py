@@ -11,6 +11,7 @@ def execute(filters=None):
 def get_columns(filters):
     columns = [
         {"label": "Date", "fieldname": "date", "fieldtype": "Date", "width": 100},
+        {"label": "Date", "fieldname": "audit", "fieldtype": "Date", "width": 100},
         {"label": "Type", "fieldname": "type", "fieldtype": "Data", "width": 180},
         {"label": "Amount", "fieldname": "amount",
             "fieldtype": "Currency", "width": 150},
@@ -28,7 +29,7 @@ def get_amount(filters):
 def get_data(filters):
     query = f"""
     SELECT
-        dsr.date, dse.type, {get_amount(filters)} as amount, dsr.amount_for_travel
+        dsr.date, dse.type, {get_amount(filters)} as amount, dsr.amount_for_travel, dsr.audit
     FROM
         `tabDaily Sales Report By Admin` as dsr
         JOIN
