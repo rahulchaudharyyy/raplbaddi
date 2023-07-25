@@ -1,0 +1,92 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{date_of_entry}_{old_brand}_to_{new_brand}_{qty}",
+ "creation": "2023-07-25 15:19:54.097870",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "old_brand",
+  "new_brand",
+  "column_break_szr6n",
+  "qty",
+  "date_of_entry",
+  "section_break_cgjqb",
+  "items"
+ ],
+ "fields": [
+  {
+   "default": "Today",
+   "fieldname": "date_of_entry",
+   "fieldtype": "Date",
+   "label": "Date Of Entry",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_szr6n",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Int",
+   "label": "Qty",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_cgjqb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "Plain",
+   "fieldname": "old_brand",
+   "fieldtype": "Link",
+   "label": "Old Brand",
+   "options": "Brand",
+   "reqd": 1
+  },
+  {
+   "fieldname": "new_brand",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "New Brand",
+   "options": "Brand",
+   "reqd": 1
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Serial No Changing Entry Table",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-07-25 18:38:47.122120",
+ "modified_by": "Administrator",
+ "module": "Production Rapl",
+ "name": "Serial No Changing Entry",
+ "name_case": "Title Case",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
