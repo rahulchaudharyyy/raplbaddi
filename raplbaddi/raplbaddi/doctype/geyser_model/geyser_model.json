@@ -9,7 +9,8 @@
  "engine": "InnoDB",
  "field_order": [
   "model",
-  "abbreviation"
+  "abbreviation",
+  "image"
  ],
  "fields": [
   {
@@ -22,11 +23,17 @@
    "fieldname": "abbreviation",
    "fieldtype": "Data",
    "label": "Abbreviation"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
   }
  ],
+ "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-06-24 10:05:40.182145",
+ "modified": "2023-07-26 11:21:59.850710",
  "modified_by": "Administrator",
  "module": "Raplbaddi",
  "name": "Geyser Model",
