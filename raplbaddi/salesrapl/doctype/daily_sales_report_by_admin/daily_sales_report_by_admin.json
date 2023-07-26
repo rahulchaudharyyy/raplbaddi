@@ -110,6 +110,7 @@
    "fieldname": "km_travelled",
    "fieldtype": "Int",
    "label": "Km Travelled",
+   "non_negative": 1,
    "permlevel": 1
   },
   {
@@ -148,6 +149,7 @@
    "fieldname": "start_reading",
    "fieldtype": "Int",
    "label": "Start Reading",
+   "non_negative": 1,
    "permlevel": 1
   },
   {
@@ -160,6 +162,7 @@
    "fieldname": "end_reading",
    "fieldtype": "Int",
    "label": "End Reading",
+   "non_negative": 1,
    "permlevel": 1
   },
   {
@@ -179,8 +182,11 @@
    "fieldname": "end_reading_image",
    "fieldtype": "Image",
    "label": "End Reading Image",
+   "max_height": "5px",
    "options": "end_reading_pic",
-   "permlevel": 1
+   "permlevel": 1,
+   "print_width": "5px",
+   "width": "5px"
   },
   {
    "fieldname": "section_break_rt8eu",
@@ -263,7 +269,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-07-26 07:22:15.575289",
+ "modified": "2023-07-26 12:27:53.628063",
  "modified_by": "Administrator",
  "module": "SalesRapl",
  "name": "Daily Sales Report By Admin",

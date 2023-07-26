@@ -65,7 +65,7 @@ def get_columns(filters):
         {"label": "Line", "fieldname": "production_line",
             "fieldtype": "Data", "width": 50},
         {"label": "Workforce", "fieldname": "workforce",
-            "fieldtype": "Data", "width": 50},
+            "fieldtype": "Data", "width": 50, "disable_total": True},
     ]
     total = [
         {"label": "Quantity", "fieldname": "qty",
