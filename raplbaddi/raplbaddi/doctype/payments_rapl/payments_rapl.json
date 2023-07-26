@@ -246,7 +246,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-07-20 17:49:05.364170",
+ "modified": "2023-07-26 13:48:37.306912",
  "modified_by": "Administrator",
  "module": "Raplbaddi",
  "name": "Payments Rapl",
@@ -327,5 +327,6 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
- "title_field": "party_name"
+ "title_field": "party_name",
+ "track_changes": 1
 }

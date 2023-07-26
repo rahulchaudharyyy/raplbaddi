@@ -13,6 +13,11 @@
   "column_break_szr6n",
   "qty",
   "date_of_entry",
+  "section_break_1tfea",
+  "from_serial",
+  "column_break_pnzdt",
+  "to_serial",
+  "populate",
   "section_break_cgjqb",
   "items"
  ],
@@ -31,6 +36,7 @@
   {
    "fieldname": "qty",
    "fieldtype": "Int",
+   "in_list_view": 1,
    "label": "Qty",
    "read_only": 1,
    "reqd": 1
@@ -43,6 +49,8 @@
    "default": "Plain",
    "fieldname": "old_brand",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Old Brand",
    "options": "Brand",
    "reqd": 1
@@ -51,6 +59,7 @@
    "fieldname": "new_brand",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "New Brand",
    "options": "Brand",
    "reqd": 1
@@ -61,11 +70,35 @@
    "label": "Items",
    "options": "Serial No Changing Entry Table",
    "reqd": 1
+  },
+  {
+   "fieldname": "from_serial",
+   "fieldtype": "Int",
+   "label": "From Serial"
+  },
+  {
+   "fieldname": "to_serial",
+   "fieldtype": "Int",
+   "label": "To Serial"
+  },
+  {
+   "fieldname": "populate",
+   "fieldtype": "Button",
+   "label": "Populate"
+  },
+  {
+   "depends_on": "eval:frappe.user_roles.includes(\"Software Operator\")",
+   "fieldname": "section_break_1tfea",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_pnzdt",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-07-25 18:38:47.122120",
+ "modified": "2023-07-26 14:09:31.086600",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Serial No Changing Entry",
@@ -84,9 +117,36 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Geyser Changer",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Dispatch",
+   "share": 1,
+   "write": 1
   }
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "date_of_entry",
+ "track_changes": 1
 }
