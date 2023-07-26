@@ -9,7 +9,7 @@
  "filters": [],
  "idx": 0,
  "is_standard": "Yes",
- "modified": "2023-07-25 12:29:32.837819",
+ "modified": "2023-07-26 07:23:02.110128",
  "modified_by": "Administrator",
  "module": "SalesRapl",
  "name": "Daily Sales Report",
@@ -23,10 +23,10 @@
    "role": "System Manager"
   },
   {
-   "role": "Sales Rapl"
+   "role": "Payment Auditor"
   },
   {
-   "role": "Payment Auditor"
+   "role": "Sales Rapl"
   }
  ]
 }
