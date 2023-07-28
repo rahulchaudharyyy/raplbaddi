@@ -84,7 +84,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-07-17 09:14:09.702103",
+ "modified": "2023-07-27 20:38:05.492474",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Geyser Production Entry",
@@ -115,9 +115,21 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Production",
+   "role": "Production User",
    "share": 1,
    "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Production Manager",
+   "share": 1,
    "write": 1
   }
  ],
