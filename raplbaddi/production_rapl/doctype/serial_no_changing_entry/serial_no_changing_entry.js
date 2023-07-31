@@ -8,13 +8,11 @@ frappe.ui.form.on('Serial No Changing Entry', {
 	populate(frm){
 		let doc = frm.doc
 		if(doc.from_serial && doc.to_serial){
-			console.log("object");
 			for (let i = doc.from_serial; i <= doc.to_serial; i++) {
 				console.log("object");
 				frm.add_child('items', {serial_number: i})
 				frm.refresh_field('items')
 			}
-			console.log("object3");
 		}
 	}
 });

@@ -5,31 +5,38 @@ import frappe
 from frappe.model.document import Document
 
 
-class SerialNoChangingEntry(Document):
+class SNCStockEntry(Document):
     def before_save(self):
         date = self.get("date_of_entry")
-        transfer(date=date)
+        transfer(items=self.items,name=self.get("name"), date=date)
 
 
 @frappe.whitelist()
-def transfer(date):
+def transfer(items, name, date):
     """Helper function to make a Stock Entry
     :items: Item to be moved
     """
-    try:
-        doc = frappe.get_doc('SNC Stock Entry', str(date))
-        doc.append("items", {
-            "t_warehouse": "Big Titan - RAPL",
-            "f_warehouse": "Big Titan - RAPL",
-            "qty": 10,
-            "item_code": 'G3A',
+    s = frappe.new_doc("Stock Entry")
+    s.company = "Real Appliances Private Limited"
+    s.stock_entry_type = "Geyser Changed"
+    s.serial_no_changing_entry = name
+    s.set_posting_time = 1
+    s.posting_date = date
+
+    # items
+    for item in items:
+        s.append('items', {
+            "item_code": item.item_code,
+            "qty": item.qty,
+            "s_warehouse": item.f_warehouse,
+            "t_warehouse": item.t_warehouse,
+            "is_finished_item": 1,
         })
-        doc.save()
-        print(doc.items)
-    except:
-        doc = frappe.new_doc('SNC Stock Entry', str(date))
-    finally:
-        pass
+
+    # insert
+    s.insert()
+    s.submit()
+    return s
 
 
 @frappe.whitelist()

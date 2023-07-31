@@ -1,0 +1,132 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format:P-{date_of_production}",
+ "creation": "2023-07-28 12:23:45.657986",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "date_of_production",
+  "contractor",
+  "column_break_rfx7v",
+  "workforce",
+  "total",
+  "section_break_za6jn",
+  "items",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "workforce",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Workforce",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_rfx7v",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date_of_production",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date of Production",
+   "reqd": 1
+  },
+  {
+   "fieldname": "total",
+   "fieldtype": "Int",
+   "label": "Total",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_za6jn",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Element Production Entry Table",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Element Production Entry",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "default": "Vikash",
+   "fieldname": "contractor",
+   "fieldtype": "Data",
+   "label": "Contractor",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2023-07-31 10:04:46.376541",
+ "modified_by": "Administrator",
+ "module": "Production Rapl",
+ "name": "Element Production Entry",
+ "name_case": "Title Case",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Production User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Production Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
