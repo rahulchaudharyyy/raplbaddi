@@ -24,6 +24,8 @@ def get_data(filters):
 					ON gpet.item = i.name
         WHERE
             {get_conditions(filters)}
+        GROUP BY
+            i.geyser_capacity, i.geyser_model
     ;
     """
     result = frappe.db.sql(query, as_dict=True)
