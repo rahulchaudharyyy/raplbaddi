@@ -13,7 +13,7 @@ def execute(filters=None):
 def get_data(filters):
     query = f"""
 		SELECT
-			gpe.production_line as production_line, gpe.date_of_production, i.geyser_capacity as capacity, i.geyser_model as model, SUM(gpet.qty) as total
+			gpe.production_line as production_line, i.geyser_capacity as capacity, i.geyser_model as model, SUM(gpet.qty) as total
 		FROM
 			`tabGeyser Production Entry` as gpe
 			LEFT JOIN
@@ -34,8 +34,6 @@ def get_data(filters):
 
 def get_columns(filters):
     columns = [
-        {"label": "Date", "fieldtype": "Date",
-            "width": 150, "fieldname": "date_of_production"},
         {"label": "Model Name", "fieldtype": "Data",
             "width": 150, "fieldname": "model"},
         {"label": "Capacity", "fieldtype": "Data",
