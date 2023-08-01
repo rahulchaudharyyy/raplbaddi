@@ -2,6 +2,15 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Serial No Changing Entry', {
+	onload(frm) {
+		frm.set_query("geyser", function () {
+			return {
+				"filters": {
+					"item_group": "Geyser Unit",
+				}
+			};
+		});
+	},
 	before_save(frm){
 		frm.set_value('qty', frm.doc.items.length)
 	},

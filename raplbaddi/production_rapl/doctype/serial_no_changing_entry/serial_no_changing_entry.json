@@ -8,6 +8,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "geyser",
   "old_brand",
   "new_brand",
   "column_break_szr6n",
@@ -94,11 +95,18 @@
   {
    "fieldname": "column_break_pnzdt",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "geyser",
+   "fieldtype": "Link",
+   "label": "Geyser",
+   "options": "Item",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-07-26 14:09:31.086600",
+ "modified": "2023-07-31 18:51:02.390712",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Serial No Changing Entry",
