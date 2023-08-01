@@ -6,7 +6,7 @@ import frappe
 def execute(filters=None):
     columns, data = [], []
     data = get_data(filters)
-    return get_columns(filters), data, # get_message(filters, data)
+    return get_columns(filters), data,  # get_message(filters, data)
 
 
 # def get_message(filters, data):
@@ -30,15 +30,15 @@ def execute(filters=None):
 
 def get_data(filters):
     query = f"""
-		SELECT DISTINCT
+		SELECT
 			gpe.date_of_production, gpe.production_line,
             gpe.workforce, gpet.item_name, gpet.brand, i.geyser_capacity, i.geyser_model {get_total_quantity(filters)}
 		FROM
 			`tabGeyser Production Entry` as gpe
-			JOIN
+			LEFT JOIN
 				`tabGeyser Production Entry Table` as gpet
 					ON gpet.parent = gpe.name
-			JOIN
+			LEFT JOIN
 				`tabItem` as i
 					ON gpet.item = i.name
         WHERE
