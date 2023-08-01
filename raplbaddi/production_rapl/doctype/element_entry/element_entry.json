@@ -2,7 +2,7 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "format:I-{date_of_entry}",
+ "autoname": "format:{entry_type}-{date_of_entry}",
  "creation": "2023-07-31 10:13:49.157528",
  "default_view": "List",
  "doctype": "DocType",
@@ -11,6 +11,7 @@
  "field_order": [
   "date_of_entry",
   "column_break_rfx7v",
+  "entry_type",
   "total",
   "section_break_za6jn",
   "items",
@@ -29,7 +30,7 @@
    "fieldname": "items",
    "fieldtype": "Table",
    "label": "Items",
-   "options": "Element Issue Entry Table",
+   "options": "Element Entry Table",
    "reqd": 1
   },
   {
@@ -37,7 +38,7 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Element Issue Entry",
+   "options": "Element Entry",
    "print_hide": 1,
    "read_only": 1
   },
@@ -54,15 +55,22 @@
    "fieldtype": "Int",
    "label": "Total",
    "read_only": 1
+  },
+  {
+   "fieldname": "entry_type",
+   "fieldtype": "Select",
+   "label": "Entry Type",
+   "options": "Issue\nReceipt\nRework",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-07-31 10:20:48.681460",
+ "modified": "2023-08-01 12:46:05.473826",
  "modified_by": "Administrator",
  "module": "Production Rapl",
- "name": "Element Issue Entry",
+ "name": "Element Entry",
  "name_case": "Title Case",
  "naming_rule": "Expression",
  "owner": "Administrator",

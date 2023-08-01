@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestElementIssueEntry(FrappeTestCase):
+class TestElementEntry(FrappeTestCase):
 	pass

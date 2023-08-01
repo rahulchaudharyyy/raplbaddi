@@ -1,7 +1,7 @@
 // Copyright (c) 2023, Nishant Bhickta and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Element Issue Entry', {
+frappe.ui.form.on('Element Entry', {
 	onload(frm) {
 		frm.set_query("item", "items", function () {
 			return {
@@ -15,7 +15,7 @@ frappe.ui.form.on('Element Issue Entry', {
 		let total = 0
 		frm.doc.items.forEach(
 			(item) => {
-				total = total + item.qty_issued
+				total = total + item.qty
 			}
 		)
 		console.log(total);
