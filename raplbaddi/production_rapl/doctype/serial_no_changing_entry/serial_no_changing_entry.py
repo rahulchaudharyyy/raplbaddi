@@ -6,9 +6,10 @@ from frappe.model.document import Document
 
 
 class SerialNoChangingEntry(Document):
-    def before_save(self):
-        date = self.get("date_of_entry")
-        transfer(date=date)
+    pass
+#    def before_save(self):
+#        date = self.get("date_of_entry")
+#        transfer(date=date)
 
 
 @frappe.whitelist()

@@ -9,8 +9,7 @@
  "field_order": [
   "item",
   "item_name",
-  "qty_tested",
-  "qty_contractor"
+  "qty_tested"
  ],
  "fields": [
   {
@@ -32,15 +31,6 @@
   },
   {
    "allow_in_quick_entry": 1,
-   "fieldname": "qty_contractor",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Qty Contractor",
-   "non_negative": 1,
-   "reqd": 1
-  },
-  {
-   "allow_in_quick_entry": 1,
    "fieldname": "qty_tested",
    "fieldtype": "Int",
    "in_list_view": 1,
@@ -52,7 +42,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-07-31 10:05:01.682654",
+ "modified": "2023-08-02 09:39:38.941697",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Element Production Entry Table",
