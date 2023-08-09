@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{date_of_entry}_{old_brand}_to_{new_brand}_{qty}",
+ "autoname": "hash",
  "creation": "2023-07-25 15:19:54.097870",
  "default_view": "List",
  "doctype": "DocType",
@@ -108,12 +108,12 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-08-01 16:52:29.211989",
+ "modified": "2023-08-04 09:37:44.589537",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Serial No Changing Entry",
  "name_case": "Title Case",
- "naming_rule": "Expression",
+ "naming_rule": "Random",
  "owner": "Administrator",
  "permissions": [
   {
