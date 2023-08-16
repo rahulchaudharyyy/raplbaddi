@@ -14,7 +14,7 @@
  "module": "SalesRapl",
  "name": "Daily Sales Report",
  "owner": "Administrator",
- "prepared_report": 0,
+ "prepared_report": 1,
  "ref_doctype": "Daily Sales Report By Admin",
  "report_name": "Daily Sales Report",
  "report_type": "Script Report",

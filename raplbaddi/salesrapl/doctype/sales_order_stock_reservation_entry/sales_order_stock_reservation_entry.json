@@ -1,0 +1,77 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:sales_order",
+ "creation": "2023-08-10 17:30:39.074029",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sales_order",
+  "column_break_craq9",
+  "customer",
+  "section_break_rtaeh",
+  "items"
+ ],
+ "fields": [
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sales Order",
+   "options": "Sales Order",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fetch_from": "sales_order.customer_name",
+   "fieldname": "customer",
+   "fieldtype": "Data",
+   "label": "Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_craq9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_rtaeh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Sales Order Stock Reservation Entry Item",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-08-10 17:58:42.418553",
+ "modified_by": "Administrator",
+ "module": "SalesRapl",
+ "name": "Sales Order Stock Reservation Entry",
+ "name_case": "Title Case",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

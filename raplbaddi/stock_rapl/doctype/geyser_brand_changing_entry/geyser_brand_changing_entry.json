@@ -1,0 +1,141 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-08-12 13:53:02.418782",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "date",
+  "column_break_38rpb",
+  "posting_time",
+  "section_break_xuou2",
+  "items",
+  "amended_from",
+  "total"
+ ],
+ "fields": [
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "fieldname": "section_break_xuou2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Geyser Brand Changing Entry Table"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Geyser Brand Changing Entry",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "default": "Now",
+   "fieldname": "posting_time",
+   "fieldtype": "Time",
+   "label": "Posting Time"
+  },
+  {
+   "fieldname": "column_break_38rpb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total",
+   "fieldtype": "Int",
+   "label": "Total",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2023-08-14 13:59:11.124224",
+ "modified_by": "Administrator",
+ "module": "Stock Rapl",
+ "name": "Geyser Brand Changing Entry",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Dispatch",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Geyser Changer",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Production Manager",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "date",
+ "track_changes": 1,
+ "translated_doctype": 1
+}
