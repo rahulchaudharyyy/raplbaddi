@@ -128,12 +128,12 @@ def get_data(filters):
 			soi.name_of_brand AS `brand`,
 			so.name AS `sales_order`,
             IF(
-                (b.actual_qty / (soi.qty - soi.delivered_qty)) * 100 > 100,
+                (IF(b.actual_qty < 0, 0, b.actual_qty) / (soi.qty - soi.delivered_qty)) * 100 > 100,
                 100,
                 IF(
-                    (b.actual_qty / (soi.qty - soi.delivered_qty)) * 100 < 0,
+                    (IF(b.actual_qty < 0, 0, b.actual_qty) / (soi.qty - soi.delivered_qty)) * 100 < 0,
                     0,
-                    CONVERT((b.actual_qty / (soi.qty - soi.delivered_qty)) * 100, UNSIGNED)
+                    CONVERT((IF(b.actual_qty < 0, 0, b.actual_qty) / (soi.qty - soi.delivered_qty)) * 100, UNSIGNED)
                 )
             ) as `total_qty`,
 			so.customer AS `customer`,
@@ -142,14 +142,14 @@ def get_data(filters):
 			soi.qty AS `ordered_qty`,
 			soi.delivered_qty AS `delivered_qty`,
 			(soi.qty - soi.delivered_qty) AS `pending_qty`,
-			b.actual_qty - b.sales_order_reserved_qty AS `actual_qty`,
+			IF(b.actual_qty < 0, 0, b.actual_qty) - b.sales_order_reserved_qty AS `actual_qty`,
             b.reserved_qty - b.sales_order_reserved_qty AS `need`,
-            IF(b.reserved_qty - b.actual_qty <= 0, 0, b.reserved_qty - b.actual_qty) as `fullfill_so`,
-            IF((soi.qty - soi.delivered_qty) - b.actual_qty <= 0, 0, (soi.qty - soi.delivered_qty) - b.actual_qty) as `fullfill_cu`,
-			b.actual_qty - (soi.qty - soi.delivered_qty) AS `difference`,
-			IF(b.actual_qty - (soi.qty - soi.delivered_qty) >= 0, 'Yes', 'No') AS `deliverable`,
-			(SELECT b.actual_qty FROM `tabBin` AS b WHERE b.item_code = soi.item_code AND b.warehouse = 'Plain - RAPL') AS `Plain`,
-			IF(b.actual_qty - (soi.qty - soi.delivered_qty) + (SELECT b.actual_qty FROM `tabBin` AS b WHERE b.item_code = soi.item_code AND b.warehouse = 'Plain - RAPL') >= 0, 'Yes', 'No') AS `IF Plain Used`
+            IF(b.reserved_qty - IF(b.actual_qty < 0, 0, b.actual_qty) <= 0, 0, b.reserved_qty - IF(b.actual_qty < 0, 0, b.actual_qty)) as `fullfill_so`,
+            IF((soi.qty - soi.delivered_qty) - IF(b.actual_qty < 0, 0, b.actual_qty) <= 0, 0, (soi.qty - soi.delivered_qty) - IF(b.actual_qty < 0, 0, b.actual_qty)) as `fullfill_cu`,
+			IF(b.actual_qty < 0, 0, b.actual_qty) - (soi.qty - soi.delivered_qty) AS `difference`,
+			IF(IF(b.actual_qty < 0, 0, b.actual_qty) - (soi.qty - soi.delivered_qty) >= 0, 'Yes', 'No') AS `deliverable`,
+			(SELECT IF(b.actual_qty < 0, 0, b.actual_qty) FROM `tabBin` AS b WHERE b.item_code = soi.item_code AND b.warehouse = 'Plain - RAPL') AS `Plain`,
+			IF(IF(b.actual_qty < 0, 0, b.actual_qty) - (soi.qty - soi.delivered_qty) + (SELECT IF(b.actual_qty < 0, 0, b.actual_qty) FROM `tabBin` AS b WHERE b.item_code = soi.item_code AND b.warehouse = 'Plain - RAPL') >= 0, 'Yes', 'No') AS `IF Plain Used`
 		FROM
 			`tabSales Order` so
 		JOIN
@@ -157,7 +157,7 @@ def get_data(filters):
 		LEFT JOIN
 			`tabBin` AS b ON b.item_code = soi.item_code AND b.warehouse = soi.warehouse
 		WHERE
-			so.status NOT IN ('Stopped', 'Closed', 'On Hold')
+			so.status NOT IN ('Stopped', 'Closed') 
 			AND so.docstatus = 1
 			AND (soi.qty - soi.delivered_qty) > 0
 		GROUP BY soi.name

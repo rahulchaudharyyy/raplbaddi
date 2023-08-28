@@ -10,10 +10,6 @@ class ElementEntry(Document):
         issue(items=self.get("items"), name=self.get("name"), date=self.get(
             "date_of_entry"), entry_type=self.get("entry_type"))
 
-    def autoname(self):
-        self.name = self.get("entry_type") + " " + self.get("date_of_entry")
-
-
 @frappe.whitelist()
 def issue(items, name, date, entry_type):
     """Helper function to make a Stock Entry
