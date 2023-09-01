@@ -9,7 +9,8 @@
  "engine": "InnoDB",
  "field_order": [
   "title",
-  "description"
+  "description",
+  "disabled"
  ],
  "fields": [
   {
@@ -22,11 +23,26 @@
    "fieldname": "description",
    "fieldtype": "Text",
    "label": "Description"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2023-06-13 12:25:26.727837",
+ "links": [
+  {
+   "link_doctype": "Sales Order",
+   "link_fieldname": "billing_rule"
+  },
+  {
+   "link_doctype": "Delivery Note",
+   "link_fieldname": "billing_rule"
+  }
+ ],
+ "modified": "2023-08-31 15:27:02.218534",
  "modified_by": "Administrator",
  "module": "Raplbaddi",
  "name": "Billing Rule Rapl",
