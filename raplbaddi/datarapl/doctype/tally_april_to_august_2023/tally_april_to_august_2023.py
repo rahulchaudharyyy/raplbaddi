@@ -4,5 +4,5 @@
 # import frappe
 from frappe.model.document import Document
 
-class TallyData1Aprilto31August2023(Document):
+class TallyApriltoAugust2023(Document):
 	pass

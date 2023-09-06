@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestTallyData1Aprilto31August2023(FrappeTestCase):
+class TestTallyApriltoAugust2023(FrappeTestCase):
 	pass

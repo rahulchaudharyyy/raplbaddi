@@ -2,7 +2,7 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "creation": "2023-09-02 17:37:20.500144",
+ "creation": "2023-09-04 12:46:18.073558",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -13,10 +13,7 @@
   "party_name",
   "quantity",
   "rate",
-  "value",
-  "gross_total",
-  "customer",
-  "transaction_type"
+  "value"
  ],
  "fields": [
   {
@@ -26,23 +23,19 @@
   },
   {
    "fieldname": "particulars",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Particulars"
+   "fieldtype": "Link",
+   "label": "Particulars",
+   "options": "Tally Particular"
   },
   {
    "fieldname": "party_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Party Name "
+   "fieldtype": "Link",
+   "label": "Party Name",
+   "options": "Tally Party Name"
   },
   {
    "fieldname": "quantity",
    "fieldtype": "Float",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Quantity"
   },
   {
@@ -54,31 +47,14 @@
    "fieldname": "value",
    "fieldtype": "Float",
    "label": "Value"
-  },
-  {
-   "fieldname": "gross_total",
-   "fieldtype": "Float",
-   "label": "Gross Total"
-  },
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "Customer",
-   "options": "Customer"
-  },
-  {
-   "fieldname": "transaction_type",
-   "fieldtype": "Float",
-   "label": "Transaction Type",
-   "options": "Sale\nCredit Note"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-02 18:37:52.363225",
+ "modified": "2023-09-04 12:46:38.078288",
  "modified_by": "Administrator",
  "module": "DataRapl",
- "name": "Tally Data - 1April to 31 August 2023",
+ "name": "Tally April to August 2023",
  "owner": "Administrator",
  "permissions": [
   {
