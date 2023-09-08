@@ -1,0 +1,54 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-09-07 10:49:09.606003",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item_code",
+  "qty",
+  "item_name",
+  "line"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item Code",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Qty",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "item_code.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name"
+  },
+  {
+   "fieldname": "line",
+   "fieldtype": "Data",
+   "label": "Line"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-09-07 11:07:44.354318",
+ "modified_by": "Administrator",
+ "module": "Stock Rapl",
+ "name": "Stock Recon Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

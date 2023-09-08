@@ -9,7 +9,8 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "party_name"
+  "party_name",
+  "transaction"
  ],
  "fields": [
   {
@@ -17,11 +18,17 @@
    "fieldtype": "Data",
    "label": "Party Name",
    "unique": 1
+  },
+  {
+   "fieldname": "transaction",
+   "fieldtype": "Select",
+   "label": "Transaction",
+   "options": "\nCredit Note\nSales"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-04 12:54:36.503041",
+ "modified": "2023-09-06 11:34:32.210635",
  "modified_by": "Administrator",
  "module": "DataRapl",
  "name": "Tally Party Name",

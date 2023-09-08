@@ -15,7 +15,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Type",
-   "options": "Basic\nBig Vehicle\nDala\nHalf Dala\nDouble Height\nPoint",
+   "options": "Basic\nBig Vehicle\nDala\nHalf Dala\nDouble Height\nPoint\nVia",
    "reqd": 1
   },
   {
@@ -30,7 +30,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-05 11:45:58.786010",
+ "modified": "2023-09-06 18:15:57.786353",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "Freight Table",
