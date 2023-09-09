@@ -10,7 +10,7 @@
  "engine": "InnoDB",
  "field_order": [
   "party_name",
-  "transaction"
+  "customer"
  ],
  "fields": [
   {
@@ -20,15 +20,15 @@
    "unique": 1
   },
   {
-   "fieldname": "transaction",
-   "fieldtype": "Select",
-   "label": "Transaction",
-   "options": "\nCredit Note\nSales"
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-06 11:34:32.210635",
+ "modified": "2023-09-09 17:38:26.386229",
  "modified_by": "Administrator",
  "module": "DataRapl",
  "name": "Tally Party Name",
@@ -44,6 +44,18 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
    "share": 1,
    "write": 1
   }

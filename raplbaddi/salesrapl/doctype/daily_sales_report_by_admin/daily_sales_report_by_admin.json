@@ -37,12 +37,15 @@
   "column_break_fjeif",
   "km_travelled",
   "amount_for_travel",
+  "total_amount",
   "section_break_nqzok",
   "daily_sales_expenses_by_admin",
   "visits",
   "section_break_hjwml",
   "miscellaneous_informations",
-  "amended_from"
+  "amended_from",
+  "section_break_ajmix",
+  "owner_no_first"
  ],
  "fields": [
   {
@@ -270,12 +273,29 @@
    "options": "Daily Sales Report By Admin",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_ajmix",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "default": "9218671788",
+   "fieldname": "owner_no_first",
+   "fieldtype": "Data",
+   "label": "Owner No First"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-08 09:29:44.310260",
+ "modified": "2023-09-09 16:32:57.935493",
  "modified_by": "Administrator",
  "module": "SalesRapl",
  "name": "Daily Sales Report By Admin",
