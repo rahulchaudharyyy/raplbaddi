@@ -1,0 +1,47 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "creation": "2023-09-09 18:21:53.303352",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "modified": "2023-09-09 18:21:53.303352",
+ "modified_by": "Administrator",
+ "module": "Stock Rapl",
+ "name": "Delivery Note Salesmanwise",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Delivery Note",
+ "report_name": "Delivery Note Salesmanwise",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "Stock User"
+  },
+  {
+   "role": "Sales User"
+  },
+  {
+   "role": "Accounts User"
+  },
+  {
+   "role": "Dispatch Bill"
+  },
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Dispatch"
+  },
+  {
+   "role": "AM Rapl"
+  },
+  {
+   "role": "Sales Rapl"
+  }
+ ]
+}
