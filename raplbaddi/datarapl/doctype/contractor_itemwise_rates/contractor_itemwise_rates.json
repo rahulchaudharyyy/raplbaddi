@@ -1,38 +1,39 @@
 {
  "actions": [],
- "allow_import": 1,
  "allow_rename": 1,
- "autoname": "field:particulars",
- "creation": "2023-09-04 12:45:15.326133",
+ "creation": "2023-09-10 16:34:47.032440",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "particulars",
-  "item"
+  "item",
+  "rate"
  ],
  "fields": [
   {
-   "fieldname": "particulars",
-   "fieldtype": "Data",
-   "label": "Particulars",
-   "unique": 1
-  },
-  {
    "fieldname": "item",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Item",
    "options": "Item"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Rate",
+   "non_negative": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-10 14:25:46.577919",
+ "modified": "2023-09-11 09:46:30.472513",
  "modified_by": "Administrator",
  "module": "DataRapl",
- "name": "Tally Particular",
- "naming_rule": "By fieldname",
+ "name": "Contractor Itemwise Rates",
  "owner": "Administrator",
  "permissions": [
   {
@@ -62,5 +63,7 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "item",
+ "track_changes": 1
 }
