@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "creation": "2023-09-10 16:34:47.032440",
  "default_view": "List",
@@ -7,18 +8,12 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "item",
-  "rate"
+  "rate",
+  "section_break_rrxgy",
+  "model",
+  "capacity"
  ],
  "fields": [
-  {
-   "fieldname": "item",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Item",
-   "options": "Item"
-  },
   {
    "fieldname": "rate",
    "fieldtype": "Float",
@@ -26,11 +21,31 @@
    "in_standard_filter": 1,
    "label": "Rate",
    "non_negative": 1
+  },
+  {
+   "fieldname": "section_break_rrxgy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "model",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Model",
+   "options": "Geyser Model"
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Capacity",
+   "options": "Geyser Capacity"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-11 09:46:30.472513",
+ "modified": "2023-09-12 16:29:00.985460",
  "modified_by": "Administrator",
  "module": "DataRapl",
  "name": "Contractor Itemwise Rates",
@@ -64,6 +79,6 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
- "title_field": "item",
+ "title_field": "rate",
  "track_changes": 1
 }

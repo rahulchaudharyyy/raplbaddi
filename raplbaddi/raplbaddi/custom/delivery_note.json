@@ -1538,7 +1538,7 @@
    "columns": 0,
    "creation": "2023-09-05 09:31:47.794146",
    "default": null,
-   "depends_on": "eval:frappe.user.has_role('Dispatch Bill')",
+   "depends_on": "eval:frappe.user.has_role('Dispatch Bill') || frappe.user.has_role('Dispatch')",
    "description": null,
    "docstatus": 0,
    "dt": "Delivery Note",
