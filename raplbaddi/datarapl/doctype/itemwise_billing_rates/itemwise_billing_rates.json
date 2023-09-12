@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "creation": "2023-09-11 14:32:31.641172",
  "default_view": "List",
@@ -29,7 +30,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-11 14:34:48.242870",
+ "modified": "2023-09-11 15:12:05.210349",
  "modified_by": "Administrator",
  "module": "DataRapl",
  "name": "Itemwise billing rates",
