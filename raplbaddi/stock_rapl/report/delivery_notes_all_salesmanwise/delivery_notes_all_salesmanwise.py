@@ -18,8 +18,8 @@ def permissions(filters):
 
 def execute(filters=None):
     columns, data = [], []
-    data = get_data(filters)
     if permissions(filters):
+        data = get_data(filters)
         return get_columns(filters), data
     else:
         return None
