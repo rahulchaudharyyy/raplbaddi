@@ -1,12 +1,28 @@
 # Copyright (c) 2023, Nishant Bhickta and contributors
 # For license information, please see license.txt
 import frappe
+from frappe.core.doctype.user_permission.user_permission import get_user_permissions
+from raplbaddi.datarapl.doctype.report_full_access_users.report_full_access_users import get_wildcard_users
 
+def get_groups(user):
+    user_permissions = get_user_permissions(user=user)
+    allowed_groups = [groups['doc'] for groups in user_permissions.get('Customer Group', [])]
+    return allowed_groups
+
+def permissions(filters):
+    user = frappe.session.user
+    if filters.get('sales_person') in get_groups(user) or user in get_wildcard_users():
+        return True
+    else:
+        return False
 
 def execute(filters=None):
     columns, data = [], []
     data = get_data(filters)
-    return get_columns(filters), data
+    if permissions(filters):
+        return get_columns(filters), data
+    else:
+        return None
 
 def get_data(filters):
     query = f"""
