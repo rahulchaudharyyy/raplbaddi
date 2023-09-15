@@ -10,7 +10,8 @@
  "engine": "InnoDB",
  "field_order": [
   "party_name",
-  "customer"
+  "customer",
+  "supplier"
  ],
  "fields": [
   {
@@ -24,11 +25,17 @@
    "fieldtype": "Link",
    "label": "Customer",
    "options": "Customer"
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "options": "Supplier"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-09 17:38:26.386229",
+ "modified": "2023-09-15 16:17:15.482246",
  "modified_by": "Administrator",
  "module": "DataRapl",
  "name": "Tally Party Name",

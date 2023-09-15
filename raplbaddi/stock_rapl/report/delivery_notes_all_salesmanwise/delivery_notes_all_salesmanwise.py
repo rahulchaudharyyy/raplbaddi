@@ -34,7 +34,6 @@ def get_data(filters):
             SUM(net_sales) AS net_sales
         FROM (
             SELECT
-                DISTINCT
                 SUM(IF(td.transaction_type = 'Sales', td.quantity, -(td.quantity))) AS net_sales,
                 tp.customer AS customer,
                 cu.customer_group AS salesman,
@@ -42,26 +41,26 @@ def get_data(filters):
             FROM
                 `tabTally April to August 2023` AS td
                 LEFT JOIN `tabTally Party Name` AS tp ON td.party_name = tp.name
+                LEFT JOIN `tabTally Particular` as tr ON td.particulars = tr.name
                 LEFT JOIN `tabCustomer` AS cu ON tp.customer = cu.name
+                LEFT JOIN `tabItem` as i ON i.name = tr.item
             WHERE
-                td.particulars IS NOT NULL
-                AND particulars LIKE '%%Geyser%%'
-                AND td.date BETWEEN '2023-04-01' AND '2023-08-28'
+                td.date BETWEEN '2023-04-01' AND '2023-08-28'
+                AND i.item_group = 'Geyser Unit'
             GROUP BY
                 tp.customer
 
             UNION
-
+            
             SELECT
-                DISTINCT
-                SUM(dn.total_qty) AS net_sales,
+                SUM(dni.qty) AS net_sales,
                 dn.customer_name AS customer,
                 cu.customer_group AS salesman,
                 dn.posting_date AS date
             FROM
                 `tabDelivery Note` AS dn
+                LEFT JOIN `tabDelivery Note Item` AS dni ON dni.parent = dn.name
                 LEFT JOIN `tabCustomer` AS cu ON dn.customer_name = cu.customer_name
-                LEFT JOIN `tabDelivery Notes Item` as dni ON dni.parent = dn.name
                 LEFT JOIN `tabItem` as i ON dni.item_code = i.name
             WHERE
                 dn.posting_date >= '2023-08-29'
@@ -103,7 +102,7 @@ def get_columns(filters):
 
 
 def get_conditions(filters):
-    conditions = "1"
+    conditions = "net_sales > 0"
     if filters and filters.get("from_date"):
         from_date = filters.get("from_date")
         conditions += f" AND d.date >= '{from_date}'"
