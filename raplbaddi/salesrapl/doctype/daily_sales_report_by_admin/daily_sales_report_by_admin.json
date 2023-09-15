@@ -280,7 +280,7 @@
    "hidden": 1
   },
   {
-   "default": "9218671788",
+   "default": "7838003978",
    "fieldname": "owner_no_first",
    "fieldtype": "Data",
    "label": "Owner No First"
@@ -295,7 +295,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-09 16:32:57.935493",
+ "modified": "2023-09-15 10:32:35.446755",
  "modified_by": "Administrator",
  "module": "SalesRapl",
  "name": "Daily Sales Report By Admin",
@@ -398,6 +398,6 @@
    "title": "Unpaid"
   }
  ],
- "title_field": "date",
+ "title_field": "sales_person",
  "track_changes": 1
 }

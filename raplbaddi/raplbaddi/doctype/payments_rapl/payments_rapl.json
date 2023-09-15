@@ -39,7 +39,8 @@
   "approver_phone_number",
   "auditor_number",
   "msg_to_approver",
-  "msg_to_auditor"
+  "msg_to_auditor",
+  "amended_from"
  ],
  "fields": [
   {
@@ -245,11 +246,20 @@
    "fieldname": "msg_to_auditor",
    "fieldtype": "Check",
    "label": "Msg To Auditor"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Payments Rapl",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-11 18:24:07.296455",
+ "modified": "2023-09-13 19:01:07.009632",
  "modified_by": "Administrator",
  "module": "Raplbaddi",
  "name": "Payments Rapl",

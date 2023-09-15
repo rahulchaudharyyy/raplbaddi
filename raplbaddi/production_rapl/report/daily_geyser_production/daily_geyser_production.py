@@ -32,7 +32,7 @@ def get_data(filters):
     query = f"""
 		SELECT
 			gpe.date_of_production, gpe.production_line,
-            gpe.workforce, gpet.item_name, gpet.brand, i.geyser_capacity, i.geyser_model {get_total_quantity(filters)}
+            gpe.workforce, gpet.item_name, gpet.brand, i.capacity, i.geyser_model {get_total_quantity(filters)}
 		FROM
 			`tabGeyser Production Entry` as gpe
 			LEFT JOIN
@@ -74,7 +74,7 @@ def get_columns(filters):
     item = filters.get("item")
     if item == "Geyser":
         add = [
-            {"label": "Litre", "fieldname": "geyser_capacity",
+            {"label": "Litre", "fieldname": "capacity",
                 "fieldtype": "Data", "width": 150},
             {"label": "Model Name", "fieldname": "geyser_model",
                 "fieldtype": "Data", "width": 150},

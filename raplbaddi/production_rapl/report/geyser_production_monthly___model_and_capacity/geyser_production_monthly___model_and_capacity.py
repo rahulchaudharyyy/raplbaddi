@@ -13,7 +13,7 @@ def execute(filters=None):
 def get_data(filters):
     query = f"""
 		SELECT
-			gpe.production_line as production_line, i.geyser_capacity as capacity, i.geyser_model as model, SUM(gpet.qty) as total
+			gpe.production_line as production_line, i.capacity as capacity, i.geyser_model as model, SUM(gpet.qty) as total
 		FROM
 			`tabGeyser Production Entry` as gpe
 			LEFT JOIN
@@ -25,7 +25,7 @@ def get_data(filters):
         WHERE
             {get_conditions(filters)}
         GROUP BY
-            i.geyser_capacity, i.geyser_model, gpe.production_line
+            i.capacity, i.geyser_model, gpe.production_line
     ;
     """
     result = frappe.db.sql(query, as_dict=True)

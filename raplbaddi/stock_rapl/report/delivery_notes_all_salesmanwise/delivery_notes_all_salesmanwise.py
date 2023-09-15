@@ -13,6 +13,8 @@ def permissions(filters):
     user = frappe.session.user
     if filters.get('sales_person') in get_groups(user) or user in get_wildcard_users():
         return True
+    if filters.get('sales_person') == 'All' and user in get_wildcard_users():
+        return True
     else:
         return False
 
@@ -59,9 +61,12 @@ def get_data(filters):
             FROM
                 `tabDelivery Note` AS dn
                 LEFT JOIN `tabCustomer` AS cu ON dn.customer_name = cu.customer_name
+                LEFT JOIN `tabDelivery Notes Item` as dni ON dni.parent = dn.name
+                LEFT JOIN `tabItem` as i ON dni.item_code = i.name
             WHERE
                 dn.posting_date >= '2023-08-29'
                 AND dn.docstatus = 1
+                AND i.item_group = 'Geyser Unit'
             GROUP BY
                 dn.customer_name
             HAVING
@@ -70,6 +75,8 @@ def get_data(filters):
         WHERE {get_conditions(filters)}
         GROUP BY
             d.customer
+        ORDER BY
+            net_sales DESC
     """
 
     result = frappe.db.sql(query, as_dict=True)
@@ -105,5 +112,8 @@ def get_conditions(filters):
         conditions += f" AND d.date <= '{to_date}'"
     if filters and filters.get("sales_person"):
         sales_person = filters.get("sales_person")
-        conditions += f" AND d.salesman = '{sales_person}'"
+        if sales_person == 'All':
+            conditions += f" AND 1"
+        else:
+            conditions += f" AND d.salesman = '{sales_person}'"
     return conditions

@@ -40,6 +40,7 @@ frappe.query_reports["Delivery Notes All Salesmanwise"] = {
 			"fieldtype": "Link",
 			"width": "80",
 			"options": "Customer Group",
+			"default": get_user_default(frappe.session.user),
 			"reqd": 1,
 		},
 		{
@@ -60,3 +61,9 @@ frappe.query_reports["Delivery Notes All Salesmanwise"] = {
 		},
 	]
 };
+
+function get_user_default(user){
+	if(frappe.session.user == 'kuldeepbaddi@gmail.com'){
+		return 'All'
+	}
+}
