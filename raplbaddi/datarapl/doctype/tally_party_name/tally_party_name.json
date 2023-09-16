@@ -34,8 +34,13 @@
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2023-09-15 16:17:15.482246",
+ "links": [
+  {
+   "link_doctype": "Tally Party Name",
+   "link_fieldname": "customer"
+  }
+ ],
+ "modified": "2023-09-15 16:41:05.624263",
  "modified_by": "Administrator",
  "module": "DataRapl",
  "name": "Tally Party Name",
