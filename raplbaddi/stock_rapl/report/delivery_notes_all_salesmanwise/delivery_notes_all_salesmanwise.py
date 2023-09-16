@@ -59,12 +59,8 @@ def get_data(filters):
                 dn.posting_date AS date
             FROM
                 `tabDelivery Note` AS dn
-                LEFT JOIN `tabDelivery Note Item` AS dni ON dni.parent = dn.name
-                LEFT JOIN `tabCustomer` AS cu ON dn.customer_name = cu.customer_name
-<<<<<<< Updated upstream
-=======
                 LEFT JOIN `tabDelivery Note Item` as dni ON dni.parent = dn.name
->>>>>>> Stashed changes
+                LEFT JOIN `tabCustomer` AS cu ON dn.customer_name = cu.customer_name
                 LEFT JOIN `tabItem` as i ON dni.item_code = i.name
             WHERE
                 dn.posting_date >= '2023-08-29'
