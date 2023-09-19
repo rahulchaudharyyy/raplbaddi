@@ -1,0 +1,109 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "autoname": "autoincrement",
+ "creation": "2023-09-18 17:24:50.855321",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "box_type",
+  "box_particular",
+  "column_break_wigeu",
+  "capacity",
+  "model",
+  "sub_box_type"
+ ],
+ "fields": [
+  {
+   "fieldname": "box_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Box Type",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "box_particular",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Box Particular",
+   "options": "box_type"
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Capacity",
+   "options": "Geyser Capacity"
+  },
+  {
+   "fieldname": "model",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Model",
+   "options": "Geyser Model"
+  },
+  {
+   "fieldname": "sub_box_type",
+   "fieldtype": "Link",
+   "label": "Sub Box Type",
+   "options": "Sub Box Type"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "label": "Item",
+   "options": "Item",
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_wigeu",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-09-18 18:52:46.939800",
+ "modified_by": "Administrator",
+ "module": "Stock Rapl",
+ "name": "Brand Plain Box Availability",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "box_particular",
+ "track_changes": 1
+}
