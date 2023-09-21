@@ -25,8 +25,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Production Line",
-   "options": "Production Lines",
-   "reqd": 1
+   "options": "Production Lines"
   },
   {
    "fieldname": "column_break_rfx7v",
@@ -36,8 +35,7 @@
    "fieldname": "workforce",
    "fieldtype": "Int",
    "in_list_view": 1,
-   "label": "Workforce",
-   "reqd": 1
+   "label": "Workforce"
   },
   {
    "default": "Today",
@@ -51,8 +49,7 @@
    "fetch_from": "production_line.contractor_name",
    "fieldname": "contactor_name",
    "fieldtype": "Data",
-   "label": "Contactor Name",
-   "reqd": 1
+   "label": "Contactor Name"
   },
   {
    "fieldname": "section_break_vlp2z",
@@ -84,7 +81,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-07-27 20:38:05.492474",
+ "modified": "2023-09-20 12:54:09.832108",
  "modified_by": "Administrator",
  "module": "Production Rapl",
  "name": "Geyser Production Entry",

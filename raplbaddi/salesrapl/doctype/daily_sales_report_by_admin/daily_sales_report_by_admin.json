@@ -252,7 +252,6 @@
    "fieldname": "payment_audited",
    "fieldtype": "Check",
    "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Payment Audited"
   },
   {
@@ -295,7 +294,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-18 12:05:02.853482",
+ "modified": "2023-09-21 14:01:37.596010",
  "modified_by": "Administrator",
  "module": "SalesRapl",
  "name": "Daily Sales Report By Admin",

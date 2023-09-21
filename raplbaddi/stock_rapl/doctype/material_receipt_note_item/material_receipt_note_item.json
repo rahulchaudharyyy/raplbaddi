@@ -29,6 +29,7 @@
   },
   {
    "fetch_from": "item_code.purchase_uom",
+   "fetch_if_empty": 1,
    "fieldname": "uom",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -64,7 +65,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-14 16:48:18.437590",
+ "modified": "2023-09-19 19:03:15.003437",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "Material Receipt Note Item",
