@@ -10,6 +10,7 @@
  "field_order": [
   "naming_series",
   "date",
+  "customer",
   "supplier",
   "column_break_aogow",
   "supplier_name",
@@ -96,12 +97,18 @@
    "fieldtype": "Button",
    "hidden": 1,
    "label": "Copy"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-18 19:25:05.387447",
+ "modified": "2023-09-22 12:08:05.263388",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "Material Receipt Note",
