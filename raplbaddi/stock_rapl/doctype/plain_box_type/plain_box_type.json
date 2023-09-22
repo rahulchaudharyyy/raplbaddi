@@ -9,14 +9,31 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "plain_box_type"
+  "plain_box_type",
+  "items",
+  "jk_only"
  ],
  "fields": [
   {
    "fieldname": "plain_box_type",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Plain Box Type",
+   "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Plain Box Type Table",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "jk_only",
+   "fieldtype": "Check",
+   "label": "JK Only"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -26,7 +43,7 @@
    "link_fieldname": "plain_box_type"
   }
  ],
- "modified": "2023-07-19 11:57:16.367246",
+ "modified": "2023-09-22 12:15:13.317345",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "Plain Box Type",

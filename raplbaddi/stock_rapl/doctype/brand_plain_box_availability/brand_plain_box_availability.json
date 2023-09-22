@@ -14,7 +14,9 @@
   "column_break_wigeu",
   "capacity",
   "model",
-  "sub_box_type"
+  "sub_box_type",
+  "box_paper_type",
+  "box_paper_category"
  ],
  "fields": [
   {
@@ -65,11 +67,23 @@
   {
    "fieldname": "column_break_wigeu",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "box_paper_type",
+   "fieldtype": "Link",
+   "label": "Box Paper Type",
+   "options": "Box Paper Type"
+  },
+  {
+   "fieldname": "box_paper_category",
+   "fieldtype": "Select",
+   "label": "Box Paper Category",
+   "options": "Duplex\nCraft"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-18 18:52:46.939800",
+ "modified": "2023-09-22 13:58:04.044149",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "Brand Plain Box Availability",
