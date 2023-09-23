@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "prompt",
  "creation": "2023-09-22 13:38:44.162666",
@@ -21,7 +22,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-22 13:42:03.092951",
+ "modified": "2023-09-22 16:45:52.351564",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "Box Paper Type",
