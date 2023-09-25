@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "hash",
+ "creation": "2023-09-23 11:54:49.563296",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "capacity",
+  "model",
+  "box_paper_category",
+  "box_paper_type",
+  "sub_box_type"
+ ],
+ "fields": [
+  {
+   "columns": 2,
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item",
+   "options": "Item"
+  },
+  {
+   "columns": 2,
+   "fieldname": "model",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Model",
+   "options": "Geyser Model"
+  },
+  {
+   "columns": 1,
+   "fieldname": "capacity",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Capacity",
+   "options": "Geyser Capacity"
+  },
+  {
+   "columns": 2,
+   "fieldname": "box_paper_category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Box Paper Category",
+   "options": "Box Paper Type"
+  },
+  {
+   "columns": 1,
+   "fieldname": "box_paper_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Box Paper Type",
+   "options": "Duplex\nCraft"
+  },
+  {
+   "columns": 1,
+   "fieldname": "sub_box_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sub Box Type",
+   "options": "Sub Box Type"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-09-23 12:38:35.984474",
+ "modified_by": "Administrator",
+ "module": "Stock Rapl",
+ "name": "PB Creation Tool Table",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

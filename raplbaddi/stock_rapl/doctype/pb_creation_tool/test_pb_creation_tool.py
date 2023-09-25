@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestBrandPlainBoxAvailability(FrappeTestCase):
+class TestPBCreationTool(FrappeTestCase):
 	pass
