@@ -2,10 +2,10 @@ import frappe
 from frappe.model.document import Document
 
 class PBCreationTool(Document):
-    def before_insert(self):
+    def before_submit(self):
         for i in self.items:
             item_code = f'PB{i.capacity}{i.model[:1]} {self.box_particular}'
-            item_paper_code = f'PP {self.box_particular} {i.box_paper_category}'
+            item_paper_code = f'PP {self.box_particular} {i.box_paper_category} {i.box_paper_type}'
             item, item_paper = self.get_or_create_item(item_code, item_paper_code, i)
             item.disabled = not i.enabled
             item.save()
