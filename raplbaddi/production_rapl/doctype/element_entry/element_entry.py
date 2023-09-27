@@ -7,8 +7,13 @@ from frappe.model.document import Document
 
 class ElementEntry(Document):
     def on_submit(self):
-        issue(items=self.get("items"), name=self.get("name"), date=self.get(
-            "date_of_entry"), entry_type=self.get("entry_type"))
+        issue(
+            items=self.get("items"),
+            name=self.get("name"),
+            date=self.get("date_of_entry"),
+            entry_type=self.get("entry_type"),
+        )
+
 
 @frappe.whitelist()
 def issue(items, name, date, entry_type):
@@ -24,11 +29,6 @@ def issue(items, name, date, entry_type):
         "Rework": "Element Receipt",
     }
 
-    warehouse_map = {
-        "Issue": "s_warehouse",
-        "Receipt": "t_warehouse",
-        "Rework": "t_warehouse",
-    }
     s.stock_entry_type = entry_map[entry_type]
     s.element_entry = name
     s.set_posting_time = 1
@@ -36,12 +36,24 @@ def issue(items, name, date, entry_type):
 
     # items
     for item in items:
-        s.append('items', {
-            "item_code": item.item,
-            "qty": item.qty,
-            warehouse_map[entry_type]: 'Element Section' + " - RAPL",
-            "is_finished_item": 1,
-        })
+        t_warehouse = (
+            "Element Section - RAPL" if entry_type == "Element Receipt" else ""
+        )
+        s_warehouse = (
+            "Stores - RAPL"
+            if entry_type == "Element Receipt"
+            else "Element Section - RAPL"
+        )
+        s.append(
+            "items",
+            {
+                "item_code": item.item,
+                "qty": item.qty,
+                "t_warehouse": t_warehouse,
+                "s_warehouse": s_warehouse,
+                "is_finished_item": 1,
+            },
+        )
     # insert
     s.insert()
     s.submit()

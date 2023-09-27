@@ -7,31 +7,25 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "enabled",
-  "item",
-  "item_paper",
+  "box",
+  "paper",
   "capacity",
   "model",
-  "box_paper_category",
-  "box_paper_type",
-  "sub_box_type"
+  "paper_name",
+  "paper_type",
+  "sub_box",
+  "box_enabled",
+  "safety_stock"
  ],
  "fields": [
-  {
-   "columns": 2,
-   "fieldname": "item",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Item",
-   "options": "Item"
-  },
   {
    "columns": 2,
    "fieldname": "model",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Model",
-   "options": "Geyser Model"
+   "options": "Geyser Model",
+   "reqd": 1
   },
   {
    "columns": 1,
@@ -39,30 +33,61 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Capacity",
-   "options": "Geyser Capacity"
+   "options": "Geyser Capacity",
+   "reqd": 1
   },
   {
-   "columns": 2,
-   "fieldname": "box_paper_category",
-   "fieldtype": "Link",
+   "allow_in_quick_entry": 1,
+   "allow_on_submit": 1,
+   "columns": 1,
+   "fetch_from": "item.safety_stock",
+   "fetch_if_empty": 1,
+   "fieldname": "safety_stock",
+   "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Box Paper Category",
-   "options": "Box Paper Type"
+   "label": "Safety Stock",
+   "non_negative": 1
   },
   {
    "columns": 1,
-   "fieldname": "box_paper_type",
+   "fieldname": "box",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Box",
+   "options": "Item"
+  },
+  {
+   "columns": 1,
+   "fieldname": "paper",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Paper",
+   "options": "Item"
+  },
+  {
+   "columns": 1,
+   "fieldname": "paper_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Paper Name",
+   "options": "Paper Name",
+   "reqd": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "paper_type",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Box Paper Type",
-   "options": "Duplex\nCraft"
+   "label": "Paper Type",
+   "options": "Duplex\nCraft",
+   "reqd": 1
   },
   {
    "columns": 1,
-   "fieldname": "sub_box_type",
+   "fieldname": "sub_box",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Sub Box Type",
+   "label": "Sub Box",
    "options": "Sub Box Type"
   },
   {
@@ -70,24 +95,16 @@
    "allow_on_submit": 1,
    "columns": 1,
    "default": "1",
-   "fieldname": "enabled",
+   "fieldname": "box_enabled",
    "fieldtype": "Check",
    "in_list_view": 1,
-   "label": "Enabled"
-  },
-  {
-   "columns": 1,
-   "fieldname": "item_paper",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Item Paper",
-   "options": "Item"
+   "label": "Box Enabled"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-26 10:09:45.295317",
+ "modified": "2023-09-26 17:28:53.838111",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "PB Creation Tool Table",

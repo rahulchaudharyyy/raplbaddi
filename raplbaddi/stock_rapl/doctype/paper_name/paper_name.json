@@ -2,13 +2,13 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "prompt",
  "creation": "2023-09-22 13:38:44.162666",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "paper_type",
   "items"
  ],
  "fields": [
@@ -18,15 +18,23 @@
    "label": "Items",
    "options": "Box Paper Type Table",
    "reqd": 1
+  },
+  {
+   "fieldname": "paper_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Paper Type",
+   "options": "\nDuplex\nCraft",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-22 16:45:52.351564",
+ "modified": "2023-09-26 18:47:00.204989",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
- "name": "Box Paper Type",
- "naming_rule": "Set by user",
+ "name": "Paper Name",
+ "naming_rule": "By script",
  "owner": "Administrator",
  "permissions": [
   {
