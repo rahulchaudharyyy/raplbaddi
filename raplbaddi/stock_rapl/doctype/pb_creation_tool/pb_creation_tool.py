@@ -5,27 +5,47 @@ class PBCreationTool(Document):
     def get_item_code(self, item, item_type):
         item_code_formats = {
             "Box": f'PB{item.capacity}{item.model[:1]} {self.box_particular}',
-            "Paper": f'PP {self.box_particular} {item.paper_name} {item.paper_type}',
+            "Paper": f'PP {self.box_particular} {item.paper_name}',
         }
         
         return item_code_formats.get(item_type)
     
+    def get_total_safety_stock(self, i):
+        for item in self.items:
+            safety_stock_list = [item.safety_stock for item in self.items if i.paper_name == item.paper_name]
+        return sum(safety_stock_list)
+                
+    
+    def validate(self):
+        for item in self.items:
+            try:
+                box_code = self.get_item_code(item, item_type='Box')
+                box = frappe.get_doc("Item", box_code)
+                item.box = box.name
+            except frappe.exceptions.DoesNotExistError:
+                item.box = ''
+                item.paper = ''
+
+            try:
+                paper_code = self.get_item_code(item, item_type='Paper')
+                paper = frappe.get_doc("Item", paper_code)
+            except frappe.exceptions.DoesNotExistError:
+                item.paper = ''
+   
     def before_submit(self):
         for item in self.items:
             box_code, paper_code = self.get_item_code(item, item_type='Box'), self.get_item_code(item, item_type='Paper')
-            box, paper = self.get_or_create_item(box_code, paper_code, item)
+            box, paper = self.get_or_create_item(box_code, paper_code, item, self.get_total_safety_stock(item))
             if not item.box_enabled:
                 box.disabled = True
             box.save(), paper.save()
 
+    
     def on_update_after_submit(self):
         for item in self.items:
             box_code, paper_code = self.get_item_code(item, item_type='Box'), self.get_item_code(item, item_type='Paper')
-            safety_stock_list = [item.safety_stock for item in self.items]
             enable_paper = False if len([item.box_enabled for item in self.items if item.box_enabled]) == 0 else True
-            print(enable_paper)
-            total_safety_stock = sum(safety_stock_list)
-            box, paper = self.get_or_create_item(box_code, paper_code, item, total_safety_stock)
+            box, paper = self.get_or_create_item(box_code, paper_code, item, self.get_total_safety_stock(item))
             if not item.box_enabled:
                 box.disabled = True
             paper.disabled = not enable_paper
@@ -46,7 +66,7 @@ class PBCreationTool(Document):
         item.box = box.name
         item.paper = paper.name
         box.disabled = not item.box_enabled
-        box.safety_stock = item.safety_stock
+        box.safety_stock = item.safety_stock if box.safety_stock == 0 else box.safety_stock
         paper.safety_stock = total_safety_stock
         return box, paper
 

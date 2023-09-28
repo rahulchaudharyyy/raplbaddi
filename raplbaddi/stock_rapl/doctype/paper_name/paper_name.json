@@ -9,14 +9,19 @@
  "engine": "InnoDB",
  "field_order": [
   "paper_type",
-  "items"
+  "supplier",
+  "priority",
+  "add_supplier",
+  "section_break_tqlzm",
+  "items",
+  "priority_and_rates"
  ],
  "fields": [
   {
    "fieldname": "items",
    "fieldtype": "Table",
    "label": "Items",
-   "options": "Box Paper Type Table",
+   "options": "Box Paper Name Table",
    "reqd": 1
   },
   {
@@ -26,11 +31,37 @@
    "label": "Paper Type",
    "options": "\nDuplex\nCraft",
    "reqd": 1
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "options": "Supplier"
+  },
+  {
+   "fieldname": "add_supplier",
+   "fieldtype": "Button",
+   "label": "Add Supplier"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Int",
+   "label": "Priority"
+  },
+  {
+   "fieldname": "section_break_tqlzm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "priority_and_rates",
+   "fieldtype": "Table",
+   "label": "Priority and Rates",
+   "options": "Paper Supplier Priority"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-26 18:47:00.204989",
+ "modified": "2023-09-27 17:08:48.338030",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "Paper Name",
@@ -46,6 +77,7 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "select": 1,
    "share": 1,
    "write": 1
   }

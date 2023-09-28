@@ -6,7 +6,7 @@ from frappe.model.document import Document
 
 
 class ElementEntry(Document):
-    def on_submit(self):
+    def before_submit(self):
         issue(
             items=self.get("items"),
             name=self.get("name"),
@@ -24,9 +24,9 @@ def issue(items, name, date, entry_type):
     s.company = "Real Appliances Private Limited"
 
     entry_map = {
-        "Issue": "Element Issue",
-        "Receipt": "Element Receipt",
-        "Rework": "Element Receipt",
+        "Issue": "Material Issue",
+        "Receipt": "Material Transfer",
+        "Rework": "Material Transfer",
     }
 
     s.stock_entry_type = entry_map[entry_type]
@@ -37,12 +37,12 @@ def issue(items, name, date, entry_type):
     # items
     for item in items:
         t_warehouse = (
-            "Element Section - RAPL" if entry_type == "Element Receipt" else ""
+            "" if entry_type == "Issue" else "Element Section - RAPL"
         )
         s_warehouse = (
-            "Stores - RAPL"
-            if entry_type == "Element Receipt"
-            else "Element Section - RAPL"
+            "Element Section - RAPL"
+            if entry_type == "Issue"
+            else "Stores - RAPL"
         )
         s.append(
             "items",
@@ -55,6 +55,6 @@ def issue(items, name, date, entry_type):
             },
         )
     # insert
-    s.insert()
+    s.save()
     s.submit()
     return s

@@ -80,16 +80,18 @@
    "options": "Paper Name"
   },
   {
+   "fetch_from": "paper_name.paper_type",
    "fieldname": "paper_type",
    "fieldtype": "Select",
    "label": "Paper Type",
-   "options": "\nDuplex\nCraft"
+   "options": "\nDuplex\nCraft",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-26 17:46:33.346140",
+ "modified": "2023-09-27 16:06:37.125214",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "PB Creation Tool",
