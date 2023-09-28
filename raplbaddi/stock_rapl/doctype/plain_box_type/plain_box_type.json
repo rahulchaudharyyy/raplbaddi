@@ -9,9 +9,13 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "paper_name",
+  "disabled",
+  "column_break_qxg9l",
   "plain_box_type",
-  "items",
-  "jk_only"
+  "jk_only",
+  "section_break_vtl1j",
+  "items"
  ],
  "fields": [
   {
@@ -34,6 +38,29 @@
    "fieldname": "jk_only",
    "fieldtype": "Check",
    "label": "JK Only"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "section_break_vtl1j",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "paper_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Paper Name",
+   "options": "Paper Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_qxg9l",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -43,7 +70,7 @@
    "link_fieldname": "plain_box_type"
   }
  ],
- "modified": "2023-09-22 12:15:13.317345",
+ "modified": "2023-09-28 10:47:53.886326",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "Plain Box Type",
