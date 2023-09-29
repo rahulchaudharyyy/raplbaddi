@@ -12,7 +12,7 @@
   "box_particular",
   "sub_box_type",
   "column_break_3zrpo",
-  "paper_name",
+  "paper_names",
   "paper_type",
   "create_box",
   "section_break_2rstb",
@@ -74,24 +74,24 @@
    "read_only": 1
   },
   {
-   "fieldname": "paper_name",
-   "fieldtype": "Link",
-   "label": "Paper Name",
-   "options": "Paper Name"
-  },
-  {
    "fetch_from": "paper_name.paper_type",
    "fieldname": "paper_type",
    "fieldtype": "Select",
    "label": "Paper Type",
    "options": "\nDuplex\nCraft",
    "read_only": 1
+  },
+  {
+   "fieldname": "paper_names",
+   "fieldtype": "Table MultiSelect",
+   "label": "Paper Names",
+   "options": "Paper Names Table"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-27 16:06:37.125214",
+ "modified": "2023-09-29 11:18:20.622075",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "PB Creation Tool",

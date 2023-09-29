@@ -12,6 +12,9 @@ frappe.ui.form.on('PB Creation Tool', {
         });
     },
 
+	box_particular(frm) {
+		frappe.db.get_doc(frm.doc.box_type, frm.doc.box_particular).then(r => frm.set_value('paper_names', r.paper_names))
+},
     create_box(frm) {
         create_box(frm)
     }
