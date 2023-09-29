@@ -14,7 +14,8 @@
   "add_supplier",
   "section_break_tqlzm",
   "items",
-  "priority_and_rates"
+  "priority_and_rates",
+  "attributes"
  ],
  "fields": [
   {
@@ -57,11 +58,17 @@
    "fieldtype": "Table",
    "label": "Priority and Rates",
    "options": "Paper Supplier Priority"
+  },
+  {
+   "fieldname": "attributes",
+   "fieldtype": "Table",
+   "label": "Attributes",
+   "options": "Paper Attributes Table"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-27 17:08:48.338030",
+ "modified": "2023-09-29 12:56:32.714563",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "Paper Name",

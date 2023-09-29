@@ -10,7 +10,6 @@
  "field_order": [
   "box_type",
   "box_particular",
-  "sub_box_type",
   "column_break_3zrpo",
   "paper_names",
   "paper_type",
@@ -50,12 +49,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "sub_box_type",
-   "fieldtype": "Link",
-   "label": "Sub Box Type",
-   "options": "Sub Box Type"
-  },
-  {
    "fieldname": "create_box",
    "fieldtype": "Button",
    "label": "Create Box"
@@ -91,7 +84,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-29 11:18:20.622075",
+ "modified": "2023-09-29 12:53:10.942180",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "PB Creation Tool",

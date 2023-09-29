@@ -1,29 +1,38 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2023-09-29 10:26:58.108737",
+ "creation": "2023-09-29 12:50:38.928520",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "title"
+  "attribute",
+  "value"
  ],
  "fields": [
   {
-   "fieldname": "title",
+   "fieldname": "attribute",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Title",
-   "options": "Paper Name"
+   "label": "Attribute",
+   "options": "Paper Name Attribute",
+   "reqd": 1
+  },
+  {
+   "fieldname": "value",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Value",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-29 12:09:48.636205",
+ "modified": "2023-09-29 12:50:38.928520",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
- "name": "Paper Names Table",
+ "name": "Paper Attributes Table",
  "owner": "Administrator",
  "permissions": [],
  "sort_field": "modified",

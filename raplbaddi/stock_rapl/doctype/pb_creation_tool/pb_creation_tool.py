@@ -24,11 +24,11 @@ class PBCreationTool(Document):
                 item.box = box.name
             except frappe.exceptions.DoesNotExistError:
                 item.box = ''
-                item.paper = ''
 
             try:
                 paper_code = self.get_item_code(item, item_type='Paper')
                 paper = frappe.get_doc("Item", paper_code)
+                item.paper = paper.paper
             except frappe.exceptions.DoesNotExistError:
                 item.paper = ''
    
