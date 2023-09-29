@@ -47,7 +47,7 @@
   },
   {
    "fieldname": "paper_names",
-   "fieldtype": "Table MultiSelect",
+   "fieldtype": "Table",
    "label": "Paper Names",
    "options": "Paper Names Table"
   }
@@ -59,7 +59,7 @@
    "link_fieldname": "plain_box_type"
   }
  ],
- "modified": "2023-09-29 11:13:52.573822",
+ "modified": "2023-09-29 14:16:54.214039",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "Plain Box Type",
