@@ -14,7 +14,14 @@
   "plain_box_type",
   "jk_only",
   "section_break_vtl1j",
-  "paper_names"
+  "paper_names",
+  "priority_and_rates",
+  "section_break_lmtck",
+  "supplier",
+  "column_break_pgpxy",
+  "priority",
+  "add_supplier",
+  "check"
  ],
  "fields": [
   {
@@ -50,6 +57,42 @@
    "fieldtype": "Table",
    "label": "Paper Names",
    "options": "Paper Names Table"
+  },
+  {
+   "fieldname": "priority_and_rates",
+   "fieldtype": "Table",
+   "label": "Priority and Rates",
+   "options": "Paper Supplier Priority"
+  },
+  {
+   "fieldname": "section_break_lmtck",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "options": "Supplier"
+  },
+  {
+   "fieldname": "column_break_pgpxy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Data",
+   "label": "Priority"
+  },
+  {
+   "fieldname": "add_supplier",
+   "fieldtype": "Button",
+   "label": "Add Supplier"
+  },
+  {
+   "default": "0",
+   "fieldname": "check",
+   "fieldtype": "Check",
+   "label": "Check"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -59,7 +102,7 @@
    "link_fieldname": "plain_box_type"
   }
  ],
- "modified": "2023-09-29 14:16:54.214039",
+ "modified": "2023-10-03 14:44:31.570681",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "Plain Box Type",

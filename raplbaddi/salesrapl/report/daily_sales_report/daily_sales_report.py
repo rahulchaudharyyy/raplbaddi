@@ -53,7 +53,7 @@ def get_amount(filters):
 def get_data(filters):
     query = f"""
     SELECT DISTINCT
-        dsr.name, dsr.date, dse.type, {get_amount(filters)} as amount, dsr.amount_for_travel, dsr.payment_audited, dsr.status, dsr.start_reading, dsr.end_reading, dsr.km_travelled
+        dsr.name, dsr.date, dse.type, {get_amount(filters)} as amount, dsr.amount_for_travel, dsr.payment_audited, dsr.start_reading, dsr.end_reading, dsr.km_travelled
     FROM
         `tabDaily Sales Report By Admin` as dsr
         JOIN
@@ -102,9 +102,6 @@ def get_conditions(filters):
     if filters and filters.get("end_date"):
         end_date = filters.get("end_date")
         conditions += f" AND dsr.date <= '{end_date}'"
-    if filters and filters.get("payment_status"):
-        payment_status = filters.get("payment_status")
-        conditions += f" AND status = '{payment_status}'"
     if filters and filters.get("payment_audited"):
         payment_audited = filters.get("payment_audited")
         if payment_audited == 'Yes':
