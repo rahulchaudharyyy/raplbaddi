@@ -27,7 +27,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-21 15:58:13.268236",
+ "modified": "2023-10-05 11:25:04.146070",
  "modified_by": "Administrator",
  "module": "Stock Rapl",
  "name": "Geyser Box Size",
@@ -43,6 +43,18 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
    "share": 1,
    "write": 1
   }
