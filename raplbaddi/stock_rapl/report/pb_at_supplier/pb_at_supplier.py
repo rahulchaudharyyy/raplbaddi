@@ -18,7 +18,6 @@ def get_supplier_and_warehouse(filters=None) -> str:
     user = frappe.session.user
     supplier = ''
     warehouse = ''
-    print(user in get_wildcard_users())
     if user == 'production.jaiambey2024@gmail.com':
         supplier = 'Jai Ambey Industries'
         warehouse = 'Jai Ambey Industries - Rapl'
@@ -28,9 +27,8 @@ def get_supplier_and_warehouse(filters=None) -> str:
     elif user in get_wildcard_users() and filters.get('supplier'):
         if filters.get('supplier') == 'Jai Ambey Industries':
             supplier = 'Jai Ambey Industries'
-            warehouse = 'Jai Ambey Industries - Rapl    '
+            warehouse = 'Jai Ambey Industries - Rapl'
         elif filters.get('supplier') == "Amit Print 'N' Pack, Kishanpura, Baddi":
-            print('Heheh')
             supplier = "Amit Print 'N' Pack, Kishanpura, Baddi"
             warehouse = "Amit Print 'N' Pack - RAPL"
     
@@ -43,7 +41,7 @@ def all_boxes() -> dict:
         frappe.qb
         .from_(items)
         .where(items.item_group == "Packing Boxes").where(items.disabled == 0)
-        .select(items.name.as_('box'))
+        .select(items.name.as_('box'), items.safety_stock.as_('msl'))
     )
     return box_query.run(as_dict=True)
 
@@ -121,7 +119,7 @@ def warehouse_qty(warehouse: str) -> dict:
         .where(bin.warehouse == warehouse)
         .select(
             bin.actual_qty.as_('warehouse_qty'),
-            item.name.as_('box'),
+            item.name.as_('box')
         )
     )
     return remove_negative(['warehouse_qty'], qty_query.run(as_dict=True))
@@ -130,7 +128,7 @@ def columns(filters=None):
    cols = [{"label": "item", "fieldtype": "Link", "width": 180, "options": "Item", "fieldname": 'box'},
         {"label": "Date", "fieldtype": "Date", "width": 120, "fieldname": "po_date"},
         {"label": "Stock", "fieldtype": "Int", "width": 60, "fieldname": "warehouse_qty"},
-        {"label": "Production", "fieldtype": "Int", "width": 100, "fieldname": 'box_qty'},
-        {"label": "Dispatch", "fieldtype": "Int", "width": 100, "fieldname": 'planned_qty'},
+        {"label": "Production Order", "fieldtype": "Int", "width": 100, "fieldname": 'box_qty'},
+        {"label": "Dispatch Order", "fieldtype": "Int", "width": 100, "fieldname": 'planned_qty'},
     ]
    return cols
