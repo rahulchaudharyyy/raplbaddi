@@ -117,7 +117,7 @@ def warehouse_qty(warehouse: str) -> dict:
 
 def columns(filters=None):
    cols = [{"label": "item", "fieldtype": "Link", "width": 180, "options": "Item", "fieldname": 'box'},
-        {"label": "Date", "fieldtype": "Date", "width": 60, "fieldname": "po_date"},
+        {"label": "Date", "fieldtype": "Date", "width": 120, "fieldname": "po_date"},
         {"label": "Stock", "fieldtype": "Int", "width": 60, "fieldname": "warehouse_qty"},
         {"label": "Production", "fieldtype": "Int", "width": 100, "fieldname": 'box_qty'},
         {"label": "Dispatch", "fieldtype": "Int", "width": 100, "fieldname": 'planned_qty'},
