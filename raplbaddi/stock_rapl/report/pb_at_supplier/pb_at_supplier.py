@@ -7,25 +7,35 @@ from frappe.query_builder.functions import Count, Sum
 from pypika.terms import Case, Not, Field, Order
 from frappe.query_builder import AliasedQuery
 from frappe.utils import getdate
+from raplbaddi.datarapl.doctype.report_full_access_users.report_full_access_users import get_wildcard_users
 
 date = getdate('1-1-1')
 
 def execute(filters=None):
-    return columns(filters), join()
+    return columns(filters), join(filters)
 
-def get_supplier_and_warehouse() -> str:
+def get_supplier_and_warehouse(filters=None) -> str:
     user = frappe.session.user
+    supplier = ''
+    warehouse = ''
+    print(user in get_wildcard_users())
     if user == 'production.jaiambey2024@gmail.com':
         supplier = 'Jai Ambey Industries'
         warehouse = 'Jai Ambey Industries - Rapl'
-    if user == 'ppic@amitprintpack.com':
+    elif user == 'ppic@amitprintpack.com':
         supplier = "Amit Print 'N' Pack, Kishanpura, Baddi"
         warehouse = "Amit Print 'N' Pack - RAPL"
-    else:
-        warehouse = ''
-    supplier = "Amit Print 'N' Pack, Kishanpura, Baddi"
-    warehouse = "Amit Print 'N' Pack - RAPL"
+    elif user in get_wildcard_users() and filters.get('supplier'):
+        if filters.get('supplier') == 'Jai Ambey Industries':
+            supplier = 'Jai Ambey Industries'
+            warehouse = 'Jai Ambey Industries - Rapl    '
+        elif filters.get('supplier') == "Amit Print 'N' Pack, Kishanpura, Baddi":
+            print('Heheh')
+            supplier = "Amit Print 'N' Pack, Kishanpura, Baddi"
+            warehouse = "Amit Print 'N' Pack - RAPL"
+    
     return supplier, warehouse
+
 
 def all_boxes() -> dict:
     items = DocType('Item')
@@ -47,6 +57,7 @@ def get_supplierwise_po(supplier: str) -> dict:
         .on(po.name == poi.parent)
         .where(po.supplier == supplier)
         .where(po.docstatus == 1)
+        .where(po.status != 'Closed')
         .select(
             Sum(poi.qty - poi.received_qty).as_('box_qty'),
             poi.item_code.as_('box'),
@@ -57,9 +68,9 @@ def get_supplierwise_po(supplier: str) -> dict:
     )
     return jai_ambey_po_query.run(as_dict=True)
 
-def join():
+def join(filters=None):
     all_box = all_boxes()
-    supplier, warehouse = get_supplier_and_warehouse()
+    supplier, warehouse = get_supplier_and_warehouse(filters)
     warehouse_box = warehouse_qty(warehouse)
     po_box = remove_negative(['box_qty', 'planned_qty'], get_supplierwise_po(supplier))
 

@@ -7,6 +7,7 @@ from frappe.model.document import Document
 class ReportFullAccessUsers(Document):
 	pass
 
+@frappe.whitelist()
 def get_wildcard_users():
     users= frappe.get_all(
 			"Report Full Access Users",
