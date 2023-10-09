@@ -16,24 +16,24 @@ date = getdate('1-1-1')
 def execute(filters=None):
     return columns(filters), join(filters)
 
-def get_supplier_and_warehouse(filters=None) -> str:
+def get_supplier_and_warehouse(filters=None, s='', w='') -> str:
     user = frappe.session.user
-    supplier = ''
-    warehouse = ''
+    supplier = s
+    warehouse = w
     if user == 'production.jaiambey2024@gmail.com':
         supplier = 'Jai Ambey Industries'
-        warehouse = 'Jai Ambey Industries - Rapl'
+        warehouse = 'Jai Ambey Industries - RAPL'
     elif user in ['ppic@amitprintpack.com', 'appdispatch01@gmail.com']:
         supplier = "Amit Print 'N' Pack, Kishanpura, Baddi"
         warehouse = "Amit Print 'N' Pack - RAPL"
     elif user in get_wildcard_users() and filters.get('supplier'):
         if filters.get('supplier') == 'Jai Ambey Industries':
             supplier = 'Jai Ambey Industries'
-            warehouse = 'Jai Ambey Industries - Rapl'
+            warehouse = 'Jai Ambey Industries - RAPL'
         elif filters.get('supplier') == "Amit Print 'N' Pack, Kishanpura, Baddi":
             supplier = "Amit Print 'N' Pack, Kishanpura, Baddi"
             warehouse = "Amit Print 'N' Pack - RAPL"
-    
+    print(supplier, warehouse)
     return supplier, warehouse
 
 
@@ -52,7 +52,7 @@ def get_supplierwise_po(supplier: str) -> dict:
     poi = DocType('Purchase Order Item')
     po = DocType('Purchase Order')
     url = get_url()
-    jai_ambey_po_query = (
+    query = (
         frappe.qb
         .from_(poi)
         .left_join(po)
@@ -83,14 +83,14 @@ def get_supplierwise_po(supplier: str) -> dict:
         )
         .groupby(poi.item_code)
     )
-    return jai_ambey_po_query.run(as_dict=True)
+    return query.run(as_dict=True)
 
 def mapper(data: list) -> dict:
     return {item['box']: item for item in data}
 
 def join(filters=None):
     all_box = all_boxes()
-    supplier, warehouse = get_supplier_and_warehouse(filters)
+    supplier, warehouse = get_supplier_and_warehouse(filters=filters)
     warehouse_box = mapper(warehouse_qty(warehouse))
     po_box = mapper(get_supplierwise_po(supplier))
 
