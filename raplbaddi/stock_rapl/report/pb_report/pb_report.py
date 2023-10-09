@@ -45,8 +45,6 @@ def join(filters=None):
     amit_warehouse_box_mapping = {item['box']: item for item in amit_warehouse_box}
     amit_po_box_mapping = {item['box']: item for item in amit_po_box}
 
-    filtered_box = []
-
     for box in all_box:
         box_name = box['box']
         
@@ -85,7 +83,6 @@ def join(filters=None):
             box['amit_box_qty'] = amit_po_box_mapping[box_name]['box_qty']
             box['amit_planned_qty'] = amit_po_box_mapping[box_name]['planned_qty']
             box['amit_po'] = jai_ambey_po_box_mapping[box_name]['po_name']
-            if box['amit_planned_qty'] < 
         else:
             box['amit_box_qty'] = 0.0
             box['amit_planned_qty'] = 0.0

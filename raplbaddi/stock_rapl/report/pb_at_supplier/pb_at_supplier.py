@@ -47,6 +47,7 @@ def all_boxes() -> dict:
     )
     return box_query.run(as_dict=True)
 
+
 def get_supplierwise_po(supplier: str) -> dict:
     poi = DocType('Purchase Order Item')
     po = DocType('Purchase Order')
@@ -60,9 +61,22 @@ def get_supplierwise_po(supplier: str) -> dict:
         .where(po.docstatus == 1)
         .where(po.status != 'Closed')
         .select(
-            Sum(poi.qty - poi.received_qty).as_('box_qty'),
+            Sum(Case()
+                .when(
+                    (poi.qty - poi.received_qty) < 0, (poi.qty - poi.received_qty) - (poi.qty - poi.received_qty))
+                .else_((poi.qty - poi.received_qty))
+                ).as_('box_qty'),
             poi.item_code.as_('box'),
-            Sum(poi.planned_dispatch_qty - poi.received_qty).as_('planned_qty'),
+            Sum(Case()
+                .when(
+                    (poi.planned_dispatch_qty - poi.received_qty) < 0, (poi.planned_dispatch_qty - poi.received_qty) - (poi.planned_dispatch_qty - poi.received_qty))
+                .else_((poi.planned_dispatch_qty - poi.received_qty))
+                ).as_('planned_qty'),
+            (Case()
+                .when(
+                    Sum(poi.planned_dispatch_qty - poi.received_qty) < 0, Sum(poi.received_qty - poi.planned_dispatch_qty))
+                .else_(0)
+                ).as_('over_dispatch'),
             po.transaction_date.as_('po_date'),
             GroupConcat(Concat('<a href="', url,'/app/purchase-order/', po.name, '">', po.name, '</a>')).as_('po_name'),
             Sum(poi.received_qty).as_('received_qty')
@@ -71,29 +85,32 @@ def get_supplierwise_po(supplier: str) -> dict:
     )
     return jai_ambey_po_query.run(as_dict=True)
 
+def mapper(data: list) -> dict:
+    return {item['box']: item for item in data}
+
 def join(filters=None):
     all_box = all_boxes()
     supplier, warehouse = get_supplier_and_warehouse(filters)
-    warehouse_box = warehouse_qty(warehouse)
-    po_box = remove_negative(['box_qty', 'planned_qty'], get_supplierwise_po(supplier))
+    warehouse_box = mapper(warehouse_qty(warehouse))
+    po_box = mapper(get_supplierwise_po(supplier))
 
-    warehouse_box_mapping = {item['box']: item for item in warehouse_box}
-    po_box_mapping = {item['box']: item for item in po_box}
 
     filtered_box = []
 
     for box in all_box:
         box_name = box['box']
 
-        if box_name in warehouse_box_mapping:
-            box['warehouse_qty'] = warehouse_box_mapping[box_name]['warehouse_qty']
+        if box_name in warehouse_box:
+            box['warehouse_qty'] = warehouse_box[box_name]['warehouse_qty']
         else:
             box['warehouse_qty'] = 0.0
 
-        if box_name in po_box_mapping:
-            box['box_qty'] = po_box_mapping[box_name]['box_qty']
-            box['planned_qty'] = po_box_mapping[box_name]['planned_qty']
-            box['po_date'] = po_box_mapping[box_name]['po_date']
+        if box_name in po_box:
+            box['box_qty'] = po_box[box_name]['box_qty']
+            box['planned_qty'] = po_box[box_name]['planned_qty']
+            box['over_dispatch'] = po_box[box_name]['over_dispatch']
+            box['po_name'] = po_box[box_name]['po_name']
+            box['po_date'] = po_box[box_name]['po_date']
         else:
             box['box_qty'] = 0.0
             box['planned_qty'] = 0.0
@@ -103,7 +120,6 @@ def join(filters=None):
             filtered_box.append(box)
 
     filtered_box.sort(key=lambda x: x['po_date'], reverse=True)
-
     return filtered_box
 
 def remove_negative(keys: list, data: list[dict]) -> dict:
@@ -135,5 +151,7 @@ def columns(filters=None):
         {"label": "Stock", "fieldtype": "Int", "width": 60, "fieldname": "warehouse_qty"},
         {"label": "Production Order", "fieldtype": "Int", "width": 100, "fieldname": 'box_qty'},
         {"label": "Dispatch Order", "fieldtype": "Int", "width": 100, "fieldname": 'planned_qty'},
+        {"label": "Over Dispatch", "fieldtype": "Int", "width": 100, "fieldname": 'over_dispatch'},
+        {"label": "PO", "fieldtype": "Html", "width": 100, "fieldname": 'po_name'}
     ]
    return cols
