@@ -8,6 +8,8 @@ from pypika.terms import Case, Not, Field, Order
 from frappe.query_builder import AliasedQuery
 from frappe.utils import getdate
 from raplbaddi.datarapl.doctype.report_full_access_users.report_full_access_users import get_wildcard_users
+from frappe.query_builder.functions import Concat, Sum, GroupConcat
+from frappe.utils import get_url
 
 date = getdate('1-1-1')
 
@@ -21,7 +23,7 @@ def get_supplier_and_warehouse(filters=None) -> str:
     if user == 'production.jaiambey2024@gmail.com':
         supplier = 'Jai Ambey Industries'
         warehouse = 'Jai Ambey Industries - Rapl'
-    elif user == 'ppic@amitprintpack.com':
+    elif user in ['ppic@amitprintpack.com', 'appdispatch01@gmail.com']:
         supplier = "Amit Print 'N' Pack, Kishanpura, Baddi"
         warehouse = "Amit Print 'N' Pack - RAPL"
     elif user in get_wildcard_users() and filters.get('supplier'):
@@ -48,6 +50,7 @@ def all_boxes() -> dict:
 def get_supplierwise_po(supplier: str) -> dict:
     poi = DocType('Purchase Order Item')
     po = DocType('Purchase Order')
+    url = get_url()
     jai_ambey_po_query = (
         frappe.qb
         .from_(poi)
@@ -60,7 +63,9 @@ def get_supplierwise_po(supplier: str) -> dict:
             Sum(poi.qty - poi.received_qty).as_('box_qty'),
             poi.item_code.as_('box'),
             Sum(poi.planned_dispatch_qty - poi.received_qty).as_('planned_qty'),
-            po.transaction_date.as_('po_date') 
+            po.transaction_date.as_('po_date'),
+            GroupConcat(Concat('<a href="', url,'/app/purchase-order/', po.name, '">', po.name, '</a>')).as_('po_name'),
+            Sum(poi.received_qty).as_('received_qty')
         )
         .groupby(poi.item_code)
     )

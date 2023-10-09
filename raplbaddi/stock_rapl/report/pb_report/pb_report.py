@@ -4,15 +4,16 @@
 import frappe
 from raplbaddi.stock_rapl.report.pb_at_supplier.pb_at_supplier import all_boxes, get_supplier_and_warehouse, remove_negative, get_supplierwise_po, warehouse_qty, date
 from frappe.query_builder import DocType
-from frappe.query_builder.functions import Count, Sum
+from frappe.query_builder.functions import Concat, Sum, GroupConcat
+from frappe.utils import get_url
 
 def execute(filters=None):
     return columns(), join()
 
-
 def so_qty() -> dict:
     so = DocType('Sales Order')
     soi = DocType('Sales Order Item')
+    url = get_url()
     so_query = (
         frappe.qb
         .from_(so)
@@ -20,7 +21,8 @@ def so_qty() -> dict:
         .on(so.name == soi.parent)
         .select(
             Sum(soi.qty - soi.delivered_qty).as_('so_qty'),
-            soi.custom_box.as_('box')
+            soi.custom_box.as_('box'),
+            GroupConcat(Concat('<a href="', url,'/app/sales-order/', so.name, '">', so.name, '</a>')).as_('so_name')
         )
         .groupby(soi.custom_box)
     )
@@ -50,6 +52,8 @@ def join(filters=None):
         
         if box_name in so_box_mapping:
             box['so_qty'] = so_box_mapping[box_name]['so_qty']
+            box['so_name'] = so_box_mapping[box_name]['so_name']
+            print(box['so_name'])
         else:
             box['so_qty'] = 0.0
         
@@ -66,6 +70,7 @@ def join(filters=None):
         if box_name in jai_ambey_po_box_mapping:
             box['jai_ambey_box_qty'] = jai_ambey_po_box_mapping[box_name]['box_qty']
             box['jai_ambey_planned_qty'] = jai_ambey_po_box_mapping[box_name]['planned_qty']
+            box['jai_ambey_po'] = jai_ambey_po_box_mapping[box_name]['po_name']
         else:
             box['jai_ambey_box_qty'] = 0.0
             box['jai_ambey_planned_qty'] = 0.0
@@ -79,6 +84,8 @@ def join(filters=None):
         if box_name in amit_po_box_mapping:
             box['amit_box_qty'] = amit_po_box_mapping[box_name]['box_qty']
             box['amit_planned_qty'] = amit_po_box_mapping[box_name]['planned_qty']
+            box['amit_po'] = jai_ambey_po_box_mapping[box_name]['po_name']
+            if box['amit_planned_qty'] < 
         else:
             box['amit_box_qty'] = 0.0
             box['amit_planned_qty'] = 0.0
@@ -101,6 +108,9 @@ def columns(filters=None):
             {"label": "Production Amit", "fieldtype": "Int", "width": 100, "fieldname": 'amit_box_qty'},
             {"label": "Dispatch Amit", "fieldtype": "Int", "width": 100, "fieldname": 'amit_planned_qty'},
             {"label": "MSL", "fieldtype": "Int", "width": 100, "fieldname": 'msl', 'disable_total': True},
-            {"label": "Shortage", "fieldtype": "Int", "width": 100, "fieldname": 'short_qty'}
+            {"label": "Shortage", "fieldtype": "Int", "width": 100, "fieldname": 'short_qty'},
+            {"label": "SOs", "fieldtype": "HTML", "width": 100, "fieldname": 'so_name'},
+            {"label": "POs Amit", "fieldtype": "HTML", "width": 100, "fieldname": 'amit_po'},
+            {"label": "POs JAI", "fieldtype": "HTML", "width": 100, "fieldname": 'jai_ambey_po'}
     ]
     return cols
