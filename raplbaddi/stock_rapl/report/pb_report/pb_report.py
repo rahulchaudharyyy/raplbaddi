@@ -19,6 +19,9 @@ def so_qty() -> dict:
         .from_(so)
         .left_join(soi)
         .on(so.name == soi.parent)
+        .where(so.docstatus == 1)
+        .where(so.status.notin(['Stopped', 'Closed']))
+        .where((soi.qty - soi.delivered_qty) > 0)
         .select(
             Sum(soi.qty - soi.delivered_qty).as_('so_qty'),
             soi.custom_box.as_('box'),
@@ -89,6 +92,7 @@ def join(filters=None):
             if box['short_qty'] <= 0:
                 box['short_qty'] = 0
     
+    all_box.sort(key=lambda x: x['short_qty'], reverse=True)
     return all_box
 
 def columns(filters=None):
