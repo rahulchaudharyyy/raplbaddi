@@ -1,95 +1,81 @@
 # Copyright (c) 2013, Frappe Technologies Pvt. Ltd. and contributors
 # For license information, please see license.txt
 
-
 import copy
-
 import frappe
 from frappe import _
 from frappe.query_builder.functions import Coalesce, Sum
 from frappe.utils import cint, date_diff, flt, getdate
-
+from raplbaddi.datarapl.doctype.report_full_access_users.report_full_access_users import permission_decorator
 
 def execute(filters=None):
-	if not filters:
-		return [], []
+    if not filters:
+        return [], []
 
-	validate_filters(filters)
+    s = filters.get('supplier')
+    validate_filters(filters)
 
-	columns = get_columns(filters)
-	data = get_data(filters)
+    columns = get_columns(filters)
+    data = run(filters)
 
-	# prepare data for report and chart views
-	data, chart_data = prepare_data(data, filters)
-
-	return columns, data, None, chart_data
-
+    data, chart_data = prepare_data(data, filters)
+    return columns, data, None, chart_data
 
 def validate_filters(filters):
-	from_date, to_date = filters.get("from_date"), filters.get("to_date")
+    from_date, to_date = filters.get("from_date"), filters.get("to_date")
 
-	if not from_date and to_date:
-		frappe.throw(_("From and To Dates are required."))
-	elif date_diff(to_date, from_date) < 0:
-		frappe.throw(_("To Date cannot be before From Date."))
+    if not from_date or not to_date:
+        frappe.throw(_("From and To Dates are required. Please specify both dates."))
+    elif date_diff(to_date, from_date) < 0:
+        frappe.throw(_("To Date cannot be before From Date."))
 
-def get_data(filters):
-	mr = frappe.qb.DocType("Material Request")
-	mr_item = frappe.qb.DocType("Material Request Item")
-
-	query = (
-		frappe.qb.from_(mr)
-		.join(mr_item)
-		.on(mr_item.parent == mr.name)
-		.select(
-			mr.name.as_("material_request"),
-			mr.transaction_date.as_("date"),
-			mr_item.schedule_date.as_("required_date"),
-			mr_item.item_code.as_("item_code"),
-			Sum(Coalesce(mr_item.qty, 0)).as_("qty"),
-			Sum(Coalesce(mr_item.stock_qty, 0)).as_("stock_qty"),
-			Coalesce(mr_item.uom, "").as_("uom"),
-			Coalesce(mr_item.stock_uom, "").as_("stock_uom"),
-			Sum(Coalesce(mr_item.ordered_qty, 0)).as_("ordered_qty"),
-			Sum(Coalesce(mr_item.received_qty, 0)).as_("received_qty"),
-			(Sum(Coalesce(mr_item.stock_qty, 0)) - Sum(Coalesce(mr_item.received_qty, 0))).as_(
-				"qty_to_receive"
-			),
-			Sum(Coalesce(mr_item.received_qty, 0)).as_("received_qty"),
-			(Sum(Coalesce(mr_item.stock_qty, 0)) - Sum(Coalesce(mr_item.ordered_qty, 0))).as_(
-				"qty_to_order"
-			),
-			mr_item.item_name,
-			mr_item.description,
-			mr.company,
+def run(filters):
+	@permission_decorator(doc='Supplier', value=filters.get('supplier'), user=frappe.session.user)
+	def get_data(filters):
+		mr = frappe.qb.DocType("Material Request")
+		mr_item = frappe.qb.DocType("Material Request Item")
+		query = (
+			frappe.qb.from_(mr)
+			.join(mr_item)
+			.on(mr_item.parent == mr.name)
+			.select(
+				mr.name.as_("material_request"),
+				mr.transaction_date.as_("date"),
+				mr_item.schedule_date.as_("required_date"),
+				mr_item.item_code.as_("item_code"),
+				Sum(Coalesce(mr_item.qty, 0)).as_("qty"),
+				Sum(Coalesce(mr_item.stock_qty, 0)).as_("stock_qty"),
+				Coalesce(mr_item.uom, "").as_("uom"),
+				Coalesce(mr_item.stock_uom, "").as_("stock_uom"),
+				Sum(Coalesce(mr_item.ordered_qty, 0)).as_("ordered_qty"),
+				Sum(Coalesce(mr_item.received_qty, 0)).as_("received_qty"),
+				(Sum(Coalesce(mr_item.stock_qty, 0)) - Sum(Coalesce(mr_item.received_qty, 0))).as_("qty_to_receive"),
+				Sum(Coalesce(mr_item.received_qty, 0)).as_("received_qty"),
+				(Sum(Coalesce(mr_item.stock_qty, 0)) - Sum(Coalesce(mr_item.ordered_qty, 0))).as_("qty_to_order"),
+				mr_item.item_name,
+				mr_item.description,
+				mr.company,
+			)
+			.where(
+				(mr.material_request_type == "Purchase")
+				& (mr.docstatus == 1)
+				& (mr.status != "Stopped")
+				& (mr.per_received < 100)
+			)
 		)
-		.where(
-			(mr.material_request_type == "Purchase")
-			& (mr.docstatus == 1)
-			& (mr.status != "Stopped")
-			& (mr.per_received < 100)
-		)
-	)
 
-	query = get_conditions(filters, query, mr, mr_item)  # add conditional conditions
+		query = get_conditions(filters, query, mr, mr_item)  # add conditional conditions
 
-	query = query.groupby(mr.name, mr_item.item_code).orderby(mr.transaction_date, mr.schedule_date)
-	data = query.run(as_dict=True)
-	return data
-
-
-def get_supplier():
-	if frappe.session.user in ['ppic@amitprintpack.com, appdispatch01@gmail.com']:
-		return "Amit Print 'N' Pack, Kishanpura, Baddi"
-		print('Amit')
-	if frappe.session.user in ['production.jaiambey2024@gmail.com']:
-		print('Amit')
-		return 'Jai Ambey Industries'
+		query = query.groupby(mr.name, mr_item.item_code).orderby(mr.transaction_date, mr.schedule_date)
+		data = query.run(as_dict=True)
+		return data
+	return get_data(filters)
 
 def get_conditions(filters, query, mr, mr_item):
-	query = query.where(
-		mr.custom_supplier == get_supplier()
-	)
+	if(filters.get('supplier') != 'All'):
+		query = query.where(
+			mr.custom_supplier == filters.get('supplier')
+		)
 	if filters.get("from_date") and filters.get("to_date"):
 		query = query.where(
 			(mr.transaction_date >= filters.get("from_date"))
@@ -106,12 +92,10 @@ def get_conditions(filters, query, mr, mr_item):
 
 	return query
 
-
 def update_qty_columns(row_to_update, data_row):
-	fields = ["qty", "stock_qty", "ordered_qty", "received_qty", "qty_to_receive", "qty_to_order"]
-	for field in fields:
-		row_to_update[field] += flt(data_row[field])
-
+    fields = ["qty", "stock_qty", "ordered_qty", "received_qty", "qty_to_receive", "qty_to_order"]
+    for field in fields:
+        row_to_update[field] += flt(data_row[field])
 
 def prepare_data(data, filters):
 	"""Prepare consolidated Report data and Chart data"""
@@ -160,7 +144,7 @@ def prepare_data(data, filters):
 
 
 def prepare_chart_data(item_data):
-	labels, qty_to_order, ordered_qty, received_qty, qty_to_receive = [], [], [], [], []
+	labels, qty, ordered_qty, received_qty, qty_to_receive = [], [], [], [], []
 
 	if len(item_data) > 30:
 		item_data = dict(list(item_data.items())[:30])
@@ -168,7 +152,7 @@ def prepare_chart_data(item_data):
 	for row in item_data:
 		mr_row = item_data[row]
 		labels.append(row)
-		qty_to_order.append(mr_row["qty_to_order"])
+		qty.append(mr_row["qty"])
 		ordered_qty.append(mr_row["ordered_qty"])
 		received_qty.append(mr_row["received_qty"])
 		qty_to_receive.append(mr_row["qty_to_receive"])
@@ -177,10 +161,10 @@ def prepare_chart_data(item_data):
 		"data": {
 			"labels": labels,
 			"datasets": [
-				{"name": _("Qty to Order"), "values": qty_to_order},
+				{"name": _("Qty For Production"), "values": qty},
 				{"name": _("Ordered Qty"), "values": ordered_qty},
-				{"name": _("Received Qty"), "values": received_qty},
-				{"name": _("Qty to Receive"), "values": qty_to_receive},
+				{"name": _("Qty Received"), "values": received_qty},
+				{"name": _("Qty Remaining For Dispatch"), "values": qty_to_receive},
 			],
 		},
 		"type": "bar",
@@ -244,14 +228,7 @@ def get_columns(filters):
 				"fieldtype": "Float",
 				"width": 120,
 				"convertible": "qty",
-			},
-			{
-				"label": _("Qty to Order"),
-				"fieldname": "qty_to_order",
-				"fieldtype": "Float",
-				"width": 120,
-				"convertible": "qty",
-			},
+			}
 		]
 	)
 

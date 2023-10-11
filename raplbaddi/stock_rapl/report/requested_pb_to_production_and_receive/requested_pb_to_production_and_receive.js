@@ -20,7 +20,8 @@ frappe.query_reports["Requested PB to Production and Receive"] = {
 			"fieldtype": "Link",
 			"width": "80",
 			"options": "Supplier",
-			"default": get_default_supplier(frappe.session.user)
+			"default": get_default_supplier(frappe.session.user),
+			"reqd": 1
 		},
 		{
 			"fieldname": "from_date",
