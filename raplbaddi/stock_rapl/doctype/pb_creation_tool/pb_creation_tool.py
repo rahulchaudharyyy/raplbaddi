@@ -1,5 +1,6 @@
 import frappe
 from frappe.model.document import Document
+from frappe.exceptions import LinkValidationError
 
 class PBCreationTool(Document):
     def get_item_code(self, item, item_type):
@@ -10,32 +11,14 @@ class PBCreationTool(Document):
         
         return item_code_formats.get(item_type)
     
-    def get_total_safety_stock(self, i):
-        for item in self.items:
-            safety_stock_list = [item.safety_stock for item in self.items if i.paper_name == item.paper_name]
-        return sum(safety_stock_list)
-                
-    
-    def validate(self):
-        for item in self.items:
-            try:
-                box_code = self.get_item_code(item, item_type='Box')
-                box = frappe.get_doc("Item", box_code)
-                item.box = box.name
-            except frappe.exceptions.DoesNotExistError:
-                item.box = ''
-
-            try:
-                paper_code = self.get_item_code(item, item_type='Paper')
-                paper = frappe.get_doc("Item", paper_code)
-                item.paper = paper.paper
-            except frappe.exceptions.DoesNotExistError:
-                item.paper = ''
-   
+    def paper_safety_stock(self, i):
+        safety_stock_list = [item.safety_stock for item in self.items if i.paper_name == item.paper_name]
+        return sum(safety_stock_list)   
+  
     def before_submit(self):
         for item in self.items:
             box_code, paper_code = self.get_item_code(item, item_type='Box'), self.get_item_code(item, item_type='Paper')
-            box, paper = self.get_or_create_item(box_code, paper_code, item, self.get_total_safety_stock(item))
+            box, paper = self.get_or_create_item(box_code, paper_code, item, self.paper_safety_stock(item))
             if not item.box_enabled:
                 box.disabled = True
             box.save(), paper.save()
@@ -43,9 +26,9 @@ class PBCreationTool(Document):
     
     def on_update_after_submit(self):
         for item in self.items:
-            box_code, paper_code = self.get_item_code(item, item_type='Box'), self.get_item_code(item, item_type='Paper')
+            box_code, paper_code = item.box, item.paper
             enable_paper = False if len([item.box_enabled for item in self.items if item.box_enabled]) == 0 else True
-            box, paper = self.get_or_create_item(box_code, paper_code, item, self.get_total_safety_stock(item))
+            box, paper = self.get_or_create_item(box_code, paper_code, item, self.paper_safety_stock(item))
             if not item.box_enabled:
                 box.disabled = True
             paper.disabled = not enable_paper
@@ -66,7 +49,7 @@ class PBCreationTool(Document):
         item.box = box.name
         item.paper = paper.name
         box.disabled = not item.box_enabled
-        box.safety_stock = item.safety_stock if box.safety_stock == 0 else box.safety_stock
+        box.safety_stock = item.safety_stock if box.safety_stock == 0 and self.docstatus == 0 else box.safety_stock
         paper.safety_stock = total_safety_stock
         return box, paper
 
@@ -89,3 +72,13 @@ class PBCreationTool(Document):
             item.plain_box_type = self.box_particular
         item.save()
         return item
+
+    def on_cancel(self):
+        for item in self.items:
+            self.disable_item(item.box)
+            self.disable_item(item.paper)
+ 
+    def disable_item(self, item_code):
+        box = frappe.get_doc("Item", item_code)
+        box.disabled = 1
+        box.save()

@@ -11,12 +11,26 @@ frappe.ui.form.on('PB Creation Tool', {
             };
         });
     },
+    validate(frm){
+        frm.doc.items.forEach((e) =>{
+            if(e.paper) {
+                frappe.db.exists('Item', e.paper).then(r => {
+                    console.log(r)
+                    if(!r) {
+                        e.paper = ''
+                        frm.refresh_field('items', 'paper')
+                    }
+                })
+            }
+            })
+    },
 
     box_particular(frm) {
         frappe.db.get_doc(frm.doc.box_type, frm.doc.box_particular).then(r => frm.set_value('paper_names', r.paper_names))
         frm.refresh_field('paper_names')
     },
     create_box(frm) {
+        frm.doc.items = []
         create_box(frm)
     }
 });
