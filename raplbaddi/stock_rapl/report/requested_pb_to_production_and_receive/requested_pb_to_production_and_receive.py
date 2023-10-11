@@ -74,7 +74,7 @@ def run(filters):
 def get_conditions(filters, query, mr, mr_item):
 	if(filters.get('supplier') != 'All'):
 		query = query.where(
-			mr.custom_supplier == filters.get('supplier')
+			mr.supplier== filters.get('supplier')
 		)
 	if filters.get("from_date") and filters.get("to_date"):
 		query = query.where(
