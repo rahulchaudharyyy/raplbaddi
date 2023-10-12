@@ -75,6 +75,12 @@ frappe.query_reports["Requested PB to Production and Receive"] = {
 			"label": __("Group by Material Request"),
 			"fieldtype": "Check",
 			"default": 0
+		},
+		{
+			"fieldname": "group_by_item",
+			"label": __("Group by Item"),
+			"fieldtype": "Check",
+			"default": 1
 		}
 	],
 

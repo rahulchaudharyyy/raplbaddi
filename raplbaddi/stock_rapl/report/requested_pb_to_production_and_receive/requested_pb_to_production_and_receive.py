@@ -12,7 +12,6 @@ def execute(filters=None):
     if not filters:
         return [], []
 
-    s = filters.get('supplier')
     validate_filters(filters)
 
     columns = get_columns(filters)
@@ -22,8 +21,10 @@ def execute(filters=None):
     return columns, data, None, chart_data
 
 def validate_filters(filters):
+    print(filters)
+    if filters.get('group_by_item') and filters.get('group_by_mr'):
+        frappe.throw('Either Group by Item or Production Requested Can be Selected')
     from_date, to_date = filters.get("from_date"), filters.get("to_date")
-
     if not from_date or not to_date:
         frappe.throw(_("From and To Dates are required. Please specify both dates."))
     elif date_diff(to_date, from_date) < 0:
@@ -101,7 +102,7 @@ def prepare_data(data, filters):
 	"""Prepare consolidated Report data and Chart data"""
 	material_request_map, item_qty_map = {}, {}
 	precision = cint(frappe.db.get_default("float_precision")) or 2
-
+	print(data)
 	for row in data:
 		# item wise map for charts
 		if not row["item_code"] in item_qty_map:
@@ -132,9 +133,27 @@ def prepare_data(data, filters):
 				# sum numeric columns
 				update_qty_columns(mr_row, row)
 
+		if filters.get("group_by_item"):
+			# consolidated material request map for group by filter
+			if not row["item_code"] in material_request_map:
+				# create an entry with mr as key
+				row_copy = copy.deepcopy(row)
+				material_request_map[row["item_code"]] = row_copy
+			else:
+				mr_row = material_request_map[row["item_code"]]
+				mr_row["required_date"] = min(getdate(mr_row["required_date"]), getdate(row["required_date"]))
+
+				# sum numeric columns
+				update_qty_columns(mr_row, row)
+
 	chart_data = prepare_chart_data(item_qty_map)
 
 	if filters.get("group_by_mr"):
+		data = []
+		for mr in material_request_map:
+			data.append(material_request_map[mr])
+		return data, chart_data
+	if filters.get("group_by_item"):
 		data = []
 		for mr in material_request_map:
 			data.append(material_request_map[mr])
@@ -176,16 +195,21 @@ def prepare_chart_data(item_data):
 
 def get_columns(filters):
 	columns = [
-		{
-			"label": _("Production Request"),
-			"fieldname": "material_request",
-			"fieldtype": "Link",
-			"options": "Material Request",
-			"width": 150,
-		},
 		{"label": _("Date"), "fieldname": "date", "fieldtype": "Date", "width": 120},
 	]
 
+	if not filters.get("group_by_item"):
+		columns.extend(
+			[
+				{
+					"label": _("Production Request"),
+					"fieldname": "material_request",
+					"fieldtype": "Link",
+					"options": "Material Request",
+					"width": 150,
+				}
+			]
+		)
 	if not filters.get("group_by_mr"):
 		columns.extend(
 			[
