@@ -206,4 +206,4 @@ override_whitelisted_methods = {
 	"erpnext.selling.doctype.sales_order.sales_order.make_delivery_note": "raplbaddi.overrides.make_delivery_note"
 }
 
-fixtures = ["Custom Field"]
+fixtures = ["Custom Field", "Custom DocPerm"]
