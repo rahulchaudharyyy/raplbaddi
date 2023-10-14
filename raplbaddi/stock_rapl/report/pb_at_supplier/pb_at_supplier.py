@@ -42,9 +42,9 @@ def all_boxes() -> dict:
     supplier_priority = DocType('Supplier Priority')
     box_query = (
         frappe.qb
-        .from_(items).join(supplier_priority).on(items.name == supplier_priority.parent)
+        .from_(items)
         .where(items.item_group == "Packing Boxes").where(items.disabled == 0)
-        .select(items.name.as_('box'), items.safety_stock.as_('msl'), supplier_priority.supplier, supplier_priority.priority)
+        .select(items.name.as_('box'), items.safety_stock.as_('msl'))
     )
     return box_query.run(as_dict=True)
 
@@ -141,7 +141,8 @@ def warehouse_qty(warehouse: str) -> dict:
         .where(bin.warehouse == warehouse)
         .select(
             bin.actual_qty.as_('warehouse_qty'),
-            item.name.as_('box')
+            item.name.as_('box'),
+            bin.projected_qty.as_('projected_qty')
         )
     )
     return remove_negative(['warehouse_qty'], qty_query.run(as_dict=True))

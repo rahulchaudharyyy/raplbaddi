@@ -21,7 +21,6 @@ def execute(filters=None):
     return columns, data, None, chart_data
 
 def validate_filters(filters):
-    print(filters)
     if filters.get('group_by_item') and filters.get('group_by_mr'):
         frappe.throw('Either Group by Item or Production Requested Can be Selected')
     from_date, to_date = filters.get("from_date"), filters.get("to_date")
@@ -43,6 +42,7 @@ def run(filters):
 				mr.name.as_("material_request"),
 				mr.transaction_date.as_("date"),
 				mr_item.schedule_date.as_("required_date"),
+				mr.supplier.as_("supplier"),
 				mr_item.item_code.as_("item_code"),
 				Sum(Coalesce(mr_item.qty, 0)).as_("qty"),
 				Sum(Coalesce(mr_item.stock_qty, 0)).as_("stock_qty"),
@@ -102,7 +102,6 @@ def prepare_data(data, filters):
 	"""Prepare consolidated Report data and Chart data"""
 	material_request_map, item_qty_map = {}, {}
 	precision = cint(frappe.db.get_default("float_precision")) or 2
-	print(data)
 	for row in data:
 		# item wise map for charts
 		if not row["item_code"] in item_qty_map:
@@ -252,6 +251,12 @@ def get_columns(filters):
 				"fieldtype": "Float",
 				"width": 120,
 				"convertible": "qty",
+			},
+			{
+				"label": _("Supplier"),
+				"fieldname": "supplier",
+				"fieldtype": "Data",
+				"width": 120,
 			}
 		]
 	)

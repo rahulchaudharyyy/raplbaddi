@@ -41,7 +41,7 @@ class PBCreationTool(Document):
         item.paper = paper.name
         box.disabled = not item.box_enabled
         box.safety_stock = item.safety_stock if box.safety_stock == 0 and self.docstatus == 0 else box.safety_stock
-        paper.safety_stock = total_safety_stock
+        box.custom_paper_name, paper.custom_paper_name = item.paper_name, item.paper_name
         return box, paper
 
     def create_item(self, box_code, i):
@@ -54,6 +54,7 @@ class PBCreationTool(Document):
         item.geyser_model = i.model
         item.capacity = i.capacity,
         item.safety_stock = i.safety_stock if item.item_group == 'Packing Boxes' else i.safety_stock * (i.paper_name.count('-') + 1)
+        item.paper_name = i.paper_name
         item.stock_uom = 'Nos' if item.item_group == 'Packing Boxes' else 'Set 2'
         item.is_stock_item = 1
         item.append("item_defaults", {"default_warehouse": 'Packing Boxes - Rapl', "company": 'Real Appliances Private Limited'})

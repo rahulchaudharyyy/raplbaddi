@@ -106,8 +106,10 @@ def join(filters=None):
         
         if box_name in rapl_warehouse_box_mapping:
             box['stock_rapl'] = rapl_warehouse_box_mapping[box_name]['warehouse_qty']
+            box['projected_rapl'] = rapl_warehouse_box_mapping[box_name]['projected_qty']
         else:
             box['stock_rapl'] = 0.0
+            box['projected_rapl'] = 0.0
 
         if box_name in jai_ambey_warehouse_box:
             box['stock_jai_ambey'] = jai_ambey_warehouse_box[box_name]['warehouse_qty']
@@ -144,6 +146,7 @@ def columns(filters=None):
             {"label": "JAI Stock", "fieldtype": "Int", "width": 60, "fieldname": "stock_jai_ambey"},
             {"label": "Amit Stock", "fieldtype": "Int", "width": 60, "fieldname": "stock_amit"},
             {"label": "Rapl Stock", "fieldtype": "Int", "width": 60, "fieldname": "stock_rapl"},
+            {"label": "Σ Projected", "fieldtype": "Int", "width": 60, "fieldname": "projected_rapl"},
             {"label": "SO", "fieldtype": "Int", "width": 60, "fieldname": "so_qty"},
             {"label": "Production JAI", "fieldtype": "Int", "width": 100, "fieldname": 'production_jai_ambey'},
             {"label": "Dispatch JAI", "fieldtype": "Int", "width": 100, "fieldname": 'dispatch_jai_ambey'},
@@ -153,8 +156,6 @@ def columns(filters=None):
             {"label": "Shortage", "fieldtype": "Int", "width": 100, "fieldname": 'short_qty'},
             {"label": "SOs", "fieldtype": "HTML", "width": 100, "fieldname": 'so_name'},
             {"label": "POs Amit", "fieldtype": "HTML", "width": 100, "fieldname": 'po_name_amit'},
-            {"label": "POs JAI", "fieldtype": "HTML", "width": 100, "fieldname": 'po_name_jai_ambey'},
-            {"label": "POs JAI", "fieldtype": "Data", "width": 100, "fieldname": 'supplier'},
-            {"label": "POs JAI", "fieldtype": "Int", "width": 100, "fieldname": 'priority'}
+            {"label": "POs JAI", "fieldtype": "HTML", "width": 100, "fieldname": 'po_name_jai_ambey'}
     ]
     return cols
