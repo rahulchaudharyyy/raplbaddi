@@ -137,6 +137,11 @@ def join(filters=None):
             box['short_qty'] = (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai_ambey'] + box['stock_amit'] + box['production_amit'] + box['production_jai_ambey'])
             if box['short_qty'] <= 0:
                 box['short_qty'] = 0
+            box['dispatch_need_to_complete_so'] = box['stock_rapl'] - box['so_qty'] + box['dispatch_jai_ambey'] + box['dispatch_amit']
+            if box['dispatch_need_to_complete_so'] < 0:
+                box['dispatch_need_to_complete_so'] = - box['dispatch_need_to_complete_so']
+            else:
+                box['dispatch_need_to_complete_so'] = 0
     
     all_box.sort(key=lambda x: x['short_qty'], reverse=True)
     return all_box
@@ -146,6 +151,7 @@ def columns(filters=None):
             {"label": "JAI Stock", "fieldtype": "Int", "width": 60, "fieldname": "stock_jai_ambey"},
             {"label": "Amit Stock", "fieldtype": "Int", "width": 60, "fieldname": "stock_amit"},
             {"label": "Rapl Stock", "fieldtype": "Int", "width": 60, "fieldname": "stock_rapl"},
+            {"label": "Dispatch Need SO", "fieldtype": "Int", "width": 100, "fieldname": 'dispatch_need_to_complete_so'},
             {"label": "Σ Projected", "fieldtype": "Int", "width": 60, "fieldname": "projected_rapl"},
             {"label": "SO", "fieldtype": "Int", "width": 60, "fieldname": "so_qty"},
             {"label": "Production JAI", "fieldtype": "Int", "width": 100, "fieldname": 'production_jai_ambey'},
