@@ -39,11 +39,12 @@ def get_supplier_and_warehouse(filters=None, s='', w='') -> str:
 
 def all_boxes() -> dict:
     items = DocType('Item')
+    supplier_priority = DocType('Supplier Priority')
     box_query = (
         frappe.qb
-        .from_(items)
+        .from_(items).join(supplier_priority).on(items.name == supplier_priority.parent)
         .where(items.item_group == "Packing Boxes").where(items.disabled == 0)
-        .select(items.name.as_('box'), items.safety_stock.as_('msl'))
+        .select(items.name.as_('box'), items.safety_stock.as_('msl'), supplier_priority.supplier, supplier_priority.priority)
     )
     return box_query.run(as_dict=True)
 

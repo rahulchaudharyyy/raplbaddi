@@ -4,7 +4,7 @@
 import frappe
 from raplbaddi.stock_rapl.report.pb_at_supplier.pb_at_supplier import mapper, all_boxes, get_supplier_and_warehouse, remove_negative, get_supplierwise_po, warehouse_qty, date
 from frappe.query_builder import DocType
-from frappe.query_builder.functions import Concat, Sum, GroupConcat
+from frappe.query_builder.functions import Concat, Sum, GroupConcat, Coalesce
 from frappe.utils import get_url
 
 def execute(filters=None):
@@ -31,8 +31,48 @@ def so_qty() -> dict:
     )
     return remove_negative(['warehouse_qty'], so_query.run(as_dict=True))
 
+def get_mr_data(supplier):
+    mr = frappe.qb.DocType("Material Request")
+    mr_item = frappe.qb.DocType("Material Request Item")
+    query = (
+        frappe.qb.from_(mr)
+        .join(mr_item)
+        .on(mr_item.parent == mr.name)
+        .select(
+            mr.name.as_("material_request"),
+            mr.transaction_date.as_("date"),
+            mr_item.schedule_date.as_("required_date"),
+            mr_item.item_code.as_("box"),
+            Sum(Coalesce(mr_item.qty, 0)).as_("qty"),
+            Sum(Coalesce(mr_item.stock_qty, 0)).as_("stock_qty"),
+            Coalesce(mr_item.uom, "").as_("uom"),
+            Coalesce(mr_item.stock_uom, "").as_("stock_uom"),
+            Sum(Coalesce(mr_item.ordered_qty, 0)).as_("ordered_qty"),
+            Sum(Coalesce(mr_item.received_qty, 0)).as_("received_qty"),
+            (Sum(Coalesce(mr_item.stock_qty, 0)) - Sum(Coalesce(mr_item.received_qty, 0))).as_("qty_to_receive"),
+            Sum(Coalesce(mr_item.received_qty, 0)).as_("received_qty"),
+            (Sum(Coalesce(mr_item.stock_qty, 0)) - Sum(Coalesce(mr_item.ordered_qty, 0))).as_("qty_to_order"),
+            mr_item.item_name,
+            mr_item.description,
+            mr.company,
+        )
+        .where(
+            (mr.material_request_type == "Purchase")
+            & (mr.docstatus == 1)
+            & (mr.status != "Stopped")
+            & (mr.per_received < 100)
+            & (mr.supplier == supplier)
+        )
+    )
+
+    query = query.groupby(mr.name, mr_item.item_code).orderby(mr.transaction_date, mr.schedule_date)
+    data = query.run(as_dict=True)
+    return data
+
 def join(filters=None):
     all_box = all_boxes()
+    mr_jai_ambey = mapper(get_mr_data('Jai Ambey Industries'))
+    mr_amit = mapper(get_mr_data("Amit Print 'N' Pack, Kishanpura, Baddi"))
     so = so_qty()
     rapl_warehouse_box = warehouse_qty(warehouse='Packing Boxes - Rapl')
     rapl_warehouse_box_mapping = {item['box']: item for item in rapl_warehouse_box}
@@ -48,6 +88,15 @@ def join(filters=None):
     
     for box in all_box:
         box_name = box['box']
+        
+        if box_name in mr_amit:
+            box['production_amit'] = mr_amit[box_name]['qty']
+        else:
+            box['production_amit'] = 0.0
+        if box_name in mr_jai_ambey:
+            box['production_jai_ambey'] = mr_jai_ambey[box_name]['qty']
+        else:
+            box['production_jai_ambey'] = 0.0
         
         if box_name in so_box_mapping:
             box['so_qty'] = so_box_mapping[box_name]['so_qty']
@@ -66,13 +115,10 @@ def join(filters=None):
             box['stock_jai_ambey'] = 0.0
 
         if box_name in jai_ambey_warehouse_po_box:
-            box['production_jai_ambey'] = jai_ambey_warehouse_po_box[box_name]['box_qty']
-            box['dispatch_jai_ambey'] = jai_ambey_warehouse_po_box[box_name]['planned_qty']
+            box['dispatch_jai_ambey'] = jai_ambey_warehouse_po_box[box_name]['box_qty']
             box['po_name_jai_ambey'] = jai_ambey_warehouse_po_box[box_name]['po_name']
         else:
-            box['production_jai_ambey'] = 0.0
             box['dispatch_jai_ambey'] = 0.0
-            
         
         if box_name in amit_warehouse_box:
             box['stock_amit'] = amit_warehouse_box[box_name]['warehouse_qty']
@@ -80,15 +126,13 @@ def join(filters=None):
             box['stock_amit'] = 0.0
 
         if box_name in amit_warehouse_po_box:
-            box['production_amit'] = amit_warehouse_po_box[box_name]['box_qty']
-            box['dispatch_amit'] = amit_warehouse_po_box[box_name]['planned_qty']
+            box['dispatch_amit'] = amit_warehouse_po_box[box_name]['box_qty']
             box['po_name_amit'] = amit_warehouse_po_box[box_name]['po_name']
         else:
-            box['production_amit'] = 0.0
             box['dispatch_amit'] = 0.0
 
         if True:
-            box['short_qty'] = (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai_ambey'] + box['stock_amit'] + box['production_jai_ambey'] + box['production_amit'])
+            box['short_qty'] = (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai_ambey'] + box['stock_amit'] + box['production_amit'] + box['production_jai_ambey'])
             if box['short_qty'] <= 0:
                 box['short_qty'] = 0
     
@@ -109,6 +153,8 @@ def columns(filters=None):
             {"label": "Shortage", "fieldtype": "Int", "width": 100, "fieldname": 'short_qty'},
             {"label": "SOs", "fieldtype": "HTML", "width": 100, "fieldname": 'so_name'},
             {"label": "POs Amit", "fieldtype": "HTML", "width": 100, "fieldname": 'po_name_amit'},
-            {"label": "POs JAI", "fieldtype": "HTML", "width": 100, "fieldname": 'po_name_jai_ambey'}
+            {"label": "POs JAI", "fieldtype": "HTML", "width": 100, "fieldname": 'po_name_jai_ambey'},
+            {"label": "POs JAI", "fieldtype": "Data", "width": 100, "fieldname": 'supplier'},
+            {"label": "POs JAI", "fieldtype": "Int", "width": 100, "fieldname": 'priority'}
     ]
     return cols
