@@ -8,7 +8,6 @@ from frappe.query_builder.functions import Concat, Sum, GroupConcat, Coalesce
 from frappe.utils import get_url
 
 def execute(filters=None):
-    get_supplier_priority()
     return columns(), join()
 
 def so_qty() -> dict:
@@ -51,22 +50,8 @@ def get_mr_data(supplier):
         .join(mr_item)
         .on(mr_item.parent == mr.name)
         .select(
-            mr.name.as_("material_request"),
-            mr.transaction_date.as_("date"),
-            mr_item.schedule_date.as_("required_date"),
             mr_item.item_code.as_("box"),
-            Sum(Coalesce(mr_item.qty, 0)).as_("qty"),
-            Sum(Coalesce(mr_item.stock_qty, 0)).as_("stock_qty"),
-            Coalesce(mr_item.uom, "").as_("uom"),
-            Coalesce(mr_item.stock_uom, "").as_("stock_uom"),
-            Sum(Coalesce(mr_item.ordered_qty, 0)).as_("ordered_qty"),
-            Sum(Coalesce(mr_item.received_qty, 0)).as_("received_qty"),
-            (Sum(Coalesce(mr_item.stock_qty, 0)) - Sum(Coalesce(mr_item.received_qty, 0))).as_("qty_to_receive"),
-            Sum(Coalesce(mr_item.received_qty, 0)).as_("received_qty"),
-            (Sum(Coalesce(mr_item.stock_qty, 0)) - Sum(Coalesce(mr_item.ordered_qty, 0))).as_("qty_to_order"),
-            mr_item.item_name,
-            mr_item.description,
-            mr.company,
+            (Sum(Coalesce(mr_item.qty, 0))).as_("qty")
         )
         .where(
             (mr.material_request_type == "Purchase")
@@ -77,7 +62,7 @@ def get_mr_data(supplier):
         )
     )
 
-    query = query.groupby(mr.name, mr_item.item_code).orderby(mr.transaction_date, mr.schedule_date)
+    query = query.groupby(mr_item.item_code).orderby(mr.transaction_date, mr.schedule_date)
     data = query.run(as_dict=True)
     return data
 
@@ -85,6 +70,7 @@ def join(filters=None):
     all_box = all_boxes()
     mr_jai_ambey = mapper(data=get_mr_data('Jai Ambey Industries'), key='box')
     mr_amit = mapper(data=get_mr_data("Amit Print 'N' Pack, Kishanpura, Baddi"), key='box')
+    print(mr_amit)
     so = so_qty()
     rapl_warehouse_box = warehouse_qty(warehouse='Packing Boxes - Rapl')
     rapl_warehouse_box_mapping = {item['box']: item for item in rapl_warehouse_box}
