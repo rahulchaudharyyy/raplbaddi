@@ -2,12 +2,13 @@
 # For license information, please see license.txt
 
 import frappe
-from raplbaddi.stock_rapl.report.pb_at_supplier.pb_at_supplier import mapper, all_boxes, get_supplier_and_warehouse, remove_negative, get_supplierwise_po, warehouse_qty, date
+from raplbaddi.stock_rapl.report.pb_at_supplier.pb_at_supplier import accum_mapper, mapper, all_boxes, get_supplier_and_warehouse, remove_negative, get_supplierwise_po, warehouse_qty, date
 from frappe.query_builder import DocType
 from frappe.query_builder.functions import Concat, Sum, GroupConcat, Coalesce
 from frappe.utils import get_url
 
 def execute(filters=None):
+    get_supplier_priority()
     return columns(), join()
 
 def so_qty() -> dict:
@@ -30,6 +31,17 @@ def so_qty() -> dict:
         .groupby(soi.custom_box)
     )
     return remove_negative(['warehouse_qty'], so_query.run(as_dict=True))
+
+def get_supplier_priority():
+    psp = DocType('Paper Supplier Priority')
+    pp_query = (
+        frappe.qb
+        .from_(psp)
+        .select(
+            psp.paper_name, psp.supplier, psp.priority, psp.parent
+        )
+    )
+    print(accum_mapper(data=pp_query.run(as_dict=True), key='parent'))
 
 def get_mr_data(supplier):
     mr = frappe.qb.DocType("Material Request")
@@ -71,20 +83,20 @@ def get_mr_data(supplier):
 
 def join(filters=None):
     all_box = all_boxes()
-    mr_jai_ambey = mapper(get_mr_data('Jai Ambey Industries'))
-    mr_amit = mapper(get_mr_data("Amit Print 'N' Pack, Kishanpura, Baddi"))
+    mr_jai_ambey = mapper(data=get_mr_data('Jai Ambey Industries'), key='box')
+    mr_amit = mapper(data=get_mr_data("Amit Print 'N' Pack, Kishanpura, Baddi"), key='box')
     so = so_qty()
     rapl_warehouse_box = warehouse_qty(warehouse='Packing Boxes - Rapl')
     rapl_warehouse_box_mapping = {item['box']: item for item in rapl_warehouse_box}
     so_box_mapping = {item['box']: item for item in so}
     
     jai_ambey_supplier, jai_ambey_warehouse = 'Jai Ambey Industries', 'Jai Ambey Industries - RAPL'
-    jai_ambey_warehouse_box = mapper(warehouse_qty(jai_ambey_warehouse))
-    jai_ambey_warehouse_po_box = mapper(get_supplierwise_po(jai_ambey_supplier))
+    jai_ambey_warehouse_box = mapper(data=warehouse_qty(jai_ambey_warehouse), key='box')
+    jai_ambey_warehouse_po_box = mapper(data=get_supplierwise_po(jai_ambey_supplier), key='box')
     
     amit_supplier, amit_warehouse = "Amit Print 'N' Pack, Kishanpura, Baddi", "Amit Print 'N' Pack - RAPL"
-    amit_warehouse_box = mapper(warehouse_qty(amit_warehouse))
-    amit_warehouse_po_box = mapper(get_supplierwise_po(amit_supplier))
+    amit_warehouse_box = mapper(data=warehouse_qty(amit_warehouse), key='box')
+    amit_warehouse_po_box = mapper(data=get_supplierwise_po(amit_supplier), key='box')
     
     for box in all_box:
         box_name = box['box']

@@ -86,14 +86,22 @@ def get_supplierwise_po(supplier: str) -> dict:
     )
     return query.run(as_dict=True)
 
-def mapper(data: list) -> dict:
-    return {item['box']: item for item in data}
+def mapper(key: str, data: list) -> dict:
+    return {item[key]: item for item in data}
+
+from collections import defaultdict
+
+def accum_mapper(key: str, data: list) -> dict:
+    result = defaultdict(list)
+    for item in data:
+        result[item[key]].append(item)
+    return dict(result)
 
 def join(filters=None):
     all_box = all_boxes()
     supplier, warehouse = get_supplier_and_warehouse(filters=filters)
-    warehouse_box = mapper(warehouse_qty(warehouse))
-    po_box = mapper(get_supplierwise_po(supplier))
+    warehouse_box = mapper(data=warehouse_qty(warehouse), str='box')
+    po_box = mapper(data=get_supplierwise_po(supplier), str='box')
 
 
     filtered_box = []
