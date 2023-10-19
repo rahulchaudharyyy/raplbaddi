@@ -18,7 +18,7 @@ def execute(filters=None):
     data = run(filters)
 
     data, chart_data = prepare_data(data, filters)
-    return columns, data, None, chart_data
+    return columns, data, None
 
 def validate_filters(filters):
     if filters.get('group_by_item') and filters.get('group_by_mr'):
@@ -51,6 +51,7 @@ def run(filters):
 				Sum(Coalesce(mr_item.ordered_qty, 0)).as_("ordered_qty"),
 				Sum(Coalesce(mr_item.received_qty, 0)).as_("received_qty"),
 				(Sum(Coalesce(mr_item.stock_qty, 0)) - Sum(Coalesce(mr_item.received_qty, 0))).as_("qty_to_receive"),
+				(Sum(Coalesce(mr_item.ordered_qty, 0)) - Sum(Coalesce(mr_item.received_qty, 0))).as_("remaining_qty_to_dispatch_from_dispatch_order"),
 				Sum(Coalesce(mr_item.received_qty, 0)).as_("received_qty"),
 				(Sum(Coalesce(mr_item.stock_qty, 0)) - Sum(Coalesce(mr_item.ordered_qty, 0))).as_("qty_to_order"),
 				mr_item.item_name,
@@ -225,28 +226,35 @@ def get_columns(filters):
 	columns.extend(
 		[
 			{
-				"label": _("Qty For Production"),
+				"label": _("Order For Production"),
 				"fieldname": "qty",
 				"fieldtype": "Float",
 				"width": 140,
 				"convertible": "qty",
 			},
+   			{
+				"label": _("Remaining For Dispatch From Dispatch Order"),
+				"fieldname": "remaining_qty_to_dispatch_from_dispatch_order",
+				"fieldtype": "Float",
+				"width": 120,
+				"convertible": "qty",
+			},
 			{
-				"label": _("Qty For Dispatch"),
+				"label": _("Order For Dispatch"),
 				"fieldname": "ordered_qty",
 				"fieldtype": "Float",
 				"width": 120,
 				"convertible": "qty",
 			},
 			{
-				"label": _("Qty Received"),
+				"label": _("Qty Received From Order For Dispatch"),
 				"fieldname": "received_qty",
 				"fieldtype": "Float",
 				"width": 120,
 				"convertible": "qty",
 			},
 			{
-				"label": _("Remaining For Dispatch"),
+				"label": _("Remaining For Production"),
 				"fieldname": "qty_to_receive",
 				"fieldtype": "Float",
 				"width": 120,
