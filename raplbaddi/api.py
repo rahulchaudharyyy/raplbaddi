@@ -97,38 +97,21 @@ def bom(doctype, txt, searchfield, start, page_len, filters, as_dict=False):
         q, {"txt": "%%%s%%" % txt}, as_dict=as_dict)
     
 @frappe.whitelist()
-@frappe.validate_and_sanitize_search_inputs
-def customer_query(doctype, txt, searchfield, start, page_len, filters, as_dict=False):
-    print(txt)
-    doctype = "Customer"
-    conditions = []
-    cust_master_name = frappe.defaults.get_user_default("cust_master_name")
-
-    fields = ["name"]
-    if cust_master_name != "Customer Name":
-        fields.append("customer_name")
-
-    fields = get_fields(doctype, fields)
-    searchfields = frappe.get_meta(doctype).get_search_fields()
-    searchfields = " or ".join(field + " like %(txt)s" for field in searchfields)
-    return frappe.db.sql(
-        """select {fields} from `tabCustomer`
-        where docstatus < 2
-            and ({scond}) and disabled=0
-            {fcond} {mcond}
-        order by
-        	(case when locate({txt}, name) > 0 then locate({txt}, name) else 99999 end),
-        	(case when locate({txt}, customer_name) > 0 then locate({txt}, customer_name) else 99999 end),
-        	idx desc,
-        	name, customer_name
-        limit %(page_len)s offset %(start)s""".format(
-            **{
-                "fields": ", ".join(fields),
-                "scond": searchfields,
-                "mcond": get_match_cond(doctype),
-                "fcond": get_filters_cond(doctype, filters, conditions).replace("%", "%%"),
-            }
-        ),
-        {"txt": "%%%s%%" % txt, "_txt": txt.replace("%", ""), "start": start, "page_len": page_len},
-        as_dict=as_dict,
+def get_poi(item_code):
+    po = frappe.qb.DocType('Purchase Order')
+    poi = frappe.qb.DocType('Purchase Order Item')
+    query = (
+        frappe.qb
+        .from_(poi)
+        .join(po).on(po.name == poi.parent)
+        .where(po.docstatus == 1)
+        .where(po.status != 'Closed')
+        .where(poi.qty - poi.received_qty > 0)
+        .where(poi.item_code == item_code)
+        .select(
+            poi.material_request_item.as_('material_request_item'), poi.material_request,
+            (poi.qty - poi.received_qty).as_('remaining_qty'),
+            poi.name.as_('purchase_order_item'), poi.parent.as_('purchase_order')
+        )
     )
+    return query.run(as_dict=True)
