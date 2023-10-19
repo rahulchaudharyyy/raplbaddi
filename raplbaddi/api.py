@@ -68,19 +68,17 @@ def get_fields(doctype, fields=None):
 from frappe.desk.reportview import get_filters_cond, get_match_cond
 @frappe.whitelist()
 @frappe.validate_and_sanitize_search_inputs
-def bom(doctype, txt, searchfield, start, page_len, filters, as_dict=False):
+def get_poi_query(doctype, txt, searchfield, start, page_len, filters, as_dict=False):
     doctype = "Purchase Order"
     print(txt)
     conditions = []   
-    q = """SELECT poi.item_code as item_code, SUM(poi.qty - poi.received_qty) as received_qty
+    q = """SELECT poi.item_code as item_code, poi.qty - poi.received_qty as received_qty
                 FROM `tabPurchase Order Item` AS poi
                 JOIN `tabPurchase Order` ON `tabPurchase Order`.name = poi.parent
                 WHERE 1
                     {fcond} {mcond}
                     AND poi.item_code LIKE %(txt)s
                     AND poi.qty - poi.received_qty > 0
-                GROUP BY
-                    poi.item_code
                 ORDER BY
                     poi.qty - poi.received_qty DESC
                 LIMIT {start}, {page_len}              
@@ -112,6 +110,53 @@ def get_poi(item_code):
             poi.material_request_item.as_('material_request_item'), poi.material_request,
             (poi.qty - poi.received_qty).as_('remaining_qty'),
             poi.name.as_('purchase_order_item'), poi.parent.as_('purchase_order')
+        )
+    )
+    return query.run(as_dict=True)
+
+@frappe.whitelist()
+@frappe.validate_and_sanitize_search_inputs
+def get_mr_query(doctype, txt, searchfield, start, page_len, filters, as_dict=False):
+    doctype = "Material Request"
+    print(txt)
+    conditions = []   
+    q = """SELECT mri.item_code as item_code, mri.qty - mri.ordered_qty as remaining_for_order_qty
+                FROM `tabMaterial Request Item` AS mri
+                JOIN `tabMaterial Request` ON `tabMaterial Request`.name = mri.parent
+                WHERE 1
+                    {fcond} {mcond}
+                    AND mri.item_code LIKE %(txt)s
+                    AND mri.qty - mri.ordered_qty > 0
+                ORDER BY
+                    mri.qty - mri.ordered_qty DESC
+                LIMIT {start}, {page_len}              
+                """.format(
+                **{
+                    "key": searchfield,
+                    "fcond": get_filters_cond(doctype, filters, conditions),
+                    "mcond": get_match_cond(doctype),
+                    "start": start,
+                    "page_len": page_len,
+                }
+            )
+    return frappe.db.sql(
+        q, {"txt": "%%%s%%" % txt}, as_dict=as_dict)
+
+@frappe.whitelist()
+def get_mr(item_code):
+    mr = frappe.qb.DocType('Material Request')
+    mri = frappe.qb.DocType('Material Request Item')
+    query = (
+        frappe.qb
+        .from_(mri)
+        .join(mr).on(mr.name == mri.parent)
+        .where(mr.docstatus == 1)
+        .where(mr.status != 'Stopped')
+        .where(mri.qty - mri.ordered_qty > 0)
+        .where(mri.item_code == item_code)
+        .select(
+            mri.name.as_('material_request_item'), mri.parent.as_('material_request'),
+            (mri.qty - mri.ordered_qty).as_('remaining_for_order_qty')
         )
     )
     return query.run(as_dict=True)
