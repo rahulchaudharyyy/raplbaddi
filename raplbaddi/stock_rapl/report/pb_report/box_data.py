@@ -1,5 +1,6 @@
 from frappe.query_builder import DocType
-from frappe.query_builder.functions import Concat, Sum, GroupConcat, Coalesce, Case
+from frappe.query_builder.functions import Concat, Sum, GroupConcat, Coalesce
+from pypika import Case
 from frappe.utils import get_url
 from raplbaddi.utils import report_utils
 import frappe
@@ -112,14 +113,3 @@ def get_supplierwise_po(supplier: str) -> dict:
         .groupby(poi.item_code)
     )
     return query.run(as_dict=True)
-
-def get_supplier_priority():
-    psp = DocType('Paper Supplier Priority')
-    pp_query = (
-        frappe.qb
-        .from_(psp)
-        .select(
-            psp.paper_name, psp.supplier, psp.priority, psp.parent
-        )
-    )
-    print(report_utils.accum_mapper(data=pp_query.run(as_dict=True), key='parent'))

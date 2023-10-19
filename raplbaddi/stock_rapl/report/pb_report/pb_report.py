@@ -2,7 +2,6 @@
 # For license information, please see license.txt
 
 import frappe
-from raplbaddi.stock_rapl.report.pb_at_supplier.pb_at_supplier import accum_mapper, mapper, all_boxes, get_supplier_and_warehouse, remove_negative, get_supplierwise_po, warehouse_qty, date
 from frappe.query_builder import DocType
 from frappe.query_builder.functions import Concat, Sum, GroupConcat, Coalesce
 from frappe.utils import get_url
@@ -16,14 +15,14 @@ def get_box_data(box_name, mr_dict, column_name):
     return mr_dict.get(box_name, {}).get(column_name, 0.0)
 
 def get_warehouse_data(warehouse_name):
-    warehouse_data = warehouse_qty(warehouse=warehouse_name)
+    warehouse_data = box_data.warehouse_qty(warehouse=warehouse_name)
     return {item['box']: item for item in warehouse_data}
 
 def join(filters=None):
-    all_box = all_boxes()
+    all_box = box_data.all_boxes()
     mr_amit = report_utils.get_mapped_data(data=box_data.get_box_order_for_production("Amit Print 'N' Pack, Kishanpura, Baddi"), key='box')
-    mr_jai_ambey = report_utils.get_mapped_dataget_mapped_data(data=box_data.get_box_order_for_production('Jai Ambey Industries'), key='box')
-    so_mapping = report_utils.get_mapped_dataget_mapped_data(data=box_data.get_box_requirement_from_so(), key='box')
+    mr_jai_ambey = report_utils.get_mapped_data(data=box_data.get_box_order_for_production('Jai Ambey Industries'), key='box')
+    so_mapping = report_utils.get_mapped_data(data=box_data.get_box_requirement_from_so(), key='box')
     rapl_warehouse_mapping = get_warehouse_data('Packing Boxes - Rapl')
     jai_ambey_warehouse_mapping = get_warehouse_data('Jai Ambey Industries - RAPL')
     amit_warehouse_mapping = get_warehouse_data("Amit Print 'N' Pack - RAPL")
@@ -31,8 +30,8 @@ def join(filters=None):
     jai_ambey_supplier = 'Jai Ambey Industries'
     amit_supplier = "Amit Print 'N' Pack, Kishanpura, Baddi"
 
-    jai_ambey_warehouse_po_box = report_utils.get_mapped_dataget_mapped_data(data=get_supplierwise_po(jai_ambey_supplier), key='box')
-    amit_warehouse_po_box = report_utils.get_mapped_data(data=get_supplierwise_po(amit_supplier), key='box')
+    jai_ambey_warehouse_po_box = report_utils.get_mapped_data(data=box_data.get_supplierwise_po(jai_ambey_supplier), key='box')
+    amit_warehouse_po_box = report_utils.get_mapped_data(data=box_data.get_supplierwise_po(amit_supplier), key='box')
 
     for box in all_box:
         box_name = box['box']
