@@ -36,6 +36,8 @@ def join(filters=None):
     for box in all_box:
         box_name = box['box']
         box['production_amit'] = get_box_data(box_name, mr_amit, 'qty')
+        box['mr_amit'] = get_box_data(box_name, mr_amit, 'mr_name')
+        box['mr_jai_ambey'] = get_box_data(box_name, mr_jai_ambey, 'mr_name')
         box['production_jai_ambey'] = get_box_data(box_name, mr_jai_ambey, 'qty')
 
         box['so_qty'] = so_mapping.get(box_name, {'so_qty': 0.0})['so_qty']
@@ -81,8 +83,10 @@ def columns(filters=None):
         .add_column("MSL", "Int", 100, "msl", disable_total=True) 
         .add_column("Shortage", "Int", 100, "short_qty") 
         .add_column("SOs", "HTML", 100, "so_name") 
+        .add_column("POs JAI", "HTML", 100, "po_name_jai_ambey")
+        .add_column("MR JAI", "HTML", 100, "mr_jai_ambey")
         .add_column("POs Amit", "HTML", 100, "po_name_amit") 
-        .add_column("POs JAI", "HTML", 100, "po_name_jai_ambey") 
+        .add_column("MR Amit", "HTML", 100, "mr_amit")
         .build()
     )
     return cols

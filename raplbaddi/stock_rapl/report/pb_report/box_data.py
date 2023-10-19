@@ -53,6 +53,7 @@ def get_box_requirement_from_so() -> dict:
     )
     return so_query.run(as_dict=True)
 
+url = get_url()
 def get_box_order_for_production(supplier):
     mr = frappe.qb.DocType("Material Request")
     mr_item = frappe.qb.DocType("Material Request Item")
@@ -62,7 +63,8 @@ def get_box_order_for_production(supplier):
         .on(mr_item.parent == mr.name)
         .select(
             mr_item.item_code.as_("box"),
-            (Sum(Coalesce(mr_item.qty, 0))).as_("qty")
+            (Sum(Coalesce(mr_item.qty, 0))).as_("qty"),
+            GroupConcat(Concat('<a href="', url,'/app/material-request/', mr.name, '">', mr.name, '</a>')).as_('mr_name')
         )
         .where(
             (mr.material_request_type == "Purchase")
