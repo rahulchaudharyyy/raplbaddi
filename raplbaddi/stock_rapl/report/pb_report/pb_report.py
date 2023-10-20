@@ -73,7 +73,7 @@ def join(filters=None):
 
     for box in all_box:
         box['short_qty'] = max(0, (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai_ambey'] + box['stock_amit'] + box['production_amit'] + box['production_jai_ambey']))
-        box['dispatch_need_to_complete_so'] = min(0, box['stock_rapl'] - box['so_qty'] + box['dispatch_jai_ambey'] + box['dispatch_amit'])
+        box['dispatch_need_to_complete_so'] = max(0, box['so_qty'] + box['dispatch_jai_ambey'] + box['dispatch_amit'] - box['stock_rapl'])
 
     all_box.sort(key=lambda x: x['short_qty'], reverse=True)
     return all_box
