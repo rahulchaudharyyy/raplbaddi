@@ -6,7 +6,9 @@ from frappe.query_builder import DocType
 from frappe.query_builder.functions import Concat, Sum, GroupConcat, Coalesce
 from frappe.utils import get_url
 from raplbaddi.utils import report_utils
-from raplbaddi.stock_rapl.report.pb_report import box_data
+from raplbaddi.stock_rapl.report.pb_report.box_data import BoxRequirements
+
+box_data = BoxRequirements()
 
 def execute(filters=None):
     return columns(), join()
@@ -26,15 +28,21 @@ def join(filters=None):
     rapl_warehouse_mapping = get_warehouse_data('Packing Boxes - Rapl')
     jai_ambey_warehouse_mapping = get_warehouse_data('Jai Ambey Industries - RAPL')
     amit_warehouse_mapping = get_warehouse_data("Amit Print 'N' Pack - RAPL")
-
     jai_ambey_supplier = 'Jai Ambey Industries'
     amit_supplier = "Amit Print 'N' Pack, Kishanpura, Baddi"
+    rana_supplier = "Rana, Packing Box"
+
+    priority_jai_ambey = report_utils.get_mapped_data(data=box_data.get_paper_supplier_priority(jai_ambey_supplier), key='box')
+    priority_amit = report_utils.get_mapped_data(data=box_data.get_paper_supplier_priority(amit_supplier), key='box')
+    priority_rana = report_utils.get_mapped_data(data=box_data.get_paper_supplier_priority(rana_supplier), key='box')
+
 
     jai_ambey_warehouse_po_box = report_utils.get_mapped_data(data=box_data.get_supplierwise_po(jai_ambey_supplier), key='box')
-    amit_warehouse_po_box = report_utils.get_mapped_data(data=box_data.get_supplierwise_po(amit_supplier), key='box')
-
+    amit_warehouse_po_box = report_utils.get_mapped_data(data=box_data.get_supplierwise_po(amit_supplier), key='box')      
+    
     for box in all_box:
         box_name = box['box']
+
         box['production_amit'] = get_box_data(box_name, mr_amit, 'qty')
         box['mr_amit'] = get_box_data(box_name, mr_amit, 'mr_name')
         box['mr_jai_ambey'] = get_box_data(box_name, mr_jai_ambey, 'mr_name')
@@ -42,7 +50,11 @@ def join(filters=None):
 
         box['so_qty'] = so_mapping.get(box_name, {'so_qty': 0.0})['so_qty']
         box['so_name'] = so_mapping.get(box_name, {'so_name': ''})['so_name']
-
+        box['priority_jai_ambey'] = priority_jai_ambey.get(box_name, {'priority': 0})['priority']
+        box['priority_amit'] = priority_amit.get(box_name, {'priority': 0})['priority']
+        box['priority_rana'] = priority_rana.get(box_name, {'priority': 0})['priority']
+        
+        
         warehouse_item = rapl_warehouse_mapping.get(box_name, {'warehouse_qty': 0.0, 'projected_qty': 0.0})
         box['stock_rapl'] = warehouse_item['warehouse_qty']
         box['projected_rapl'] = warehouse_item['projected_qty']
@@ -87,6 +99,9 @@ def columns(filters=None):
         .add_column("MR JAI", "HTML", 100, "mr_jai_ambey")
         .add_column("POs Amit", "HTML", 100, "po_name_amit") 
         .add_column("MR Amit", "HTML", 100, "mr_amit")
+        .add_column("J", "Int", 20, "priority_jai_ambey")
+        .add_column("A", "Int", 20, "priority_amit")
+        .add_column("R", "Int", 20, "priority_rana")
         .build()
     )
     return cols

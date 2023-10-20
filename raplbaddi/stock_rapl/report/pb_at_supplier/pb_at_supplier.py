@@ -10,9 +10,10 @@ from frappe.utils import getdate
 from raplbaddi.datarapl.doctype.report_full_access_users.report_full_access_users import get_wildcard_users
 from frappe.query_builder.functions import Concat, Sum, GroupConcat
 from frappe.utils import get_url
-from raplbaddi.stock_rapl.report.pb_report import box_data
+from raplbaddi.stock_rapl.report.pb_report.box_data import BoxRequirements
 from raplbaddi.utils import report_utils
 
+box_data = BoxRequirements()
 date = getdate('1-1-1')
 
 def execute(filters=None):

@@ -5,113 +5,135 @@ from frappe.utils import get_url
 from raplbaddi.utils import report_utils
 import frappe
 
-def all_boxes() -> dict:
-    items = DocType('Item')
-    box_query = (
-        frappe.qb
-        .from_(items)
-        .where(items.item_group == "Packing Boxes").where(items.disabled == 0)
-        .select(items.name.as_('box'), items.safety_stock.as_('msl'))
-    )
-    return box_query.run(as_dict=True)
+class BoxRequirements:
+    _instance = None
 
-def warehouse_qty(warehouse: str) -> dict:
-    item = DocType('Item')
-    bin = DocType('Bin')
-    qty_query = (
-        frappe.qb
-        .from_(item)
-        .left_join(bin)
-        .on(item.name == bin.item_code)
-        .where(bin.warehouse == warehouse)
-        .select(
-            bin.actual_qty.as_('warehouse_qty'),
-            item.name.as_('box'),
-            bin.projected_qty.as_('projected_qty')
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(BoxRequirements, cls).__new__(cls)
+            cls._instance._init()
+        return cls._instance
+
+    def _init(self):
+        self.url = get_url()
+        self.items = DocType('Item')
+        self.bin = DocType('Bin')
+        self.so = DocType('Sales Order')
+        self.soi = DocType('Sales Order Item')
+        self.mr = DocType("Material Request")
+        self.mr_item = DocType("Material Request Item")
+        self.poi = DocType('Purchase Order Item')
+        self.po = DocType('Purchase Order')
+        self.psp = DocType('Paper Supplier Priority')
+
+    def get_paper_supplier_priority(self, supplier):
+        query = (
+            frappe.qb
+            .from_(self.psp)
+            .left_join(self.items)
+            .on(self.items.paper_name == self.psp.paper_name)
+            .where(self.psp.supplier == supplier)
+            .select(self.psp.paper_name, self.psp.supplier, self.psp.priority, self.psp.parent.as_('box_particular'), self.items.name.as_('box'))
         )
-    )
-    return report_utils.remove_negative(['warehouse_qty'], qty_query.run(as_dict=True))
-
-def get_box_requirement_from_so() -> dict:
-    so = DocType('Sales Order')
-    soi = DocType('Sales Order Item')
-    url = get_url()
-    so_query = (
-        frappe.qb
-        .from_(so)
-        .left_join(soi)
-        .on(so.name == soi.parent)
-        .where(so.docstatus == 1)
-        .where(so.status.notin(['Stopped', 'Closed']))
-        .where((soi.qty - soi.delivered_qty) > 0)
-        .select(
-            Sum(soi.qty - soi.delivered_qty).as_('so_qty'),
-            soi.custom_box.as_('box'),
-            GroupConcat(Concat('<a href="', url,'/app/sales-order/', so.name, '">', so.name, '</a>')).as_('so_name')
+        return query.run(as_dict=True)
+    
+    def all_boxes(self):
+        box_query = (
+            frappe.qb
+            .from_(self.items)
+            .where(self.items.item_group == "Packing Boxes")
+            .where(self.items.disabled == 0)
+            .select(self.items.name.as_('box'), self.items.safety_stock.as_('msl'), self.items.paper_name.as_('paper_name'), Coalesce(self.items.brand, self.items.plain_box_type).as_('box_particular')
+            )
         )
-        .groupby(soi.custom_box)
-    )
-    return so_query.run(as_dict=True)
-
-url = get_url()
-def get_box_order_for_production(supplier):
-    mr = frappe.qb.DocType("Material Request")
-    mr_item = frappe.qb.DocType("Material Request Item")
-    query = (
-        frappe.qb.from_(mr)
-        .join(mr_item)
-        .on(mr_item.parent == mr.name)
-        .select(
-            mr_item.item_code.as_("box"),
-            (Sum(Coalesce(mr_item.qty, 0))).as_("qty"),
-            GroupConcat(Concat('<a href="', url,'/app/material-request/', mr.name, '">', mr.name, '</a>')).as_('mr_name')
+        return box_query.run(as_dict=True)
+    
+    def warehouse_qty(self, warehouse):
+        qty_query = (
+            frappe.qb
+            .from_(self.items)
+            .left_join(self.bin)
+            .on(self.items.name == self.bin.item_code)
+            .where(self.bin.warehouse == warehouse)
+            .select(
+                self.bin.actual_qty.as_('warehouse_qty'),
+                self.items.name.as_('box'),
+                self.bin.projected_qty.as_('projected_qty')
+            )
         )
-        .where(
-            (mr.material_request_type == "Purchase")
-            & (mr.docstatus == 1)
-            & (mr.status != "Stopped")
-            & (mr.per_received < 100)
-            & (mr.supplier == supplier)
+        return report_utils.remove_negative(['warehouse_qty'], qty_query.run(as_dict=True))
+
+    def get_box_requirement_from_so(self):
+        so_query = (
+            frappe.qb
+            .from_(self.so)
+            .left_join(self.soi)
+            .on(self.so.name == self.soi.parent)
+            .where(self.so.docstatus == 1)
+            .where(self.so.status.notin(['Stopped', 'Closed']))
+            .where((self.soi.qty - self.soi.delivered_qty) > 0)
+            .select(
+                Sum(self.soi.qty - self.soi.delivered_qty).as_('so_qty'),
+                self.soi.custom_box.as_('box'),
+                GroupConcat(Concat('<a href="', self.url, '/app/sales-order/', self.so.name, '">', self.so.name, '</a>')).as_('so_name')
+            )
+            .groupby(self.soi.custom_box)
         )
-    )
+        return so_query.run(as_dict=True)
 
-    query = query.groupby(mr_item.item_code).orderby(mr.transaction_date, mr.schedule_date)
-    data = query.run(as_dict=True)
-    return data
+    def get_box_order_for_production(self, supplier):
+        query = (
+            frappe.qb.from_(self.mr)
+            .join(self.mr_item)
+            .on(self.mr_item.parent == self.mr.name)
+            .select(
+                self.mr_item.item_code.as_("box"),
+                (Sum(Coalesce(self.mr_item.qty, 0))).as_("qty"),
+                GroupConcat(Concat('<a href="', self.url, '/app/material-request/', self.mr.name, '">', self.mr.name, '</a>')).as_('mr_name')
+            )
+            .where(
+                (self.mr.material_request_type == "Purchase")
+                & (self.mr.docstatus == 1)
+                & (self.mr.status != "Stopped")
+                & (self.mr.per_received < 100)
+                & (self.mr.supplier == supplier)
+            )
+        )
 
-def get_supplierwise_po(supplier: str) -> dict:
-    poi = DocType('Purchase Order Item')
-    po = DocType('Purchase Order')
-    url = get_url()
-    query = (
-        frappe.qb
-        .from_(poi)
-        .left_join(po)
-        .on(po.name == poi.parent)
-        .where(po.supplier == supplier)
-        .where(po.docstatus == 1)
-        .where(po.status != 'Closed')
-        .select(
-            Sum(Case()
-                .when(
-                    (poi.qty - poi.received_qty) < 0, (poi.qty - poi.received_qty) - (poi.qty - poi.received_qty))
-                .else_((poi.qty - poi.received_qty))
+        query = query.groupby(self.mr_item.item_code).orderby(self.mr.transaction_date, self.mr.schedule_date)
+        data = query.run(as_dict=True)
+        return data
+
+    def get_supplierwise_po(self, supplier):
+        query = (
+            frappe.qb
+            .from_(self.poi)
+            .left_join(self.po)
+            .on(self.po.name == self.poi.parent)
+            .where(self.po.supplier == supplier)
+            .where(self.po.docstatus == 1)
+            .where(self.po.status != 'Closed')
+            .select(
+                Sum(Case()
+                    .when(
+                        (self.poi.qty - self.poi.received_qty) < 0, (self.poi.qty - self.poi.received_qty) - (self.poi.qty - self.poi.received_qty))
+                    .else_((self.poi.qty - self.poi.received_qty))
                 ).as_('box_qty'),
-            poi.item_code.as_('box'),
-            Sum(Case()
-                .when(
-                    (poi.planned_dispatch_qty - poi.received_qty) < 0, (poi.planned_dispatch_qty - poi.received_qty) - (poi.planned_dispatch_qty - poi.received_qty))
-                .else_((poi.planned_dispatch_qty - poi.received_qty))
+                self.poi.item_code.as_('box'),
+                Sum(Case()
+                    .when(
+                        (self.poi.planned_dispatch_qty - self.poi.received_qty) < 0, (self.poi.planned_dispatch_qty - self.poi.received_qty) - (self.poi.planned_dispatch_qty - self.poi.received_qty))
+                    .else_((self.poi.planned_dispatch_qty - self.poi.received_qty))
                 ).as_('planned_qty'),
-            (Case()
-                .when(
-                    Sum(poi.planned_dispatch_qty - poi.received_qty) < 0, Sum(poi.received_qty - poi.planned_dispatch_qty))
-                .else_(0)
+                (Case()
+                    .when(
+                        Sum(self.poi.planned_dispatch_qty - self.poi.received_qty) < 0, Sum(self.poi.received_qty - self.poi.planned_dispatch_qty))
+                    .else_(0)
                 ).as_('over_dispatch'),
-            po.transaction_date.as_('po_date'),
-            GroupConcat(Concat('<a href="', url,'/app/purchase-order/', po.name, '">', po.name, '</a>')).as_('po_name'),
-            Sum(poi.received_qty).as_('received_qty')
+                self.po.transaction_date.as_('po_date'),
+                GroupConcat(Concat('<a href="', self.url, '/app/purchase-order/', self.po.name, '">', self.po.name, '</a>')).as_('po_name'),
+                Sum(self.poi.received_qty).as_('received_qty')
+            )
+            .groupby(self.poi.item_code)
         )
-        .groupby(poi.item_code)
-    )
-    return query.run(as_dict=True)
+        return query.run(as_dict=True)

@@ -10,14 +10,15 @@ class ColumnBuilder:
     def build(self):
         return self.columns
     
-def get_mapped_data(data, key):
-    return {item['box']: item for item in data}
+def get_mapped_data(data, key='box'):
+    return {item[key]: item for item in data}
 def accum_mapper(key: str, data: list) -> dict:
     from collections import defaultdict
     result = defaultdict(list)
     for item in data:
         result[item[key]].append(item)
     return dict(result)
+
 def remove_negative(keys: list, data: list[dict]) -> dict:
     for key in keys:
         for d in data:
