@@ -33,6 +33,7 @@ class BoxRequirements:
             .left_join(self.items)
             .on(self.items.paper_name == self.psp.paper_name)
             .where(self.psp.supplier == supplier)
+            .where(Coalesce(self.items.brand, self.items.plain_box_type) == self.psp.parent)
             .select(self.psp.paper_name, self.psp.supplier, self.psp.priority, self.psp.parent.as_('box_particular'), self.items.name.as_('box'))
         )
         return query.run(as_dict=True)
