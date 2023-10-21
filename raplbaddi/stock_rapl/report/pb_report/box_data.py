@@ -114,7 +114,7 @@ class BoxRequirements:
             .where(self.po.supplier == supplier)
             .where(self.po.docstatus == 1)
             .where(self.po.status != 'Closed')
-            .where(self.poi.closed != 0)
+            .where(self.poi.closed == 0)
             .select(
                 Sum(Case()
                     .when(
