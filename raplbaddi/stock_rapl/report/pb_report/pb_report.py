@@ -45,8 +45,10 @@ def join(filters=None):
 
         box['production_amit'] = get_box_data(box_name, mr_amit, 'qty')
         box['mr_amit'] = get_box_data(box_name, mr_amit, 'mr_name')
+        box['remain_prod_amit'] = box['production_amit'] - get_box_data(box_name, mr_amit, 'received_qty')
         box['mr_jai_ambey'] = get_box_data(box_name, mr_jai_ambey, 'mr_name')
         box['production_jai_ambey'] = get_box_data(box_name, mr_jai_ambey, 'qty')
+        box['remain_prod_jai_ambey'] = box['production_jai_ambey'] - get_box_data(box_name, mr_jai_ambey, 'received_qty')
 
         box['so_qty'] = so_mapping.get(box_name, {'so_qty': 0.0})['so_qty']
         box['so_name'] = so_mapping.get(box_name, {'so_name': ''})['so_name']
