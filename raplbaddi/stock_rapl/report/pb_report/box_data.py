@@ -44,7 +44,7 @@ class BoxRequirements:
             .from_(self.items)
             .where(self.items.item_group == "Packing Boxes")
             .where(self.items.disabled == 0)
-            .select(self.items.name.as_('box'), self.items.safety_stock.as_('msl'), self.items.paper_name.as_('paper_name'), Coalesce(self.items.brand, self.items.plain_box_type).as_('box_particular')
+            .select(self.items.name.as_('box'), self.items.safety_stock.as_('msl'), self.items.rapl_msl.as_('rapl_msl'), self.items.paper_name.as_('paper_name'), Coalesce(self.items.brand, self.items.plain_box_type).as_('box_particular')
             )
         )
         return box_query.run(as_dict=True)

@@ -75,7 +75,7 @@ def join(filters=None):
 
     for box in all_box:
         box['short_qty'] = max(0, (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai_ambey'] + box['stock_amit'] + box['production_amit'] + box['production_jai_ambey']))
-        box['dispatch_need_to_complete_so'] = abs(min(0, box['stock_rapl'] - box['so_qty'] + box['dispatch_jai_ambey'] + box['dispatch_amit']))
+        box['dispatch_need_to_complete_so'] = abs(max(0,  box['rapl_msl'] + box['so_qty'] - box['stock_rapl']))
 
     all_box.sort(key=lambda x: x['short_qty'], reverse=True)
     return all_box
@@ -87,13 +87,14 @@ def columns(filters=None):
         .add_column("JAI Stock", "Int", 60, "stock_jai_ambey") 
         .add_column("Amit Stock", "Int", 60, "stock_amit") 
         .add_column("Rapl Stock", "Int", 60, "stock_rapl") 
-        .add_column("Dispatch Need SO", "Int", 100, "dispatch_need_to_complete_so") 
+        .add_column("Dispatch Need", "Int", 100, "dispatch_need_to_complete_so") 
         .add_column("Σ Projected", "Int", 60, "projected_rapl") 
         .add_column("SO", "Int", 60, "so_qty") 
         .add_column("Production JAI", "Int", 100, "production_jai_ambey") 
         .add_column("Dispatch JAI", "Int", 100, "dispatch_jai_ambey") 
         .add_column("Production Amit", "Int", 100, "production_amit") 
         .add_column("Dispatch Amit", "Int", 100, "dispatch_amit") 
+        .add_column("Rapl MSL", "Int", 100, "rapl_msl")
         .add_column("MSL", "Int", 100, "msl", disable_total=True) 
         .add_column("Shortage", "Int", 100, "short_qty") 
         .add_column("SOs", "HTML", 100, "so_name") 
