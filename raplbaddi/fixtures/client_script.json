@@ -510,10 +510,10 @@
   "doctype": "Client Script",
   "dt": "Material Request",
   "enabled": 1,
-  "modified": "2023-10-21 20:18:13.801938",
+  "modified": "2023-10-23 15:18:39.274767",
   "module": null,
   "name": "Material Request",
-  "script": "frappe.ui.form.on('Material Request', {\n    hold(frm){\n      frm.set_value(\"status\", \"Received\")  \n    },\n    onload_post_render(frm) {\n        frm.set_query(\"item_code\", \"items\", (doc, cdt, cdn) => {\n            let row = locals[cdt][cdn];\n            return {\n                filters: {\n                    'item_group': frm.doc.item_group\n                }\n            }\n        })\n\n    }\n})",
+  "script": "frappe.ui.form.on('Material Request', {\n    hold(frm){\n      frm.set_value(\"custom_status\", \"Stopped\")\n      frm.save('Update')\n    },\n    onload_post_render(frm) {\n        frm.set_query(\"item_code\", \"items\", (doc, cdt, cdn) => {\n            let row = locals[cdt][cdn];\n            return {\n                filters: {\n                    'item_group': frm.doc.item_group\n                }\n            }\n        })\n\n    }\n})",
   "view": "Form"
  },
  {
@@ -576,10 +576,10 @@
   "doctype": "Client Script",
   "dt": "Material Request",
   "enabled": 1,
-  "modified": "2023-10-12 18:40:26.262913",
+  "modified": "2023-10-23 15:19:39.293222",
   "module": "Stock Rapl",
   "name": "Material Request List View",
-  "script": "frappe.listview_settings['Material Request'] = {\n    onload: function(listview) {\n            frappe.route_options = {\n              \"per_received\": [\"<\", 100],\n              \"status\": [\"!=\", \"Stopped\"],\n              \"docstatus\": [\"!=\", 2]\n            }\n    }\n};\n",
+  "script": "frappe.listview_settings['Material Request'] = {\n    onload: function(listview) {\n            frappe.route_options = {\n              \"per_received\": [\"<\", 100],\n              \"status\": [\"!=\", \"Stopped\"],\n              \"docstatus\": [\"!=\", 2],\n              \"custom_status\": [\"!=\", \"Stopped\"]\n            }\n    }\n};\n",
   "view": "List"
  }
 ]

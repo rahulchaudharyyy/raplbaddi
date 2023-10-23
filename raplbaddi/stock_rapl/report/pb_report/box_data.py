@@ -96,6 +96,7 @@ class BoxRequirements:
                 (self.mr.material_request_type == "Purchase")
                 & (self.mr.docstatus == 1)
                 & (self.mr.status != "Stopped")
+                & (self.mr.custom_status != "Stopped")
                 & (self.mr.per_received < 100)
                 & (self.mr.supplier == supplier)
             )
