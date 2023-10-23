@@ -1867,7 +1867,7 @@
   "is_virtual": 0,
   "label": "Box",
   "length": 0,
-  "mandatory_depends_on": null,
+  "mandatory_depends_on": "eval:doc.item_group === \"Geyser Unit\"",
   "modified": "2023-10-04 13:17:38.977655",
   "module": null,
   "name": "Sales Order Item-custom_box",
