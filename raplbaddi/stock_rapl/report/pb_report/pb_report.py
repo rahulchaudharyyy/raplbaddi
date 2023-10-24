@@ -178,7 +178,7 @@ def join(filters=None):
         box['short_qty'] = max(0, (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai_ambey'] + box['stock_amit'] + box['production_amit'] + box['production_jai_ambey']))
         box['dispatch_need_to_complete_so'] = abs(max(0,  box['rapl_msl'] + box['so_qty'] - box['stock_rapl'] - box['dispatch_amit'] -  box['dispatch_jai_ambey']))
         box['over_stock_qty'] = min(0, (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai_ambey'] + box['stock_amit'] + box['production_amit'] + box['production_jai_ambey']))
-    all_box.sort(key=lambda x: x['short_qty'], reverse=True)
+    all_box.sort(key=lambda x: x['dispatch_need_to_complete_so'], reverse=True)
     return all_box
 
 def priority_cols(builder):

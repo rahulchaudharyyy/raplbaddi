@@ -24,11 +24,6 @@ frappe.query_reports["PB Report"] = {
 			"fieldname": "add_links",
 			"label": __("Add Links"),
 			"fieldtype": "Check"
-		},
-		{
-			"fieldname": "so",
-			"label": __("Sales Order"),
-			"fieldtype": "Check"
-		},
+		}
 	]
 };
