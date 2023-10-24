@@ -11,7 +11,7 @@ from raplbaddi.stock_rapl.report.pb_report.box_data import BoxRequirements
 box_data = BoxRequirements()
 
 def execute(filters=None):
-    return columns(), join()
+    return columns(filters), join()
 
 def get_box_data(box_name, mr_dict, column_name):
     return mr_dict.get(box_name, {}).get(column_name, 0.0)
@@ -80,32 +80,61 @@ def join(filters=None):
     all_box.sort(key=lambda x: x['short_qty'], reverse=True)
     return all_box
 
-def columns(filters=None):
-    builder = report_utils.ColumnBuilder()
-    cols = (builder 
-        .add_column("Item", "Link", 180, "box", options="Item") 
-        .add_column("JAI Stock", "Int", 60, "stock_jai_ambey") 
-        .add_column("Amit Stock", "Int", 60, "stock_amit") 
-        .add_column("Rapl Stock", "Int", 60, "stock_rapl") 
-        .add_column("Dispatch Need", "Int", 100, "dispatch_need_to_complete_so") 
-        .add_column("Σ Projected", "Int", 60, "projected_rapl") 
-        .add_column("SO", "Int", 60, "so_qty") 
-        .add_column("Production JAI", "Int", 100, "production_jai_ambey") 
-        .add_column("Dispatch JAI", "Int", 100, "dispatch_jai_ambey") 
-        .add_column("Production Amit", "Int", 100, "production_amit") 
-        .add_column("Dispatch Amit", "Int", 100, "dispatch_amit") 
-        .add_column("Rapl MSL", "Int", 100, "rapl_msl")
-        .add_column("MSL", "Int", 100, "msl", disable_total=True) 
-        .add_column("Shortage", "Int", 100, "short_qty") 
-        .add_column("Over Stock", "Int", 100, "over_stock_qty") 
-        .add_column("SOs", "HTML", 100, "so_name") 
-        .add_column("POs JAI", "HTML", 100, "po_name_jai_ambey")
-        .add_column("MR JAI", "HTML", 100, "mr_jai_ambey")
-        .add_column("POs Amit", "HTML", 100, "po_name_amit") 
-        .add_column("MR Amit", "HTML", 100, "mr_amit")
+def priority_cols(builder):
+    cols = (builder
         .add_column("J", "Int", 20, "priority_jai_ambey")
         .add_column("A", "Int", 20, "priority_amit")
         .add_column("R", "Int", 20, "priority_rana")
-        .build()
+        )
+    return cols
+
+def links_cols(builder):
+    cols = (builder
+        .add_column("SOs", "HTML", 100, "so_name") 
+        .add_column("MR JAI", "HTML", 100, "mr_jai_ambey")
+        .add_column("MR Amit", "HTML", 100, "mr_amit")
+        .add_column("POs Amit", "HTML", 100, "po_name_amit") 
+        .add_column("POs JAI", "HTML", 100, "po_name_jai_ambey")
     )
     return cols
+
+def columns(filters=None):
+    builder = report_utils.ColumnBuilder()
+    cols = (builder
+        .add_column("D", "Check", 20, "dead_inventory") 
+        .add_column("Item", "Link", 180, "box", options="Item")
+        )
+    if filters.get('report_type') == 'Box Production':
+        cols = (builder 
+            .add_column("Box MSL", "Int", 100, "msl", disable_total=True)
+            .add_column("Rapl Stock", "Int", 60, "stock_rapl") 
+            .add_column("Amit Stock", "Int", 60, "stock_amit") 
+            .add_column("JAI Stock", "Int", 60, "stock_jai_ambey") 
+            .add_column("Production Amit", "Int", 100, "production_amit") 
+            .add_column("Production JAI", "Int", 100, "production_jai_ambey") 
+            .add_column("Shortage", "Int", 100, "short_qty")
+        )
+    if filters.get('report_type') == 'Box Dispatch':
+        cols = (builder
+            .add_column("Rapl MSL", "Int", 100, "rapl_msl")
+            .add_column("SO", "Int", 60, "so_qty")
+            .add_column("Dispatch Jai Ambey", 60, "Int", "dispatch_jai_ambey")
+            .add_column("Dispatch Amit", "Int", 60, "dispatch_amit")
+            .add_column("Rapl Stock", "Int", 60, "stock_rapl") 
+            .add_column("Dispatch Need", "Int", 100, "dispatch_need_to_complete_so")
+            .add_column("Amit Stock", "Int", 60, "stock_amit") 
+            .add_column("JAI Stock", "Int", 60, "stock_jai_ambey") 
+
+        )
+    
+    if filters.get('over_stock'):
+        cols = (builder
+            .add_column("Over Stock", "Int", 100, "over_stock_qty")
+        )
+    if(filters.get('add_links')):
+        cols = links_cols(builder)
+    if(filters.get('add_priority')):
+        cols = priority_cols(builder)
+    cols = cols.build()
+    return cols
+

@@ -34,7 +34,7 @@ def get_data(filters):
             SUM(net_sales) AS net_sales
         FROM (
             SELECT
-                SUM(IF(td.transaction_type = 'Sales', td.quantity, -(td.quantity))) AS net_sales,
+                SUM(IF(td.transaction_type = 'Sales', td.quantity, - (td.quantity))) AS net_sales,
                 tp.customer AS customer,
                 cu.customer_group AS salesman,
                 td.date AS date
