@@ -3,6 +3,10 @@
 import frappe
 from frappe.core.doctype.user_permission.user_permission import get_user_permissions
 from raplbaddi.datarapl.doctype.report_full_access_users.report_full_access_users import get_wildcard_users
+from frappe.query_builder import DocType
+from frappe.query_builder.functions import Concat, Sum, GroupConcat, Max
+from pypika import Case
+from raplbaddi.utils import report_utils
 
 def get_groups(user):
     user_permissions = get_user_permissions(user=user)
@@ -21,11 +25,119 @@ def permissions(filters):
 def execute(filters=None):
     columns, data = [], []
     if permissions(filters):
-        data = get_data(filters)
+        data = join(filters)
         return get_columns(filters), data
     else:
         return None
 
+def get_tally_data():
+    td = DocType('Tally April to August 2023')
+    tpn = DocType('Tally Party Name')
+    tp = DocType('Tally Particular')
+    i = DocType('Item')
+    query = (frappe.qb
+        .from_(td)
+        .left_join(tpn).on(td.party_name == tpn.name)
+        .left_join(tp).on(tp.name == td.particulars)
+        .left_join(i).on(tp.item == i.name)
+        .where(
+            (td.date >= '2023-04-01') & (td.date <= '2023-08-28') &
+            (td.transaction_type == 'Sales') &
+            (i.item_group == 'Geyser Unit')
+        )
+        .select(
+            Case()
+                .when(td.transaction_type == 'Sales', td.quantity)
+                .else_(-td.quantity)
+            .as_('net_sales'),
+            td.date.as_('date'),
+            tpn.customer.as_('customer')
+        )
+        )
+    
+    result = query.run(as_dict=True)
+    for r in result:
+        r['date'] = r['date'].date()
+    print(result)
+    return result
+
+def get_delivery_note_data():
+    dn = DocType('Delivery Note')
+    dni = DocType('Delivery Note Item')
+    i = DocType('Item')
+    
+    query = (frappe.qb
+        .from_(dn)
+        .left_join(dni).on(dni.parent == dn.name)
+        .left_join(i).on(dni.item_code == i.name)
+        .where(
+            (dn.posting_date >= '2023-08-29') &
+            (dn.docstatus == 1) &
+            (i.item_group == 'Geyser Unit')
+        )
+        .select(
+            dni.qty.as_('net_sales'),
+            dn.posting_date.as_('date'),
+            dn.customer_name.as_('customer')
+        )
+    )
+    result = query.run(as_dict=True)
+    return result
+
+def get_customer():
+    cu = DocType('Customer')
+    query = (frappe.qb
+        .from_(cu)
+        .select(cu.name.as_('customer'), cu.customer_group)         
+    )
+    return query.run(as_dict=True)
+
+def join(filters):
+    from frappe.utils import getdate
+    customer_data_list = get_customer()
+    print(get_delivery_note_data())
+    transactions_list = get_delivery_note_data() + get_tally_data()
+
+    # Parse the date strings and convert them to datetime objects
+    start_date_str = filters.get('from_date')
+    end_date_str = filters.get('to_date')
+    start_date = getdate(start_date_str)
+    end_date = getdate(end_date_str)
+    desired_customer_group = filters.get('sales_person')
+    desired_customer = filters.get('desired_customer')
+
+    # Create a list to store consolidated data for each customer
+    consolidated_data_list = []
+
+    # Iterate through customer data
+    for customer_data in customer_data_list:
+        if desired_customer_group != 'All' and customer_data['customer_group'] != desired_customer_group:
+            continue  # Skip this customer if the group doesn't match the filter
+
+        total_net_sales = 0.0
+        customer_name = customer_data['customer']
+
+        for transaction in transactions_list:
+            if (
+                start_date <= transaction['date'] <= end_date
+                and (desired_customer == "All" or transaction['customer'] == customer_name)
+            ):
+                total_net_sales += transaction['net_sales']
+            
+        if total_net_sales != 0.0:
+            consolidated_data = {
+                'customer': customer_name,
+                'net_sales': total_net_sales,
+            }
+            if consolidated_data:
+                consolidated_data_list.append(consolidated_data)
+    
+    if not consolidated_data_list:
+        return []
+    else:
+        return consolidated_data_list
+
+   
 def get_data(filters):
     query = f"""
         SELECT
