@@ -76,7 +76,7 @@ def get_delivery_note_data():
         .select(
             dni.qty.as_('net_sales'),
             dn.posting_date.as_('date'),
-            dn.customer_name.as_('customer')
+            dn.customer.as_('customer')
         )
     )
     result = query.run(as_dict=True)
@@ -113,6 +113,9 @@ def join(filters):
 
         total_net_sales = 0.0
         customer_name = customer_data['customer']
+        for transaction in transactions_list:
+            if transaction['customer'] == 'C.Lal Marketing Pvt. Ltd.':
+                print(transaction)
 
         for transaction in transactions_list:
             if (

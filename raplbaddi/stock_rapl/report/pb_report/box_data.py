@@ -38,13 +38,13 @@ class BoxRequirements:
         )
         return query.run(as_dict=True)
     
-    def all_boxes(self):
+    def all_boxes(self, item_group, key):
         box_query = (
             frappe.qb
             .from_(self.items)
-            .where(self.items.item_group == "Packing Boxes")
+            .where(self.items.item_group == item_group)
             .where(self.items.disabled == 0)
-            .select(self.items.name.as_('box'), self.items.safety_stock.as_('msl'), self.items.dead_inventory.as_('dead_inventory'), self.items.rapl_msl.as_('rapl_msl'), self.items.paper_name.as_('paper_name'), Coalesce(self.items.brand, self.items.plain_box_type).as_('box_particular')
+            .select(self.items.name.as_(key), self.items.safety_stock.as_('msl'), self.items.dead_inventory.as_('dead_inventory'), self.items.rapl_msl.as_('rapl_msl'), self.items.paper_name.as_('paper_name'), Coalesce(self.items.brand, self.items.plain_box_type, '').as_('box_particular')
             )
         )
         return box_query.run(as_dict=True)

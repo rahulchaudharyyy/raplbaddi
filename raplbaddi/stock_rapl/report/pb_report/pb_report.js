@@ -8,7 +8,7 @@ frappe.query_reports["PB Report"] = {
 			"fieldname": "report_type",
 			"label": __("Report Type"),
 			"fieldtype": "Select",
-			"options": "Box Dispatch\nBox Production",
+			"options": "Box Dispatch\nBox Production\nDead Stock",
 			"reqd": 1
 		},
 		{
@@ -19,6 +19,11 @@ frappe.query_reports["PB Report"] = {
 		{
 			"fieldname": "over_stock",
 			"label": __("Add Over Stock"),
+			"fieldtype": "Check"
+		},
+		{
+			"fieldname": "paper_stock",
+			"label": __("Add Paper Stock"),
 			"fieldtype": "Check"
 		},
 		{

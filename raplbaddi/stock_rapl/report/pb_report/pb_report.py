@@ -21,7 +21,8 @@ def get_warehouse_data(warehouse_name):
     return {item['box']: item for item in warehouse_data}
 
 def join(filters=None):
-    all_box = box_data.all_boxes()
+    all_box = box_data.all_boxes('Packing Boxes', 'box')
+    all_paper = box_data.all_boxes('Packing Paper', 'paper')
     mr_amit = report_utils.get_mapped_data(data=box_data.get_box_order_for_production("Amit Print 'N' Pack, Kishanpura, Baddi"), key='box')
     mr_jai_ambey = report_utils.get_mapped_data(data=box_data.get_box_order_for_production('Jai Ambey Industries'), key='box')
     so_mapping = report_utils.get_mapped_data(data=box_data.get_box_requirement_from_so(), key='box')
@@ -39,10 +40,9 @@ def join(filters=None):
 
     jai_ambey_warehouse_po_box = report_utils.get_mapped_data(data=box_data.get_supplierwise_po(jai_ambey_supplier), key='box')
     amit_warehouse_po_box = report_utils.get_mapped_data(data=box_data.get_supplierwise_po(amit_supplier), key='box')      
-    
-    for box in all_box:
-        box_name = box['box']
 
+    for box in all_box:
+        box_name = box.get('box', '-')
         box['production_amit'] = get_box_data(box_name, mr_amit, 'qty')
         box['mr_amit'] = get_box_data(box_name, mr_amit, 'mr_name')
         box['remain_prod_amit'] = box['production_amit'] - get_box_data(box_name, mr_amit, 'received_qty')
@@ -57,16 +57,37 @@ def join(filters=None):
         box['priority_rana'] = priority_rana.get(box_name, {'priority': 0})['priority']
         
         
+        box_particular = box.get('box_particular', '-')
+        paper_name = box.get('paper_name', '-')
+        if box_particular is None:
+            box_particular = ''
+        if paper_name is None:
+            paper_name = ''
+
+        paper_name = 'PP ' + box_particular + ' ' + paper_name
+        
+        
         warehouse_item = rapl_warehouse_mapping.get(box_name, {'warehouse_qty': 0.0, 'projected_qty': 0.0})
         box['stock_rapl'] = warehouse_item['warehouse_qty']
         box['projected_rapl'] = warehouse_item['projected_qty']
 
-        warehouse_item = jai_ambey_warehouse_mapping.get(box_name, {'warehouse_qty': 0.0})
-        box['stock_jai_ambey'] = warehouse_item['warehouse_qty']
+        jai_warehouse_item = jai_ambey_warehouse_mapping.get(box_name, {'warehouse_qty': 0.0})
+        jai_warehouse_paper = jai_ambey_warehouse_mapping.get(paper_name, {'warehouse_qty': 0.0})
+        box['stock_jai_ambey'] = jai_warehouse_item['warehouse_qty']
+        
 
-        warehouse_item = amit_warehouse_mapping.get(box_name, {'warehouse_qty': 0.0})
-        box['stock_amit'] = warehouse_item['warehouse_qty']
+        amit_warehouse_item = amit_warehouse_mapping.get(box_name, {'warehouse_qty': 0.0})
+        amit_warehouse_paper = amit_warehouse_mapping.get(paper_name, {'warehouse_qty': 0.0})        
+        box['stock_amit'] = amit_warehouse_item['warehouse_qty']
+        
 
+        # Check if any of the values are None and replace them with an empty string
+
+        for paper in all_paper:
+            if paper['paper'] == paper_name:
+                box['paper'] = paper_name
+                box['jai_paper_stock'] = jai_warehouse_paper['warehouse_qty']
+                box['amit_paper_stock'] = amit_warehouse_paper['warehouse_qty']
         box['dispatch_jai_ambey'] = jai_ambey_warehouse_po_box.get(box_name, {'box_qty': 0.0})['box_qty']
         box['po_name_jai_ambey'] = jai_ambey_warehouse_po_box.get(box_name, {'po_name': ''})['po_name']
 
@@ -76,11 +97,14 @@ def join(filters=None):
     for box in all_box:
         box['short_qty'] = max(0, (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai_ambey'] + box['stock_amit'] + box['production_amit'] + box['production_jai_ambey']))
         box['dispatch_need_to_complete_so'] = abs(max(0,  box['rapl_msl'] + box['so_qty'] - box['stock_rapl'] - box['dispatch_amit'] -  box['dispatch_jai_ambey']))
+        box['total_stock'] = box['stock_amit'] + box['stock_rapl'] + box['stock_jai_ambey']
         box['over_stock_qty'] = min(0, (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai_ambey'] + box['stock_amit'] + box['production_amit'] + box['production_jai_ambey']))
     if filters.get('report_type') == "Box Production":
         all_box.sort(key=lambda x: x['short_qty'], reverse=True)
     if filters.get('report_type') == "Box Dispatch":
         all_box.sort(key=lambda x: x['dispatch_need_to_complete_so'], reverse=True)
+    if filters.get('report_type') == "Dead Stock":
+        all_box.sort(key=lambda x: x['total_stock'], reverse=True)
     return all_box
 
 def priority_cols(builder):
@@ -110,7 +134,7 @@ def columns(filters=None):
         cols = (
             builder 
             .add_column("D", "Check", 40, "dead_inventory") 
-            .add_column("Item", "Link", 180, "box", options="Item")
+            .add_column("Box", "Link", 180, "box", options="Item")
             .add_column("Box MSL", "Int", 80, "msl", disable_total=True)
             .add_column("Rapl Stock", "Int", 120, "stock_rapl") 
             .add_column("Amit Stock", "Int", 120, "stock_amit") 
@@ -135,6 +159,26 @@ def columns(filters=None):
             .add_column("Dispatch Need", "Int", 120, "dispatch_need_to_complete_so")
             .add_column("Amit Stock", "Int", 100, "stock_amit") 
             .add_column("JAI Stock", "Int", 100, "stock_jai_ambey")
+            .build()
+        )
+    elif filters.get('report_type') == 'Dead Stock':
+        builder = report_utils.ColumnBuilder()
+        cols = (
+            builder
+            .add_column("D", "Check", 40, "dead_inventory") 
+            .add_column("Item", "Link", 180, "box", options="Item")
+            .add_column("Rapl Stock", "Int", 100, "stock_rapl") 
+            .add_column("Amit Stock", "Int", 100, "stock_amit") 
+            .add_column("JAI Stock", "Int", 100, "stock_jai_ambey")
+            .add_column("Total Stock", "Int", 100, "total_stock")
+            .build()
+        )
+    if filters.get('paper_stock'):
+        cols = (
+            builder
+            .add_column("Paper", "Link", 180, "paper", options="Item")
+            .add_column("Amit Paper", "Int", 100, "amit_paper_stock", disable_total="True")
+            .add_column("Jai_paper_stock", "Int", 100, "jai_paper_stock", disable_total="True")
             .build()
         )
     
