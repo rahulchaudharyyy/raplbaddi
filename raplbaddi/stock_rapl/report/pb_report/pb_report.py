@@ -99,12 +99,17 @@ def join(filters=None):
         box['dispatch_need_to_complete_so'] = abs(max(0,  box['rapl_msl'] + box['so_qty'] - box['stock_rapl'] - box['dispatch_amit'] -  box['dispatch_jai_ambey']))
         box['total_stock'] = box['stock_amit'] + box['stock_rapl'] + box['stock_jai_ambey']
         box['over_stock_qty'] = min(0, (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai_ambey'] + box['stock_amit'] + box['production_amit'] + box['production_jai_ambey']))
+        box['urgent_dispatch'] = box['so_qty'] - box['stock_rapl']
     if filters.get('report_type') == "Box Production":
         all_box.sort(key=lambda x: x['short_qty'], reverse=True)
     if filters.get('report_type') == "Box Dispatch":
         all_box.sort(key=lambda x: x['dispatch_need_to_complete_so'], reverse=True)
     if filters.get('report_type') == "Dead Stock":
         all_box.sort(key=lambda x: x['total_stock'], reverse=True)
+        all_box = [item for item in all_box if item['dead_inventory'] > 0 and item['total_stock'] > 0]
+    if filters.get('report_type') == "Urgent Dispatch":
+        all_box.sort(key=lambda x: x['urgent_dispatch'], reverse=True)
+        all_box = [item for item in all_box if item['urgent_dispatch'] > 0]
     return all_box
 
 def priority_cols(builder):
@@ -171,6 +176,17 @@ def columns(filters=None):
             .add_column("Amit Stock", "Int", 100, "stock_amit") 
             .add_column("JAI Stock", "Int", 100, "stock_jai_ambey")
             .add_column("Total Stock", "Int", 100, "total_stock")
+            .build()
+        )
+    elif filters.get('report_type') == 'Urgent Dispatch':
+        builder = report_utils.ColumnBuilder()
+        cols = (
+            builder
+            .add_column("D", "Check", 40, "dead_inventory") 
+            .add_column("Item", "Link", 180, "box", options="Item")
+            .add_column("Rapl Stock", "Int", 100, "stock_rapl") 
+            .add_column("SO", "Int", 80, "so_qty")
+            .add_column("Urgent Dispatch", "Int", "urgent_dispatch", "urgent_dispatch")
             .build()
         )
     if filters.get('paper_stock'):
