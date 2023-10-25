@@ -6,7 +6,6 @@ from raplbaddi.datarapl.doctype.report_full_access_users.report_full_access_user
 from frappe.query_builder import DocType
 from frappe.query_builder.functions import Concat, Sum, GroupConcat, Max
 from pypika import Case
-from raplbaddi.utils import report_utils
 
 def get_groups(user):
     user_permissions = get_user_permissions(user=user)
@@ -58,7 +57,6 @@ def get_tally_data():
     result = query.run(as_dict=True)
     for r in result:
         r['date'] = r['date'].date()
-    print(result)
     return result
 
 def get_delivery_note_data():
@@ -95,7 +93,6 @@ def get_customer():
 def join(filters):
     from frappe.utils import getdate
     customer_data_list = get_customer()
-    print(get_delivery_note_data())
     transactions_list = get_delivery_note_data() + get_tally_data()
 
     # Parse the date strings and convert them to datetime objects
@@ -135,9 +132,45 @@ def join(filters):
     if not consolidated_data_list:
         return []
     else:
+        consolidated_data_list.sort(key=lambda x: x['net_sales'], reverse=True)
         return consolidated_data_list
 
-   
+def get_columns(filters):
+    columns = [
+        {
+            "label": "Customer",
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "options": "Customer",
+            "width": 250,
+        },
+        {
+            "label": "Net Sales",
+            "fieldname": "net_sales",
+            "fieldtype": "Int",
+            "width": 120,
+        }
+    ]
+    return columns
+
+
+def get_conditions(filters):
+    conditions = "net_sales > 0"
+    if filters and filters.get("from_date"):
+        from_date = filters.get("from_date")
+        conditions += f" AND d.date >= '{from_date}'"
+    if filters and filters.get("to_date"):
+        to_date = filters.get("to_date")
+        conditions += f" AND d.date <= '{to_date}'"
+    if filters and filters.get("sales_person"):
+        sales_person = filters.get("sales_person")
+        if sales_person == 'All':
+            conditions += f" AND 1"
+        else:
+            conditions += f" AND d.salesman = '{sales_person}'"
+    return conditions
+
+
 def get_data(filters):
     query = f"""
         SELECT
@@ -192,39 +225,3 @@ def get_data(filters):
 
     result = frappe.db.sql(query, as_dict=True)
     return result
-
-
-def get_columns(filters):
-    columns = [
-        {
-            "label": "Customer",
-            "fieldname": "customer",
-            "fieldtype": "Link",
-            "options": "Customer",
-            "width": 250,
-        },
-        {
-            "label": "Net Sales",
-            "fieldname": "net_sales",
-            "fieldtype": "Int",
-            "width": 120,
-        }
-    ]
-    return columns
-
-
-def get_conditions(filters):
-    conditions = "net_sales > 0"
-    if filters and filters.get("from_date"):
-        from_date = filters.get("from_date")
-        conditions += f" AND d.date >= '{from_date}'"
-    if filters and filters.get("to_date"):
-        to_date = filters.get("to_date")
-        conditions += f" AND d.date <= '{to_date}'"
-    if filters and filters.get("sales_person"):
-        sales_person = filters.get("sales_person")
-        if sales_person == 'All':
-            conditions += f" AND 1"
-        else:
-            conditions += f" AND d.salesman = '{sales_person}'"
-    return conditions
