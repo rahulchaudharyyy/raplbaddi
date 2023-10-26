@@ -12,6 +12,12 @@ frappe.query_reports["PB Report"] = {
 			"reqd": 1
 		},
 		{
+			"fieldname": "box_stock",
+			"label": __("Box Stock"),
+			"fieldtype": "Check",
+			"default": 1
+		},
+		{
 			"fieldname": "add_priority",
 			"label": __("Add Priority"),
 			"fieldtype": "Check"

@@ -233,29 +233,27 @@ def columns(filters=None):
     if filters.get('report_type') == 'Box Production':
         builder = report_utils.ColumnBuilder()
         cols = common_cols(builder)
-        cols = rapl_msl(builder)
+        cols = box_msl(builder)
         cols = prod_cols(builder)
-        cols = stock_cols(builder)
 
     elif filters.get('report_type') == 'Box Dispatch':
         builder = report_utils.ColumnBuilder()
         cols = common_cols(builder)
-        cols = box_msl(builder)
+        cols = rapl_msl(builder)
         cols = dispatch_cols(builder)
-        cols = stock_cols(builder)
 
     elif filters.get('report_type') == 'Dead Stock':
         builder = report_utils.ColumnBuilder()
         cols = common_cols(builder)
-        cols = stock_cols(builder)
 
     elif filters.get('report_type') == 'Urgent Dispatch':
         builder = report_utils.ColumnBuilder()
         cols = common_cols(builder)
         cols = urgent_dispatch_column(builder)
         cols = dispatch_cols(builder)
-        cols = stock_cols(builder)
 
+    if filters.get('box_stock'):
+        cols = stock_cols(builder)
     if filters.get('paper_stock'):
         cols = paper_cols(builder)
     if filters.get('over_stock'):
