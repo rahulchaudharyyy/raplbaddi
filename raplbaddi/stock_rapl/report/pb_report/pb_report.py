@@ -66,7 +66,7 @@ def join(filters=None):
 
 
     warehouse_jai, mr_jai, po_jai, priority_jai = Supplier(name='Jai Ambey Industries').get_supplier_data()
-    warehouse_amit, mr_amit, po_amit, priority_amit = Supplier(name="Amit Print 'N' Pack - RAPL").get_supplier_data()
+    warehouse_amit, mr_amit, po_amit, priority_amit = Supplier(name="Amit Print 'N' Pack").get_supplier_data()
     warehouse_rana, mr_rana, po_rana, priority_rana = Supplier(name="Rana, Packing Box").get_supplier_data()
 
     for box in all_box:
