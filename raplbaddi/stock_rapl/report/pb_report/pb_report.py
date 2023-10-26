@@ -159,90 +159,107 @@ def links_cols(builder):
     )
     return cols
 
+def stock_cols(builder):
+    cols = (builder
+        .add_column("Rapl Stock", "Int", 100, "stock_rapl")
+        .add_column("JAI Stock", "Int", 100, "stock_jai")
+        .add_column("Amit Stock", "Int", 100, "stock_amit") 
+        .add_column("Total Stock", "Int", 100, "total_stock")
+        .build()
+    )
+    return cols
+
+def prod_cols(builder):
+    cols = (builder
+        .add_column("JAI Prod", "Int", 100, "production_jai") 
+        .add_column("Amit Prod", "Int", 100, "production_amit") 
+        .add_column("Rana Prod", "Int", 100, "production_rana")
+        .build()
+    )
+    return cols
+
+def dispatch_cols(builder):
+    cols = (builder
+        .add_column("Jai Dispatch", "Int", 120, "dispatch_jai")
+        .add_column("Amit Dispatch", "Int", 120, "dispatch_amit")
+        .add_column("Rana Dispatch", "Int", 120, "dispatch_rana")
+        .build()        
+    )
+    return cols
+
+def common_cols(builder):
+    cols = (
+        builder
+        .add_column("D", "Check", 40, "dead_inventory") 
+        .add_column("Item", "Link", 180, "box", options="Item")
+        .build()
+    )
+    return cols
+
+def paper_cols(builder):
+    cols = (
+        builder
+        .add_column("Paper", "Link", 180, "paper", options="Item")
+        .add_column("Amit Paper", "Int", 100, "amit_paper_stock", disable_total="True")
+        .add_column("Jai Paper", "Int", 100, "jai_paper_stock", disable_total="True")
+        .add_column("Rana Paper", "Int", 100, "rana_paper_stock", disable_total="True")
+        .build()
+    )
+    return cols
+
+def urgent_dispatch_column(builder):
+    return builder.add_column("Urgent Dispatch", "Int", "urgent_dispatch", "urgent_dispatch")
+
+def dispatch_need_column(builder):
+    return builder.add_column("Dispatch Need", "Int", 120, "dispatch_need_to_complete_so")
+
+def shortage_column(builder):
+    return builder.add_column("Shortage", "Int", 100, "short_qty")
+
+def so(builder):
+    return builder.add_column("SO", "Int", 80, "so_qty").build()
+
+def box_msl(builder):
+    return builder.add_column("MSL", "Int", 100, "msl").build()
+
+def rapl_msl(builder):
+    return builder.add_column("Rapl MSL", "Int", 100, "rapl_msl").build()
+
+def over_cols(builder):
+    return builder.add_column("Over Stock", "Int", 100, "over_stock_qty").build()
+
 def columns(filters=None):
     cols = None
     if filters.get('report_type') == 'Box Production':
         builder = report_utils.ColumnBuilder()
-        cols = (
-            builder 
-            .add_column("D", "Check", 40, "dead_inventory") 
-            .add_column("Box", "Link", 180, "box", options="Item")
-            .add_column("Box MSL", "Int", 80, "msl", disable_total=True)
-            .add_column("Rapl Stock", "Int", 120, "stock_rapl") 
-            .add_column("Amit Stock", "Int", 120, "stock_amit") 
-            .add_column("JAI Stock", "Int", 100, "stock_jai") 
-            .add_column("Rana Stock", "Int", 120, "stock_rana") 
-            .add_column("Amit Prod", "Int", 100, "production_amit") 
-            .add_column("JAI Prod", "Int", 100, "production_jai") 
-            .add_column("Rana Prod", "Int", 100, "production_rana") 
-            .add_column("Shortage", "Int", 100, "short_qty")
-            .build()
-        )
+        cols = common_cols(builder)
+        cols = rapl_msl(builder)
+        cols = prod_cols(builder)
+        cols = stock_cols(builder)
 
     elif filters.get('report_type') == 'Box Dispatch':
         builder = report_utils.ColumnBuilder()
-        cols = (
-            builder
-            .add_column("D", "Check", 40, "dead_inventory") 
-            .add_column("Item", "Link", 180, "box", options="Item")
-            .add_column("Rapl MSL", "Int", 100, "rapl_msl")
-            .add_column("SO", "Int", 80, "so_qty")
-            .add_column("Jai Dispatch", "Int", 120, "dispatch_jai")
-            .add_column("Amit Dispatch", "Int", 120, "dispatch_amit")
-            .add_column("Rana Dispatch", "Int", 120, "dispatch_rana")
-            .add_column("Rapl Stock", "Int", 100, "stock_rapl") 
-            .add_column("Dispatch Need", "Int", 120, "dispatch_need_to_complete_so")
-            .add_column("Amit Stock", "Int", 100, "stock_amit") 
-            .add_column("JAI Stock", "Int", 100, "stock_jai")
-            .add_column("Rana Stock", "Int", 100, "stock_rana")
-            .build()
-        )
+        cols = common_cols(builder)
+        cols = box_msl(builder)
+        cols = dispatch_cols(builder)
+        cols = stock_cols(builder)
+
     elif filters.get('report_type') == 'Dead Stock':
         builder = report_utils.ColumnBuilder()
-        cols = (
-            builder
-            .add_column("D", "Check", 40, "dead_inventory") 
-            .add_column("Item", "Link", 180, "box", options="Item")
-            .add_column("Rapl Stock", "Int", 100, "stock_rapl") 
-            .add_column("JAI Stock", "Int", 100, "stock_jai")
-            .add_column("Amit Stock", "Int", 100, "stock_amit")
-            .add_column("Rana Stock", "Int", 100, "stock_rana") 
-            .add_column("Total Stock", "Int", 100, "total_stock")
-            .build()
-        )
+        cols = common_cols(builder)
+        cols = stock_cols(builder)
+
     elif filters.get('report_type') == 'Urgent Dispatch':
         builder = report_utils.ColumnBuilder()
-        cols = (
-            builder
-            .add_column("D", "Check", 40, "dead_inventory") 
-            .add_column("Item", "Link", 180, "box", options="Item")
-            .add_column("Rapl Stock", "Int", 100, "stock_rapl")
-            .add_column("Jai Dispatch", "Int", 120, "dispatch_jai")
-            .add_column("Amit Dispatch", "Int", 120, "dispatch_amit")
-            .add_column("Rana Dispatch", "Int", 120, "dispatch_rana")
-            .add_column("JAI Stock", "Int", 100, "stock_jai")
-            .add_column("Amit Stock", "Int", 100, "stock_amit")
-            .add_column("Rana Stock", "Int", 100, "stock_rana") 
-            .add_column("SO", "Int", 80, "so_qty")
-            .add_column("Urgent Dispatch", "Int", "urgent_dispatch", "urgent_dispatch")
-            .build()
-        )
+        cols = common_cols(builder)
+        cols = urgent_dispatch_column(builder)
+        cols = dispatch_cols(builder)
+        cols = stock_cols(builder)
+
     if filters.get('paper_stock'):
-        cols = (
-            builder
-            .add_column("Paper", "Link", 180, "paper", options="Item")
-            .add_column("Amit Paper", "Int", 100, "amit_paper_stock", disable_total="True")
-            .add_column("Jai Paper", "Int", 100, "jai_paper_stock", disable_total="True")
-            .add_column("Rana Paper", "Int", 100, "rana_paper_stock", disable_total="True")
-            .build()
-        )
-    
+        cols = paper_cols(builder)
     if filters.get('over_stock'):
-        cols = (
-            builder
-            .add_column("Over Stock", "Int", 100, "over_stock_qty")
-            .build()
-        )
+        cols = over_cols(builder)
     if filters.get('add_links'):
         cols = links_cols(builder)
     if filters.get('add_priority'):
