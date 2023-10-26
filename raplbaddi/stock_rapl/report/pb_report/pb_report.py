@@ -166,9 +166,9 @@ def links_cols(builder):
 
 def stock_cols(builder):
     cols = (builder
-        .add_column("Rapl Stock", "Int", 100, "stock_rapl")
-        .add_column("JAI Stock", "Int", 100, "stock_jai")
-        .add_column("Amit Stock", "Int", 100, "stock_amit") 
+        .add_column("Rapl Stock", "Int", 80, "stock_rapl")
+        .add_column("JAI Stock", "Int", 80, "stock_jai")
+        .add_column("Amit Stock", "Int", 80, "stock_amit") 
         .add_column("Total Stock", "Int", 100, "total_stock")
         .build()
     )
@@ -176,18 +176,18 @@ def stock_cols(builder):
 
 def prod_cols(builder):
     cols = (builder
-        .add_column("JAI Prod", "Int", 100, "production_jai") 
-        .add_column("Amit Prod", "Int", 100, "production_amit") 
-        .add_column("Rana Prod", "Int", 100, "production_rana")
+        .add_column("JAI Prod", "Int", 80, "production_jai") 
+        .add_column("Amit Prod", "Int", 80, "production_amit") 
+        .add_column("Rana Prod", "Int", 80, "production_rana")
         .build()
     )
     return cols
 
 def dispatch_cols(builder):
     cols = (builder
-        .add_column("Jai Dispatch", "Int", 120, "dispatch_jai")
-        .add_column("Amit Dispatch", "Int", 120, "dispatch_amit")
-        .add_column("Rana Dispatch", "Int", 120, "dispatch_rana")
+        .add_column("Jai Disp", "Int", 80, "dispatch_jai")
+        .add_column("Amit Disp", "Int", 80, "dispatch_amit")
+        .add_column("Rana Disp", "Int", 80, "dispatch_rana")
         .build()        
     )
     return cols
@@ -225,10 +225,10 @@ def so(builder):
     return builder.add_column("SO", "Int", 80, "so_qty").build()
 
 def box_msl(builder):
-    return builder.add_column("MSL", "Int", 100, "msl").build()
+    return builder.add_column("MSL", "Int", 80, "msl").build()
 
 def rapl_msl(builder):
-    return builder.add_column("Rapl MSL", "Int", 100, "rapl_msl").build()
+    return builder.add_column("Rapl MSL", "Int", 80, "rapl_msl").build()
 
 def over_cols(builder):
     return builder.add_column("Over Stock", "Int", 100, "over_stock_qty").build()
