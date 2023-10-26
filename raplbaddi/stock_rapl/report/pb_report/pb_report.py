@@ -248,8 +248,10 @@ def columns(filters=None):
     elif filters.get('report_type') == 'Box Dispatch':
         builder = report_utils.ColumnBuilder()
         cols = common_cols(builder)
+        cols = so(builder)
         cols = rapl_msl(builder)
         cols = dispatch_cols(builder)
+        cols = dispatch_need_column(builder)
 
     elif filters.get('report_type') == 'Dead Stock':
         builder = report_utils.ColumnBuilder()
@@ -258,6 +260,7 @@ def columns(filters=None):
     elif filters.get('report_type') == 'Urgent Dispatch':
         builder = report_utils.ColumnBuilder()
         cols = common_cols(builder)
+        cols = so(builder)
         cols = urgent_dispatch_column(builder)
         cols = dispatch_cols(builder)
 
