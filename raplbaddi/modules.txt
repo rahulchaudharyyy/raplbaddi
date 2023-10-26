@@ -7,3 +7,4 @@ Testing Rapl
 Stock Rapl
 Purchase Rapl
 Tasks Rapl
+Reporting Rapl
