@@ -36,6 +36,10 @@ class UrgentDispatchSort(report_utils.SortStrategy):
     def sort(self, data):
         return sorted([item for item in data if item['urgent_dispatch'] > 0], key=lambda x: x['urgent_dispatch'], reverse=True)
 
+class BoxStockSort(report_utils.SortStrategy):
+    def sort(self, data):
+        return sorted([item for item in data if item['stock_rapl'] > 0], key=lambda x: x['stock_rapl'], reverse=True)
+
 class SortStrategyFactory:
     @staticmethod
     def get_strategy(report_type):
@@ -43,7 +47,8 @@ class SortStrategyFactory:
             'Box Production': BoxProductionSort(),
             'Box Dispatch': BoxDispatchSort(),
             'Dead Stock': DeadStockSort(),
-            'Urgent Dispatch': UrgentDispatchSort()
+            'Urgent Dispatch': UrgentDispatchSort(),
+            'Box Stock': BoxStockSort()
         }
         return strategies.get(report_type)
 
@@ -230,7 +235,11 @@ def over_cols(builder):
 
 def columns(filters=None):
     cols = None
-    if filters.get('report_type') == 'Box Production':
+    if filters.get('report_type') == 'Box Stock':
+        builder = report_utils.ColumnBuilder()
+        cols = common_cols(builder)
+
+    elif filters.get('report_type') == 'Box Production':
         builder = report_utils.ColumnBuilder()
         cols = common_cols(builder)
         cols = box_msl(builder)

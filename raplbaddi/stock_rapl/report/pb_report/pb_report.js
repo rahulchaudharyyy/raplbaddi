@@ -8,8 +8,9 @@ frappe.query_reports["PB Report"] = {
 			"fieldname": "report_type",
 			"label": __("Report Type"),
 			"fieldtype": "Select",
-			"options": "Box Dispatch\nBox Production\nDead Stock\nUrgent Dispatch",
-			"reqd": 1
+			"options": "Box Stock\nBox Dispatch\nBox Production\nDead Stock\nUrgent Dispatch",
+			"reqd": 1,
+			"default": "Box Stock"
 		},
 		{
 			"fieldname": "box_stock",
