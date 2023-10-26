@@ -25,3 +25,10 @@ def remove_negative(keys: list, data: list[dict]) -> dict:
             if d.get(key, 0) < 0:
                 d[key] = 0
     return data
+
+
+from abc import ABC, abstractmethod
+class SortStrategy(ABC):
+    @abstractmethod
+    def sort(self, data):
+        pass

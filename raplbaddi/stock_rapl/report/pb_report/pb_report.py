@@ -20,101 +20,126 @@ def get_warehouse_data(warehouse_name):
     warehouse_data = box_data.warehouse_qty(warehouse=warehouse_name)
     return {item['box']: item for item in warehouse_data}
 
+class BoxProductionSort(report_utils.SortStrategy):
+    def sort(self, data):
+        return sorted(data, key=lambda x: x['short_qty'], reverse=True)
+
+class BoxDispatchSort(report_utils.SortStrategy):
+    def sort(self, data):
+        return sorted(data, key=lambda x: x['dispatch_need_to_complete_so'], reverse=True)
+
+class DeadStockSort(report_utils.SortStrategy):
+    def sort(self, data):
+        return sorted([item for item in data if item['dead_inventory'] > 0 and item['total_stock'] > 0], key=lambda x: x['total_stock'], reverse=True)
+
+class UrgentDispatchSort(report_utils.SortStrategy):
+    def sort(self, data):
+        return sorted([item for item in data if item['urgent_dispatch'] > 0], key=lambda x: x['urgent_dispatch'], reverse=True)
+
+class SortStrategyFactory:
+    @staticmethod
+    def get_strategy(report_type):
+        strategies = {
+            'Box Production': BoxProductionSort(),
+            'Box Dispatch': BoxDispatchSort(),
+            'Dead Stock': DeadStockSort(),
+            'Urgent Dispatch': UrgentDispatchSort()
+        }
+        return strategies.get(report_type)
+
+class Supplier:
+    def __init__(self, name):
+        self.name = name
+        self.warehouse = get_warehouse_data(f"{name} - RAPL")
+        self.mr = report_utils.get_mapped_data(data=box_data.get_box_order_for_production(self.name), key='box')
+        self.po = report_utils.get_mapped_data(data=box_data.get_supplierwise_po(self.name), key='box')
+        self.priority = report_utils.get_mapped_data(data=box_data.get_paper_supplier_priority(self.name), key='box')
+    def get_supplier_data(self):
+        return self.warehouse, self.mr, self.po, self.priority
+
+
 def join(filters=None):
     all_box = box_data.all_boxes('Packing Boxes', 'box')
     all_paper = box_data.all_boxes('Packing Paper', 'paper')
-    mr_amit = report_utils.get_mapped_data(data=box_data.get_box_order_for_production("Amit Print 'N' Pack, Kishanpura, Baddi"), key='box')
-    mr_jai_ambey = report_utils.get_mapped_data(data=box_data.get_box_order_for_production('Jai Ambey Industries'), key='box')
-    so_mapping = report_utils.get_mapped_data(data=box_data.get_box_requirement_from_so(), key='box')
-    rapl_warehouse_mapping = get_warehouse_data('Packing Boxes - Rapl')
-    jai_ambey_warehouse_mapping = get_warehouse_data('Jai Ambey Industries - RAPL')
-    amit_warehouse_mapping = get_warehouse_data("Amit Print 'N' Pack - RAPL")
-    jai_ambey_supplier = 'Jai Ambey Industries'
-    amit_supplier = "Amit Print 'N' Pack, Kishanpura, Baddi"
-    rana_supplier = "Rana, Packing Box"
-
-    priority_jai_ambey = report_utils.get_mapped_data(data=box_data.get_paper_supplier_priority(jai_ambey_supplier), key='box')
-    priority_amit = report_utils.get_mapped_data(data=box_data.get_paper_supplier_priority(amit_supplier), key='box')
-    priority_rana = report_utils.get_mapped_data(data=box_data.get_paper_supplier_priority(rana_supplier), key='box')
+    so = report_utils.get_mapped_data(data=box_data.get_box_requirement_from_so(), key='box')
+    rapl_warehouse = get_warehouse_data('Packing Boxes - Rapl')
 
 
-    jai_ambey_warehouse_po_box = report_utils.get_mapped_data(data=box_data.get_supplierwise_po(jai_ambey_supplier), key='box')
-    amit_warehouse_po_box = report_utils.get_mapped_data(data=box_data.get_supplierwise_po(amit_supplier), key='box')      
+    warehouse_jai, mr_jai, po_jai, priority_jai = Supplier(name='Jai Ambey Industries').get_supplier_data()
+    warehouse_amit, mr_amit, po_amit, priority_amit = Supplier(name="Amit Print 'N' Pack, Kishanpura, Baddi").get_supplier_data()
+    warehouse_rana, mr_rana, po_rana, priority_rana = Supplier(name="Rana, Packing Box").get_supplier_data()
 
     for box in all_box:
         box_name = box.get('box', '-')
-        box['production_amit'] = get_box_data(box_name, mr_amit, 'qty')
-        box['mr_amit'] = get_box_data(box_name, mr_amit, 'mr_name')
-        box['remain_prod_amit'] = box['production_amit'] - get_box_data(box_name, mr_amit, 'received_qty')
-        box['mr_jai_ambey'] = get_box_data(box_name, mr_jai_ambey, 'mr_name')
-        box['production_jai_ambey'] = get_box_data(box_name, mr_jai_ambey, 'qty')
-        box['remain_prod_jai_ambey'] = box['production_jai_ambey'] - get_box_data(box_name, mr_jai_ambey, 'received_qty')
 
-        box['so_qty'] = so_mapping.get(box_name, {'so_qty': 0.0})['so_qty']
-        box['so_name'] = so_mapping.get(box_name, {'so_name': ''})['so_name']
-        box['priority_jai_ambey'] = priority_jai_ambey.get(box_name, {'priority': 0})['priority']
-        box['priority_amit'] = priority_amit.get(box_name, {'priority': 0})['priority']
-        box['priority_rana'] = priority_rana.get(box_name, {'priority': 0})['priority']
+        box['so_qty'] = so.get(box_name, {'so_qty': 0.0})['so_qty']
+        box['so_name'] = so.get(box_name, {'so_name': ''})['so_name']
+                    
+        box_particular = box.get('box_particular', '')
+        paper_name = box.get('paper_name', '')
+        paper_name = f'PP {box_particular} {paper_name}'
         
-        
-        box_particular = box.get('box_particular', '-')
-        paper_name = box.get('paper_name', '-')
-        if box_particular is None:
-            box_particular = ''
-        if paper_name is None:
-            paper_name = ''
-
-        paper_name = 'PP ' + box_particular + ' ' + paper_name
-        
-        
-        warehouse_item = rapl_warehouse_mapping.get(box_name, {'warehouse_qty': 0.0, 'projected_qty': 0.0})
+        warehouse_item = rapl_warehouse.get(box_name, {'warehouse_qty': 0.0, 'projected_qty': 0.0})
         box['stock_rapl'] = warehouse_item['warehouse_qty']
         box['projected_rapl'] = warehouse_item['projected_qty']
 
-        jai_warehouse_item = jai_ambey_warehouse_mapping.get(box_name, {'warehouse_qty': 0.0})
-        jai_warehouse_paper = jai_ambey_warehouse_mapping.get(paper_name, {'warehouse_qty': 0.0})
-        box['stock_jai_ambey'] = jai_warehouse_item['warehouse_qty']
+        jai_warehouse_item = warehouse_jai.get(box_name, {'warehouse_qty': 0.0})
+        jai_warehouse_paper = warehouse_jai.get(paper_name, {'warehouse_qty': 0.0})
         
+        amit_warehouse_item = warehouse_amit.get(box_name, {'warehouse_qty': 0.0})
+        amit_warehouse_paper = warehouse_amit.get(paper_name, {'warehouse_qty': 0.0})
+        
+        rana_warehouse_item = warehouse_rana.get(box_name, {'warehouse_qty': 0.0})
+        rana_warehouse_paper = warehouse_rana.get(paper_name, {'warehouse_qty': 0.0})
+        
+        found_paper = next((paper for paper in all_paper if paper['paper'] == paper_name), None)
 
-        amit_warehouse_item = amit_warehouse_mapping.get(box_name, {'warehouse_qty': 0.0})
-        amit_warehouse_paper = amit_warehouse_mapping.get(paper_name, {'warehouse_qty': 0.0})        
+        if found_paper is not None:
+            box['paper'] = found_paper['paper']
+            box['jai_paper_stock'] = jai_warehouse_paper.get('warehouse_qty', 0.0)
+            box['amit_paper_stock'] = amit_warehouse_paper.get('warehouse_qty', 0.0)
+            box['rana_paper_stock'] = rana_warehouse_paper.get('warehouse_qty', 0.0)
+
+
+        box['production_jai'] = get_box_data(box_name, mr_jai, 'qty')
+        box['dispatch_jai'] = po_jai.get(box_name, {'box_qty': 0.0})['box_qty']
+        box['po_name_jai'] = po_jai.get(box_name, {'po_name': ''})['po_name']
+        box['remain_prod_jai'] = box['production_jai'] - get_box_data(box_name, mr_jai, 'received_qty')
+        box['mr_jai'] = get_box_data(box_name, mr_jai, 'mr_name')
+        box['stock_jai'] = jai_warehouse_item['warehouse_qty']
+        box['priority_jai'] = priority_jai.get(box_name, {'priority': 0})['priority']
+
+        box['production_amit'] = get_box_data(box_name, mr_amit, 'qty')
+        box['dispatch_amit'] = po_amit.get(box_name, {'box_qty': 0.0})['box_qty']
+        box['po_name_amit'] = po_amit.get(box_name, {'po_name': ''})['po_name']
+        box['priority_amit'] = priority_amit.get(box_name, {'priority': 0})['priority']
         box['stock_amit'] = amit_warehouse_item['warehouse_qty']
+        box['mr_amit'] = get_box_data(box_name, mr_amit, 'mr_name')
+        box['remain_prod_amit'] = box['production_amit'] - get_box_data(box_name, mr_amit, 'received_qty')
         
-
-        # Check if any of the values are None and replace them with an empty string
-
-        for paper in all_paper:
-            if paper['paper'] == paper_name:
-                box['paper'] = paper_name
-                box['jai_paper_stock'] = jai_warehouse_paper['warehouse_qty']
-                box['amit_paper_stock'] = amit_warehouse_paper['warehouse_qty']
-        box['dispatch_jai_ambey'] = jai_ambey_warehouse_po_box.get(box_name, {'box_qty': 0.0})['box_qty']
-        box['po_name_jai_ambey'] = jai_ambey_warehouse_po_box.get(box_name, {'po_name': ''})['po_name']
-
-        box['dispatch_amit'] = amit_warehouse_po_box.get(box_name, {'box_qty': 0.0})['box_qty']
-        box['po_name_amit'] = amit_warehouse_po_box.get(box_name, {'po_name': ''})['po_name']
+        box['production_rana'] = get_box_data(box_name, mr_rana, 'qty')
+        box['dispatch_rana'] = po_rana.get(box_name, {'box_qty': 0.0})['box_qty']
+        box['po_name_rana'] = po_rana.get(box_name, {'po_name': ''})['po_name']
+        box['priority_rana'] = priority_rana.get(box_name, {'priority': 0})['priority']
+        box['stock_rana'] = rana_warehouse_item['warehouse_qty']
+        box['mr_rana'] = get_box_data(box_name, mr_rana, 'mr_name')
+        box['remain_prod_rana'] = box['production_rana'] - get_box_data(box_name, mr_rana, 'received_qty')
+        
 
     for box in all_box:
-        box['short_qty'] = max(0, (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai_ambey'] + box['stock_amit'] + box['production_amit'] + box['production_jai_ambey']))
-        box['dispatch_need_to_complete_so'] = abs(max(0,  box['rapl_msl'] + box['so_qty'] - box['stock_rapl'] - box['dispatch_amit'] -  box['dispatch_jai_ambey']))
-        box['total_stock'] = box['stock_amit'] + box['stock_rapl'] + box['stock_jai_ambey']
-        box['over_stock_qty'] = min(0, (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai_ambey'] + box['stock_amit'] + box['production_amit'] + box['production_jai_ambey']))
+        box['short_qty'] = max(0, (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai'] + box['stock_amit'] + box['production_amit'] + box['production_jai'] + box['production_rana']))
+        box['dispatch_need_to_complete_so'] = abs(max(0,  box['rapl_msl'] + box['so_qty'] - box['stock_rapl'] - box['dispatch_amit'] -  box['dispatch_jai'] - box['dispatch_rana']))
+        box['total_stock'] = box['stock_amit'] + box['stock_rapl'] + box['stock_jai'] + box['stock_rana']
+        box['over_stock_qty'] = min(0, (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai'] + box['stock_amit'] + box['production_amit'] + box['production_jai'] + box['production_rana']))
         box['urgent_dispatch'] = box['so_qty'] - box['stock_rapl']
-    if filters.get('report_type') == "Box Production":
-        all_box.sort(key=lambda x: x['short_qty'], reverse=True)
-    if filters.get('report_type') == "Box Dispatch":
-        all_box.sort(key=lambda x: x['dispatch_need_to_complete_so'], reverse=True)
-    if filters.get('report_type') == "Dead Stock":
-        all_box.sort(key=lambda x: x['total_stock'], reverse=True)
-        all_box = [item for item in all_box if item['dead_inventory'] > 0 and item['total_stock'] > 0]
-    if filters.get('report_type') == "Urgent Dispatch":
-        all_box.sort(key=lambda x: x['urgent_dispatch'], reverse=True)
-        all_box = [item for item in all_box if item['urgent_dispatch'] > 0]
-    return all_box
+        
+    strategy = SortStrategyFactory.get_strategy(filters.get('report_type'))
+    sorted_data = strategy.sort(data=all_box)
+    return sorted_data
 
 def priority_cols(builder):
     cols = (builder
-        .add_column("J", "Int", 20, "priority_jai_ambey")
+        .add_column("J", "Int", 20, "priority_jai")
         .add_column("A", "Int", 20, "priority_amit")
         .add_column("R", "Int", 20, "priority_rana")
         .build()
@@ -124,10 +149,12 @@ def priority_cols(builder):
 def links_cols(builder):
     cols = (builder
         .add_column("SOs", "HTML", 100, "so_name") 
-        .add_column("MR JAI", "HTML", 100, "mr_jai_ambey")
+        .add_column("MR JAI", "HTML", 100, "mr_jai")
         .add_column("MR Amit", "HTML", 100, "mr_amit")
+        .add_column("MR Rana", "HTML", 100, "mr_rana")
         .add_column("POs Amit", "HTML", 100, "po_name_amit") 
-        .add_column("POs JAI", "HTML", 100, "po_name_jai_ambey")
+        .add_column("POs JAI", "HTML", 100, "po_name_jai")
+        .add_column("POs Rana", "HTML", 100, "po_name_rana")
         .build()
     )
     return cols
@@ -143,9 +170,11 @@ def columns(filters=None):
             .add_column("Box MSL", "Int", 80, "msl", disable_total=True)
             .add_column("Rapl Stock", "Int", 120, "stock_rapl") 
             .add_column("Amit Stock", "Int", 120, "stock_amit") 
-            .add_column("JAI Stock", "Int", 100, "stock_jai_ambey") 
+            .add_column("JAI Stock", "Int", 100, "stock_jai") 
+            .add_column("Rana Stock", "Int", 120, "stock_rana") 
             .add_column("Amit Prod", "Int", 100, "production_amit") 
-            .add_column("JAI Prod", "Int", 100, "production_jai_ambey") 
+            .add_column("JAI Prod", "Int", 100, "production_jai") 
+            .add_column("Rana Prod", "Int", 100, "production_rana") 
             .add_column("Shortage", "Int", 100, "short_qty")
             .build()
         )
@@ -158,12 +187,14 @@ def columns(filters=None):
             .add_column("Item", "Link", 180, "box", options="Item")
             .add_column("Rapl MSL", "Int", 100, "rapl_msl")
             .add_column("SO", "Int", 80, "so_qty")
-            .add_column("Jai Dispatch", "Int", 120, "dispatch_jai_ambey")
+            .add_column("Jai Dispatch", "Int", 120, "dispatch_jai")
             .add_column("Amit Dispatch", "Int", 120, "dispatch_amit")
+            .add_column("Rana Dispatch", "Int", 120, "dispatch_rana")
             .add_column("Rapl Stock", "Int", 100, "stock_rapl") 
             .add_column("Dispatch Need", "Int", 120, "dispatch_need_to_complete_so")
             .add_column("Amit Stock", "Int", 100, "stock_amit") 
-            .add_column("JAI Stock", "Int", 100, "stock_jai_ambey")
+            .add_column("JAI Stock", "Int", 100, "stock_jai")
+            .add_column("Rana Stock", "Int", 100, "stock_rana")
             .build()
         )
     elif filters.get('report_type') == 'Dead Stock':
@@ -173,8 +204,9 @@ def columns(filters=None):
             .add_column("D", "Check", 40, "dead_inventory") 
             .add_column("Item", "Link", 180, "box", options="Item")
             .add_column("Rapl Stock", "Int", 100, "stock_rapl") 
-            .add_column("Amit Stock", "Int", 100, "stock_amit") 
-            .add_column("JAI Stock", "Int", 100, "stock_jai_ambey")
+            .add_column("JAI Stock", "Int", 100, "stock_jai")
+            .add_column("Amit Stock", "Int", 100, "stock_amit")
+            .add_column("Rana Stock", "Int", 100, "stock_rana") 
             .add_column("Total Stock", "Int", 100, "total_stock")
             .build()
         )
@@ -184,7 +216,13 @@ def columns(filters=None):
             builder
             .add_column("D", "Check", 40, "dead_inventory") 
             .add_column("Item", "Link", 180, "box", options="Item")
-            .add_column("Rapl Stock", "Int", 100, "stock_rapl") 
+            .add_column("Rapl Stock", "Int", 100, "stock_rapl")
+            .add_column("Jai Dispatch", "Int", 120, "dispatch_jai")
+            .add_column("Amit Dispatch", "Int", 120, "dispatch_amit")
+            .add_column("Rana Dispatch", "Int", 120, "dispatch_rana")
+            .add_column("JAI Stock", "Int", 100, "stock_jai")
+            .add_column("Amit Stock", "Int", 100, "stock_amit")
+            .add_column("Rana Stock", "Int", 100, "stock_rana") 
             .add_column("SO", "Int", 80, "so_qty")
             .add_column("Urgent Dispatch", "Int", "urgent_dispatch", "urgent_dispatch")
             .build()
@@ -194,7 +232,8 @@ def columns(filters=None):
             builder
             .add_column("Paper", "Link", 180, "paper", options="Item")
             .add_column("Amit Paper", "Int", 100, "amit_paper_stock", disable_total="True")
-            .add_column("Jai_paper_stock", "Int", 100, "jai_paper_stock", disable_total="True")
+            .add_column("Jai Paper", "Int", 100, "jai_paper_stock", disable_total="True")
+            .add_column("Rana Paper", "Int", 100, "rana_paper_stock", disable_total="True")
             .build()
         )
     
