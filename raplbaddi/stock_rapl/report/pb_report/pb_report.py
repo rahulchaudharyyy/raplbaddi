@@ -166,10 +166,10 @@ def links_cols(builder):
 
 def stock_cols(builder):
     cols = (builder
-        .add_column("Rapl Stock", "Int", 80, "stock_rapl")
-        .add_column("JAI Stock", "Int", 80, "stock_jai")
-        .add_column("Amit Stock", "Int", 80, "stock_amit") 
-        .add_column("Total Stock", "Int", 100, "total_stock")
+        .add_column("Rapl Stock", "Int", 100, "stock_rapl")
+        .add_column("JAI Stock", "Int", 100, "stock_jai")
+        .add_column("Amit Stock", "Int", 120, "stock_amit") 
+        .add_column("Total Stock", "Int", 120, "total_stock")
         .build()
     )
     return cols
@@ -185,9 +185,9 @@ def prod_cols(builder):
 
 def dispatch_cols(builder):
     cols = (builder
-        .add_column("Jai Disp", "Int", 80, "dispatch_jai")
-        .add_column("Amit Disp", "Int", 80, "dispatch_amit")
-        .add_column("Rana Disp", "Int", 80, "dispatch_rana")
+        .add_column("Jai Disp", "Int", 90, "dispatch_jai")
+        .add_column("Amit Disp", "Int", 100, "dispatch_amit")
+        .add_column("Rana Disp", "Int", 100, "dispatch_rana")
         .build()        
     )
     return cols
@@ -261,8 +261,8 @@ def columns(filters=None):
         builder = report_utils.ColumnBuilder()
         cols = common_cols(builder)
         cols = so(builder)
-        cols = urgent_dispatch_column(builder)
         cols = dispatch_cols(builder)
+        cols = urgent_dispatch_column(builder)
 
     if filters.get('box_stock'):
         cols = stock_cols(builder)

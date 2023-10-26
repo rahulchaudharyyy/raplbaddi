@@ -41,7 +41,7 @@ frappe.query_reports["PB Report"] = {
 	],
 	"formatter": function (value, row, column, data, default_formatter) {
 		value = default_formatter(value, row, column, data);
-		let format_fields = ["dispatch_need_to_complete_so", "over_stock_qty", "short_qty"];
+		let format_fields = ["dispatch_need_to_complete_so", "over_stock_qty", "short_qty", "urgent_dispatch"];
 
 		if (in_list(format_fields, column.fieldname) && data && data[column.fieldname] > 0) {
 			value = "<span style='color:red;'>" + value + "</span>";
