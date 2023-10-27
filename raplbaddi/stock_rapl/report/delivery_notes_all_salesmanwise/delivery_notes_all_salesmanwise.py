@@ -4,8 +4,9 @@ import frappe
 from frappe.core.doctype.user_permission.user_permission import get_user_permissions
 from raplbaddi.datarapl.doctype.report_full_access_users.report_full_access_users import get_wildcard_users
 from frappe.query_builder import DocType
-from frappe.query_builder.functions import Concat, Sum, GroupConcat, Max
+from frappe.query_builder.functions import Count, CurDate, Max, DateDiff, CustomFunction
 from pypika import Case
+import datetime
 
 def get_groups(user):
     user_permissions = get_user_permissions(user=user)
@@ -82,6 +83,21 @@ def get_delivery_note_data():
     result = query.run(as_dict=True)
     return result
 
+def get_inactive_customers():
+    datediff = CustomFunction("DATEDIFF", ["cur_date", "end_date"])
+    so = DocType('Sales Order')
+    query = (frappe.qb
+        .from_(so)
+        .where(so.docstatus == 1)
+        .select(so.customer.as_('customer'),
+                Count(so.name).as_('no_of_so'),
+                Max(so.transaction_date).as_('last_order_date'),
+                datediff(CurDate(), Max(so.transaction_date)).as_('days_since_last_order')
+        )
+        .groupby(so.customer)
+    )
+    return query.run(as_dict=True)
+
 def get_customer():
     cu = DocType('Customer')
     query = (frappe.qb
@@ -94,6 +110,7 @@ def join(filters):
     from frappe.utils import getdate
     customer_data_list = get_customer()
     transactions_list = get_delivery_note_data() + get_tally_data()
+    inactive_customers = get_inactive_customers()
 
     # Parse the date strings and convert them to datetime objects
     start_date_str = filters.get('from_date')
@@ -113,10 +130,16 @@ def join(filters):
 
         total_net_sales = 0.0
         customer_name = customer_data['customer']
-        for transaction in transactions_list:
-            if transaction['customer'] == 'C.Lal Marketing Pvt. Ltd.':
-                print(transaction)
-
+        
+        days_since_last_order = 0.0
+        last_order_date = datetime.date.today()
+        no_of_so = 0.0
+        for inactive_cust in inactive_customers:
+            if(inactive_cust['customer'] == customer_name):
+                days_since_last_order = inactive_cust['days_since_last_order']
+                last_order_date = inactive_cust['last_order_date']
+                no_of_so = inactive_cust['no_of_so']
+        
         for transaction in transactions_list:
             if (
                 start_date <= transaction['date'] <= end_date
@@ -128,6 +151,9 @@ def join(filters):
             consolidated_data = {
                 'customer': customer_name,
                 'net_sales': total_net_sales,
+                'days_since_last_order': days_since_last_order,
+                'last_order_date': last_order_date,
+                'no_of_so': no_of_so
             }
             if consolidated_data:
                 consolidated_data_list.append(consolidated_data)
@@ -151,6 +177,24 @@ def get_columns(filters):
             "label": "Net Sales",
             "fieldname": "net_sales",
             "fieldtype": "Int",
+            "width": 120,
+        },
+        {
+            "label": "No of SO",
+            "fieldname": "no_of_so",
+            "fieldtype": "Int",
+            "width": 120,
+        },
+        {
+            "label": "Days Since Last Order",
+            "fieldname": "days_since_last_order",
+            "fieldtype": "Int",
+            "width": 120,
+        },
+        {
+            "label": "Last SO Date",
+            "fieldname": "last_order_date",
+            "fieldtype": "Date",
             "width": 120,
         }
     ]
