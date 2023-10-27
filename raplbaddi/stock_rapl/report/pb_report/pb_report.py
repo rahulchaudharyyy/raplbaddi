@@ -137,6 +137,7 @@ def join(filters=None):
         box['total_stock'] = box['stock_amit'] + box['stock_rapl'] + box['stock_jai'] + box['stock_rana']
         box['over_stock_qty'] = min(0, (box['so_qty'] + box['msl']) - (box['stock_rapl'] + box['stock_jai'] + box['stock_amit'] + box['production_amit'] + box['production_jai'] + box['production_rana']))
         box['urgent_dispatch'] = box['so_qty'] - box['stock_rapl']
+        box['urgent_dispatch_pending'] = box['so_qty'] - box['stock_rapl'] - box['dispatch_amit'] -  box['dispatch_jai'] - box['dispatch_rana']
         
     strategy = SortStrategyFactory.get_strategy(filters.get('report_type'))
     sorted_data = strategy.sort(data=all_box)
@@ -213,7 +214,11 @@ def paper_cols(builder):
     return cols
 
 def urgent_dispatch_column(builder):
-    return builder.add_column("Urgent Dispatch", "Int", "urgent_dispatch", "urgent_dispatch")
+    cols = (builder
+            .add_column("Urgent Dispatch", "Int", 120, "urgent_dispatch")
+            .add_column("Urgent Dispatch", "Int", 120, "urgent_dispatch_pending")
+    )
+    return cols
 
 def dispatch_need_column(builder):
     return builder.add_column("Dispatch Need", "Int", 120, "dispatch_need_to_complete_so")
