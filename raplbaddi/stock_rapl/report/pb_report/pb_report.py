@@ -216,7 +216,7 @@ def paper_cols(builder):
 def urgent_dispatch_column(builder):
     cols = (builder
             .add_column("Urgent Dispatch", "Int", 120, "urgent_dispatch")
-            .add_column("Urgent Dispatch", "Int", 120, "urgent_dispatch_pending")
+            .add_column("Order Pending", "Int", 120, "urgent_dispatch_pending")
     )
     return cols
 
