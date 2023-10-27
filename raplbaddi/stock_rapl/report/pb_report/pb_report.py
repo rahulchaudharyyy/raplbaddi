@@ -34,7 +34,7 @@ class DeadStockSort(report_utils.SortStrategy):
 
 class UrgentDispatchSort(report_utils.SortStrategy):
     def sort(self, data):
-        return sorted([item for item in data if item['urgent_dispatch'] > 0], key=lambda x: x['urgent_dispatch'], reverse=True)
+        return sorted([item for item in data if item['urgent_dispatch'] > 0], key=lambda x: x['urgent_dispatch_pending'], reverse=True)
 
 class BoxStockSort(report_utils.SortStrategy):
     def sort(self, data):
