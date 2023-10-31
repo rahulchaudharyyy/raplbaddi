@@ -160,3 +160,38 @@ def get_mr(item_code):
         )
     )
     return query.run(as_dict=True)
+
+def get_bin_details(bin_name):
+	return frappe.db.get_value(
+		"Bin",
+		bin_name,
+		[
+			"actual_qty",
+			"ordered_qty",
+			"reserved_qty",
+			"indented_qty",
+			"planned_qty",
+			"reserved_qty_for_production",
+			"reserved_qty_for_sub_contract",
+			"reserved_qty_for_production_plan",
+            "sales_order_reserved_qty"
+		],
+		as_dict=1,
+	)
+
+from erpnext.stock import utils
+import ast
+@frappe.whitelist()
+def reserve_qty_of_so(items, reserve_type):
+    so_items = ast.literal_eval(items)
+    for item in so_items:
+        item_code = item.get('item_code')
+        warehouse = item.get('warehouse')
+        sales_order_reserved_qty = item.get('qty')
+        bin = utils.get_bin(item_code, warehouse)
+        if reserve_type == "reserve":
+            bin.sales_order_reserved_qty = max(0, bin.sales_order_reserved_qty + sales_order_reserved_qty)
+        if reserve_type == "unreserve":
+            bin.sales_order_reserved_qty = max(0, bin.sales_order_reserved_qty - sales_order_reserved_qty)
+        bin.save()
+        print(bin.sales_order_reserved_qty)
