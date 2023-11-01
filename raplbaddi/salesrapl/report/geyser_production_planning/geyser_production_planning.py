@@ -56,24 +56,24 @@ def get_so_items(filters):
 def get_data(filters=None):
 	bins = get_stock_balance(filters)
 	sos = get_so_items(filters)
-	total_actual_qty = 0 
+	total_short_qty = 0 
 	total_pending_qty = 0 
 
 	for so in sos:
 		so['brand'] = so['brand'].replace(' - RAPL', '')
 		for bin in bins:
 			item_code = bin.get('item_code')
-			qty = bin.get('actual_qty')
+			actual_qty = bin.get('actual_qty')
 			brand = bin.get('warehouse').replace(' - RAPL', '')
 			if item_code == so['item_code'] and brand == so['brand']:
-				so['actual_qty'] = qty
-				total_actual_qty += qty 
+				so['short_qty'] = (min(0, actual_qty - so['pending_qty']))
+				total_short_qty += so['short_qty']
 		total_pending_qty += so['pending_qty']
 
-		percentage = ((so['actual_qty'] - so['pending_qty']) / so['pending_qty']) * 100
+		percentage = ((actual_qty - so['pending_qty']) / so['pending_qty']) * 100
 		so['%'] = max(0, min(100, percentage))
 	if filters.get('report_type') == 'Order and Shortage':
-		percentage = ((total_actual_qty - total_pending_qty) / total_pending_qty) * 100
+		percentage = total_short_qty / total_pending_qty * 100
 		so['%'] = max(0, min(100, percentage))
 	return sos
 
