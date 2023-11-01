@@ -27,6 +27,7 @@ def get_sales_order_data(filters):
 		.where(soi.item_code.like('G%%'))
 		.select(
 			so.customer.as_('customer'),
+			Case().when(so.submission_date, so.submission_date).else_(so.transaction_date).as_('date'),
 			so.conditions.as_('so_remarks'),
 			so.planning_remarks.as_('planning_remarks'),
 			so.name.as_('sales_order'),
@@ -60,6 +61,7 @@ def get_so_items(filters):
 		.where((soi.qty - soi.delivered_qty) > 0)
 		.where(soi.item_code.like('G%%'))
 		.select(
+			Case().when(so.submission_date, so.submission_date).else_(so.transaction_date).as_('date'),
 			soi.item_code.as_('item_code'),
 			so.customer.as_('customer'),
 			so.conditions.as_('so_remarks'),
@@ -100,6 +102,7 @@ def get_columns(filters=None):
 	cols = None
 	if filters.get('report_type') == 'Order and Shortage':
 		cols = (builder
+			.add_column("Date", "Date", 100, "date")
 			.add_column("Planning", "HTML", 100, "planning_remarks")
 			.add_column("Sales Order", "Link", 100, "sales_order", options="Sales Order")
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
@@ -112,6 +115,7 @@ def get_columns(filters=None):
 		)
 	elif filters.get('report_type') == 'Itemwise Order and Shortage':
 		cols = (builder
+			.add_column("Date", "Date", 100, "date")
 			.add_column("Planning", "HTML", 100, "planning_remarks")
 			.add_column("Sales Order", "Link", 100, "sales_order", options="Sales Order")
 			.add_column("Item", "Link", 100, "item_code", options="Item")
