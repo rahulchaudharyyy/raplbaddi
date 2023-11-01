@@ -13,40 +13,15 @@ def execute(filters=None):
 	columns, data = [], []
 	return get_columns(filters), get_data(filters)
 
-def get_sales_order_data(filters):
-	so = frappe.qb.DocType('Sales Order')
-	soi = frappe.qb.DocType('Sales Order Item')
+def get_stock_balance(filters):
+	bin = frappe.qb.DocType('Bin')
 	query = (
 		frappe.qb
-		.from_(so)
-		.left_join(soi).on(so.name == soi.parent)
-		.where(so.status.notin(['Stopped', 'Closed']) & so.docstatus == 1)
-		.where(soi.item_group == "Geyser Unit")
-		.where(so.delivery_status.isin(['Partly Delivered', 'Not Delivered']))
-		.where((soi.qty - soi.delivered_qty) > 0)
-		.where(soi.item_code.like('G%%'))
-		.select(
-			so.customer.as_('customer'),
-			Case().when(so.submission_date, so.submission_date).else_(so.transaction_date).as_('date'),
-			so.conditions.as_('so_remarks'),
-			so.planning_remarks.as_('planning_remarks'),
-			so.name.as_('sales_order'),
-			soi.item_code.as_('item_code'),
-			Sum(
-				Case().when(Base(0, soi.actual_qty) -  	Base(0, soi.qty - soi.delivered_qty) > 0, 0)
-				.else_(Base(0, soi.qty - soi.delivered_qty) - Base(0, soi.actual_qty))
-			).as_('need_qty'),
-			Sum(soi.qty - soi.delivered_qty).as_('pending_qty'),
-			Sum(soi.stock_reserved_qty).as_('stock_reserved_qty'),
-			soi.warehouse.as_('brand'),
-			Sum(Base(0, soi.actual_qty)).as_('stock_qty'),
-			so.delivery_status,
-			so.delivery_status.as_('delivery_status')
-		)
-		.groupby(so.name)
-	)	
-	data = query.run(as_dict=True)
-	return data
+		.from_(bin)
+		.select(bin.item_code, bin.warehouse, bin.actual_qty)
+		.where(bin.item_code.like('G%%'))
+	)
+	return query.run(as_dict=True)
 
 def get_so_items(filters):
 	so = frappe.qb.DocType('Sales Order')
@@ -68,14 +43,9 @@ def get_so_items(filters):
 			so.planning_remarks.as_('planning_remarks'),
 			so.name.as_('sales_order'),
 			soi.item_code.as_('item_code'),
-			(
-				Case().when(Base(0, soi.actual_qty) -  Base(0, soi.qty - soi.delivered_qty) > 0, 0)
-				.else_(Base(0, soi.qty - soi.delivered_qty) - Base(0, soi.actual_qty))
-			).as_('need_qty'),
-			(soi.qty - soi.delivered_qty).as_('pending_qty'),
+			Base(0, soi.qty - soi.delivered_qty).as_('pending_qty'),
 			(soi.stock_reserved_qty).as_('stock_reserved_qty'),
 			soi.warehouse.as_('brand'),
-			(Base(0, soi.actual_qty)).as_('stock_qty'),
 			so.delivery_status,
 			so.delivery_status.as_('delivery_status')
 		)
@@ -84,17 +54,30 @@ def get_so_items(filters):
 	return data
 
 def get_data(filters=None):
-	if filters.get('report_type') == 'Order and Shortage':
-		sos = get_sales_order_data(filters)
-	if filters.get('report_type') == 'Itemwise Order and Shortage':
-		sos = get_so_items(filters)
+	bins = get_stock_balance(filters)
+	sos = get_so_items(filters)
+	total_actual_qty = 0 
+	total_pending_qty = 0 
+
 	for so in sos:
-		so['%'] = ((so['pending_qty'] - so['need_qty'])/ so['pending_qty'] )*100
 		so['brand'] = so['brand'].replace(' - RAPL', '')
-		so['stock_qty'] = so['stock_qty'] - so['stock_reserved_qty']
-		if so['%'] >= 100:
-			so['%'] = 100
+		for bin in bins:
+			item_code = bin.get('item_code')
+			qty = bin.get('actual_qty')
+			brand = bin.get('warehouse').replace(' - RAPL', '')
+			if item_code == so['item_code'] and brand == so['brand']:
+				so['actual_qty'] = qty
+				total_actual_qty += qty 
+		total_pending_qty += so['pending_qty']
+
+		percentage = ((so['actual_qty'] - so['pending_qty']) / so['pending_qty']) * 100
+		so['%'] = max(0, min(100, percentage))
+	if filters.get('report_type') == 'Order and Shortage':
+		percentage = ((total_actual_qty - total_pending_qty) / total_pending_qty) * 100
+		so['%'] = max(0, min(100, percentage))
 	return sos
+
+
 
 
 def get_columns(filters=None):
@@ -107,7 +90,6 @@ def get_columns(filters=None):
 			.add_column("Sales Order", "Link", 100, "sales_order", options="Sales Order")
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
 			.add_column("Pending Qty", "Int", 120, "pending_qty")
-			.add_column("Remanin Qty", "Int", 120, "need_qty")
 			.add_column("%", "Int", 40, "%", disable_total=True)
 			.add_column("Brand", "Data", 100, "brand")
    			.add_column("SO Remark", "HTML", 130, "so_remarks")
@@ -121,7 +103,7 @@ def get_columns(filters=None):
 			.add_column("Item", "Link", 100, "item_code", options="Item")
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
 			.add_column("Pending Qty", "Int", 120, "pending_qty")
-			.add_column("Stock Qty", "Int", 100, "stock_qty")
+			.add_column("Stock Qty", "Int", 100, "actual_qty")
 			.add_column("Remanin Qty", "Int", 120, "need_qty")
 			.add_column("%", "Int", 40, "%", disable_total=True)
 			.add_column("Brand", "Data", 100, "brand")
