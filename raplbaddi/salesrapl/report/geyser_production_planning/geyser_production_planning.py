@@ -87,6 +87,7 @@ def get_columns(filters=None):
 		cols = (builder
 			.add_column("Date", "Date", 100, "date")
 			.add_column("Planning", "HTML", 100, "planning_remarks")
+			.add_column("Item", "Link", 100, "item_code", options="Item")
 			.add_column("Sales Order", "Link", 100, "sales_order", options="Sales Order")
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
 			.add_column("Pending Qty", "Int", 120, "pending_qty")
@@ -100,7 +101,6 @@ def get_columns(filters=None):
 			.add_column("Date", "Date", 100, "date")
 			.add_column("Planning", "HTML", 100, "planning_remarks")
 			.add_column("Sales Order", "Link", 100, "sales_order", options="Sales Order")
-			.add_column("Item", "Link", 100, "item_code", options="Item")
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
 			.add_column("Pending Qty", "Int", 120, "pending_qty")
 			.add_column("Stock Qty", "Int", 100, "actual_qty")
