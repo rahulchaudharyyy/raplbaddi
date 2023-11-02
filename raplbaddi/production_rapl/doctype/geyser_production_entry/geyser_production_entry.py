@@ -5,9 +5,10 @@ import frappe
 from frappe.model.document import Document
 
 class GeyserProductionEntry(Document):
-	def on_submit(self):
-		date = self.get("date_of_production")
-		manufacture(items=self.get("items"), name=self.get("name"), date=date)
+    pass
+	# def on_submit(self):
+	# 	date = self.get("date_of_production")
+	# 	manufacture(items=self.get("items"), name=self.get("name"), date=date)
 
 @frappe.whitelist()
 def manufacture(items, name, date):
