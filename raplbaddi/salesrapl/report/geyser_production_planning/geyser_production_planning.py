@@ -30,7 +30,7 @@ def soi():
 		for box in box:
 			box_name = box['box']
 			if soi['box'] == box_name:
-				soi['box_qty'] = box['qty']
+				soi['box_qty'] = box['warehouse_qty']
 	data.sort(reverse=True, key= lambda entry: entry['%'])
 	return data
 
