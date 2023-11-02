@@ -334,10 +334,10 @@
   "doctype": "Client Script",
   "dt": "Delivery Note",
   "enabled": 1,
-  "modified": "2023-09-21 11:25:32.159026",
+  "modified": "2023-11-02 15:52:32.840609",
   "module": null,
   "name": "Delivery note brand warehouse",
-  "script": "frappe.ui.form.on('Delivery Note', {\n    onload(frm){\n      frm.set_value('set_warehouse', \"\")\n      frm.refresh_field(\"set_warehouse\")\n    },\n\tbefore_save(frm) {\n        frm.doc.items.forEach(\n            (item) => {\n                if(item.brand){\n                    item.warehouse = item.brand + ' - RAPL'\n                } else {\n                    item.warehouse = 'Stores - RAPL'\n                }\n            }    \n        )\n        frm.refresh_field(\"items\")\n\t}\n})",
+  "script": "frappe.ui.form.on('Delivery Note', {\n    onload(frm){\n      frm.set_value('set_warehouse', \"\")\n      frm.refresh_field(\"set_warehouse\")\n    },\n\tbefore_save(frm) {\n        frm.doc.items.forEach(\n            (item) => {\n                if(item.brand){\n                    item.warehouse = item.brand + ' - RAPL'\n                } else {\n                    item.warehouse = 'Stores - RAPL'\n                }\n            }    \n        )\n        frm.refresh_field(\"items\")\n\t}\n})\n\n\n\nfrappe.ui.form.on('Delivery Note Item', {\n\tbrand(frm, cdt, cdn) {\n\t\trow = locals[cdt][cdn]\n\t\tfrappe.model.set_value(cdt, cdn, \"warehouse\", row.brand + ' - RAPL')\n\t\tfrm.refresh_field('items')\n\t}\n})",
   "view": "Form"
  },
  {
