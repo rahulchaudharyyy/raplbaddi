@@ -16,7 +16,7 @@ def soi():
 	data = (sales_order_data.get_so_items())
 	for soi in data:
 		soi['brand'] = soi['brand'].replace('- RAPL', '')
-		soi['box'] = soi['custom_box']
+		soi['box'] = soi['box']
 		for bin_val in sales_order_data.get_bin_stock():
 			if bin_val['item_code'] == soi['item_code'] and bin_val['warehouse'].replace('- RAPL', '') == soi['brand']:
 				short = 0
