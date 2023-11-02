@@ -1,3 +1,4 @@
+from pypika import Case, CustomFunction
 class ColumnBuilder:
     def __init__(self):
         self.columns = []
@@ -9,7 +10,9 @@ class ColumnBuilder:
 
     def build(self):
         return self.columns
-    
+
+Greatest = CustomFunction('Greatest', ['default', 'value'])
+
 def get_mapped_data(data, key='box'):
     return {item[key]: item for item in data}
 def accum_mapper(key: str, data: list) -> dict:
