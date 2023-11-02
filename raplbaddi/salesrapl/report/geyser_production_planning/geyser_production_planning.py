@@ -1,7 +1,5 @@
 # Copyright (c) 2023, Frappe Technologies Pvt. Ltd. and contributors
 # For license information, please see license.txt
-import copy
-import frappe
 from frappe import _
 from raplbaddi.utils import report_utils
 from raplbaddi.salesrapl.report.geyser_production_planning import sales_order_data
@@ -14,15 +12,12 @@ def execute(filters=None):
 		datas = soi()
 	return get_columns(filters), datas
 
-bins = sales_order_data.get_bin_stock()
-sois = sales_order_data.get_so_items()
-gsos = report_utils.accum_mapper(data=sois, key='sales_order')
-
 def soi():
-	data = copy.deepcopy(sois)
+	data = (sales_order_data.get_so_items())
 	for soi in data:
 		soi['brand'] = soi['brand'].replace('- RAPL', '')
-		for bin_val in bins:
+		soi['box'] = soi['custom_box']
+		for bin_val in sales_order_data.get_bin_stock():
 			if bin_val['item_code'] == soi['item_code'] and bin_val['warehouse'].replace('- RAPL', '') == soi['brand']:
 				short = 0
 				if bin_val['actual_qty'] - soi['pending_qty'] > 0:
@@ -30,13 +25,14 @@ def soi():
 				else:
 					short = soi['pending_qty'] - bin_val['actual_qty']
 				soi['%'] = 100 - (short / soi['pending_qty']) * 100
+				soi['actual_qty'] = bin_val['actual_qty']
 	data.sort(reverse=True, key= lambda entry: entry['%'])
 	return data
 
 def so():
 	data = []
-	sos = copy.deepcopy(gsos)
-	for so, so_val in sos.items():
+	so = report_utils.accum_mapper(data=(sales_order_data.get_so_items()), key='sales_order')
+	for so, so_val in so.items():
 		entry = {}
 		entry['sales_order'] = so
 		entry['pending_qty'] = 0
@@ -45,6 +41,7 @@ def so():
 		items, brands = set(), set()
 		for soi in so_val:
 			entry['pending_qty'] += soi['pending_qty']
+			entry['status'] = soi['status']
 			entry['planning_remarks'] = soi['planning_remarks']
 			entry['so_remarks'] = soi['so_remarks']
 			entry['date'] = soi['date']
@@ -52,7 +49,7 @@ def so():
 			soi_shortage = 0
 			items.add(soi['item_code'])
 			brands.add(soi['brand'].replace(' - RAPL', ''))
-			for bin_val in bins:
+			for bin_val in sales_order_data.get_bin_stock():
 				if bin_val['item_code'] == soi['item_code'] and bin_val['warehouse'] == soi['brand']:
 					short = 0
 					if bin_val['actual_qty'] - soi['pending_qty'] > 0:
@@ -76,9 +73,11 @@ def get_columns(filters=None):
 			.add_column("Date", "Date", 100, "date")
 			.add_column("Planning", "HTML", 100, "planning_remarks")
 			.add_column("Item", "Link", 100, "item_code", options="Item")
+			.add_column("Box", "Link", 100, "box", options="Item")
 			.add_column("Sales Order", "Link", 100, "sales_order", options="Sales Order")
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
 			.add_column("Pending Qty", "Int", 120, "pending_qty")
+			.add_column("Actual Qty", "Int", 120, "actual_qty")
 			.add_column("%", "Int", 40, "%", disable_total=True)
 			.add_column("Brand", "Data", 100, "brand")
    			.add_column("SO Remark", "HTML", 130, "so_remarks")
@@ -90,6 +89,7 @@ def get_columns(filters=None):
 			.add_column("Date", "Date", 100, "date")
 			.add_column("Items", "Data", 100, "items")
 			.add_column("Planning", "HTML", 100, "planning_remarks")
+			.add_column("Status", "Data", 100, "status")
 			.add_column("Sales Order", "Link", 100, "sales_order", options="Sales Order")
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
 			.add_column("Pending Qty", "Int", 120, "pending_qty")

@@ -17,6 +17,7 @@ def get_so_items():
 		.select(
 			Case().when(so.submission_date, so.submission_date).else_(so.transaction_date).as_('date'),
 			soi.item_code.as_('item_code'),
+			so.status.as_('status'),
 			so.customer.as_('customer'),
 			so.conditions.as_('so_remarks'),
 			so.planning_remarks.as_('planning_remarks'),
