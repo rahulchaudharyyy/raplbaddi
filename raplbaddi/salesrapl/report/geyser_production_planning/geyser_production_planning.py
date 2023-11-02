@@ -1,25 +1,25 @@
 # Copyright (c) 2023, Frappe Technologies Pvt. Ltd. and contributors
 # For license information, please see license.txt
-
+import copy
 import frappe
 from frappe import _
 from raplbaddi.utils import report_utils
 from raplbaddi.salesrapl.report.geyser_production_planning import sales_order_data
 
 def execute(filters=None):
-	columns, data = [], []
+	columns, datas = [], []
 	if filters.get('report_type') == "Order and Shortage":
-		data = so()
+		datas = so()
 	elif filters.get('report_type') == "Itemwise Order and Shortage":
-		data = soi()
-	return get_columns(filters), data
+		datas = soi()
+	return get_columns(filters), datas
 
 bins = sales_order_data.get_bin_stock()
 sois = sales_order_data.get_so_items()
-sos = report_utils.accum_mapper(data=sois, key='sales_order')
+gsos = report_utils.accum_mapper(data=sois, key='sales_order')
 
 def soi():
-	data = sois
+	data = copy.deepcopy(sois)
 	for soi in data:
 		soi['brand'] = soi['brand'].replace('- RAPL', '')
 		for bin_val in bins:
@@ -35,6 +35,7 @@ def soi():
 
 def so():
 	data = []
+	sos = copy.deepcopy(gsos)
 	for so, so_val in sos.items():
 		entry = {}
 		entry['sales_order'] = so
