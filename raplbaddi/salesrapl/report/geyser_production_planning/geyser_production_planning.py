@@ -14,6 +14,7 @@ def execute(filters=None):
 
 def soi():
 	data = (sales_order_data.get_so_items())
+	box = sales_order_data.get_box_qty()
 	for soi in data:
 		soi['brand'] = soi['brand'].replace('- RAPL', '')
 		soi['box'] = soi['box']
@@ -26,6 +27,10 @@ def soi():
 					short = soi['pending_qty'] - bin_val['actual_qty']
 				soi['%'] = 100 - (short / soi['pending_qty']) * 100
 				soi['actual_qty'] = bin_val['actual_qty']
+		for box in box:
+			box_name = box['box']
+			if soi['box'] == box_name:
+				soi['box_qty'] = box['qty']
 	data.sort(reverse=True, key= lambda entry: entry['%'])
 	return data
 
@@ -74,6 +79,7 @@ def get_columns(filters=None):
 			.add_column("Planning", "HTML", 100, "planning_remarks")
 			.add_column("Item", "Link", 100, "item_code", options="Item")
 			.add_column("Box", "Link", 100, "box", options="Item")
+			.add_column("Box Qty", "Int", 120, "box_qty")
 			.add_column("Sales Order", "Link", 100, "sales_order", options="Sales Order")
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
 			.add_column("Pending Qty", "Int", 120, "pending_qty")

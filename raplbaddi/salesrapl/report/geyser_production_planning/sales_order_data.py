@@ -43,3 +43,9 @@ def get_bin_stock():
 		.where(bin.item_code.like('G%%'))
 	)
 	return query.run(as_dict=True)
+
+def get_box_qty():
+    from raplbaddi.stock_rapl.report.pb_report.box_data import BoxRequirements
+    box = BoxRequirements()
+    box_qty = box.warehouse_qty(warehouse='Packing Boxes - RAPL')
+    return box_qty
