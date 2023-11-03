@@ -13,11 +13,12 @@ def execute(filters=None):
 	return get_columns(filters), datas
 
 def soi():
-	data = (sales_order_data.get_so_items())
+	data = sales_order_data.get_so_items()
+	bin = sales_order_data.get_bin_stock()
 	for soi in data:
 		soi['brand'] = soi['brand'].replace('- RAPL', '')
 		soi['box'] = soi['box']
-		for bin_val in sales_order_data.get_bin_stock():
+		for bin_val in bin:
 			if bin_val['item_code'] == soi['item_code'] and bin_val['warehouse'].replace('- RAPL', '') == soi['brand']:
 				short = 0
 				if bin_val['actual_qty'] - soi['pending_qty'] > 0:
@@ -32,6 +33,7 @@ def soi():
 def so():
 	data = []
 	so = report_utils.accum_mapper(data=(sales_order_data.get_so_items()), key='sales_order')
+	bin = sales_order_data.get_bin_stock()
 	for so, so_val in so.items():
 		entry = {}
 		entry['sales_order'] = so
@@ -49,7 +51,7 @@ def so():
 			soi_shortage = 0
 			items.add(soi['item_code'])
 			brands.add(soi['brand'].replace(' - RAPL', ''))
-			for bin_val in sales_order_data.get_bin_stock():
+			for bin_val in bin:
 				if bin_val['item_code'] == soi['item_code'] and bin_val['warehouse'] == soi['brand']:
 					short = 0
 					if bin_val['actual_qty'] - soi['pending_qty'] > 0:
