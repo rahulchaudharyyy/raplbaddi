@@ -15,9 +15,9 @@ def execute(filters=None):
 def soi():
 	data = sales_order_data.get_so_items()
 	bin = sales_order_data.get_bin_stock()
+	boxes = sales_order_data.get_box_qty()
 	for soi in data:
 		soi['brand'] = soi['brand'].replace('- RAPL', '')
-		soi['box'] = soi['box']
 		for bin_val in bin:
 			if bin_val['item_code'] == soi['item_code'] and bin_val['warehouse'].replace('- RAPL', '') == soi['brand']:
 				short = 0
@@ -27,6 +27,10 @@ def soi():
 					short = soi['pending_qty'] - bin_val['actual_qty']
 				soi['%'] = 100 - (short / soi['pending_qty']) * 100
 				soi['actual_qty'] = bin_val['actual_qty']
+				soi['short_qty'] = short
+		for box in boxes:
+			if box.get('box') == soi['box']:
+				soi['box_stock_qty'] = box['warehouse_qty']
 	data.sort(reverse=True, key= lambda entry: entry['%'])
 	return data
 
@@ -76,10 +80,12 @@ def get_columns(filters=None):
 			.add_column("Planning", "HTML", 100, "planning_remarks")
 			.add_column("Item", "Link", 100, "item_code", options="Item")
 			.add_column("Box", "Link", 100, "box", options="Item")
+			.add_column("Box Qty", "Int", 120, "box_stock_qty")
 			.add_column("Sales Order", "Link", 100, "sales_order", options="Sales Order")
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
 			.add_column("Pending Qty", "Int", 120, "pending_qty")
 			.add_column("Actual Qty", "Int", 120, "actual_qty")
+			.add_column("Short Qty", "Int", 120, "short_qty")
 			.add_column("%", "Int", 40, "%", disable_total=True)
 			.add_column("Brand", "Data", 100, "brand")
    			.add_column("SO Remark", "HTML", 130, "so_remarks")
