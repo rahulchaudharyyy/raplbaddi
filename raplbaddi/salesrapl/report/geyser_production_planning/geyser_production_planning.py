@@ -9,12 +9,13 @@ from erpnext.stock.doctype.stock_reservation_entry import stock_reservation_entr
 
 def execute(filters=None):
 	columns, datas = [], []
+	columns = get_columns(filters)
 	if filters.get('report_type') == "Order and Shortage":
 		get_available_qty_to_reserve()
 		datas = so()
 	elif filters.get('report_type') == "Itemwise Order and Shortage":
 		datas = soi()
-	return get_columns(filters), datas
+	return columns, datas
 
 def get_available_qty_to_reserve():
 	bins = sales_order_data.get_bin_stock()
@@ -74,7 +75,7 @@ def soi():
 def so():
 	data = []
 	so = report_utils.accum_mapper(data=(sales_order_data.get_so_items()), key='sales_order')
-	bin = sales_order_data.get_bin_stock()
+	bin = get_available_qty_to_reserve()
 	for so, so_val in so.items():
 		entry = {}
 		entry['sales_order'] = so
@@ -95,10 +96,10 @@ def so():
 			for bin_val in bin:
 				if bin_val['item_code'] == soi['item_code'] and bin_val['warehouse'] == soi['brand']:
 					short = 0
-					if bin_val['actual_qty'] - soi['pending_qty'] > 0:
+					if bin_val.get('available_qty_to_reserve', 0) - soi['pending_qty'] > 0:
 						short = 0
 					else:
-						short = soi['pending_qty'] - bin_val['actual_qty']
+						short = soi['pending_qty'] - bin_val.get('available_qty_to_reserve')
 					soi_shortage += short
 			entry['so_shortage'] += soi_shortage
 		entry['items'] = ', '.join(items)
