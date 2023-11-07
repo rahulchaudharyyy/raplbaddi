@@ -11,7 +11,6 @@ def execute(filters=None):
 	columns, datas = [], []
 	columns = get_columns(filters)
 	if filters.get('report_type') == "Order and Shortage":
-		get_available_qty_to_reserve()
 		datas = so()
 	elif filters.get('report_type') == "Itemwise Order and Shortage":
 		datas = soi()
@@ -32,51 +31,42 @@ def get_available_qty_to_reserve():
 			bin['reserved_qty'] = reserved_qty
 	return bins
 
-def get_sre():
-	sre = frappe.qb.DocType("Stock Reservation Entry")
-	query = (
-		frappe.qb.from_(sre)
-		.select((sre.reserved_qty - sre.delivered_qty).as_('reserved_qty'), sre.warehouse, sre.item_code)
-		.where(
-			(sre.docstatus == 1)
-			& (sre.reserved_qty >= sre.delivered_qty)
-			& (sre.status.notin(["Delivered", "Cancelled"]))
-		)
-	)
-	ret = query.run(as_dict=True)
-	return ret
-
-
 def soi():
-	data = sales_order_data.get_so_items()
-	bins = get_available_qty_to_reserve()
-	boxes = sales_order_data.get_box_qty()
-	for soi in data:
-		soi['brand'] = soi['brand'].replace('- RAPL', '')
+	data = []
+	sois = sales_order_data.soi()
+	bins = sales_order_data.bin()
+	boxes = sales_order_data.box()
+	for soi in sois:
+		soi_brand = soi['brand'].replace('- RAPL', '')
+		soi_item_code = soi['item_code']
+		soi_pending_qty = soi['pending_qty']
 		for bin_val in bins:
-			if bin_val['item_code'] == soi['item_code'] and bin_val['warehouse'].replace('- RAPL', '') == soi['brand']:
-				short = 0
-				if bin_val['available_qty_to_reserve'] - soi['pending_qty'] > 0:
-					short = 0
-				else:
-					short = soi['pending_qty'] - bin_val['available_qty_to_reserve']
+			bin_item_code = bin_val['item_code']
+			bin_brand = bin_val['warehouse'].replace('- RAPL', '')
+			soi
+			if soi_item_code == bin_item_code and soi_brand == bin_brand:
+				short = max(0, soi_pending_qty - bin_val['available_qty_to_reserve'])
 				soi['%'] = 100 - (short / soi['pending_qty']) * 100
 				soi['actual_qty'] = bin_val['actual_qty']
 				soi['short_qty'] = short
 				soi['available_qty_to_reserve'] = bin_val['available_qty_to_reserve']
 				soi['reserved_qty'] = bin_val['reserved_qty']
 				soi['reserved'] = bin_val['reserved']
+		entry = {
+			'brand': brand,
+
+		}
 		for box in boxes:
 			if box.get('box') == soi['box']:
 				soi['box_stock_qty'] = box['warehouse_qty']
-	data.sort(reverse=True, key= lambda entry: entry['%'])
-	return data
+	sois.sort(reverse=True, key= lambda entry: entry['%'])
+	return sois
 
 def so():
 	data = []
-	so = report_utils.accum_mapper(data=(sales_order_data.get_so_items()), key='sales_order')
+	soi = report_utils.accum_mapper(data=(sales_order_data.soi()), key='sales_order_item')
 	bin = get_available_qty_to_reserve()
-	for so, so_val in so.items():
+	for so, so_val in so:
 		entry = {}
 		entry['sales_order'] = so
 		entry['pending_qty'] = 0
