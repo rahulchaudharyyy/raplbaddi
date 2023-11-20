@@ -2,6 +2,14 @@
 // For license information, please see license.txt
 frappe.ui.form.on('IssueRapl', {
 	refresh: function (frm) {
+		frm.add_custom_button(__('Set Rates in All Issues'), function () {
+			frm.call({
+				method: 'set_rates',
+				doc: frm.doc,
+				callback: function (response) {
+				}
+			})
+		})
 		frm.add_custom_button(__('Select SC'), function () {
 			frm.call({
 				method: 'get_addresses',

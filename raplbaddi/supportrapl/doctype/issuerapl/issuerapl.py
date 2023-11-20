@@ -3,39 +3,67 @@
 
 import frappe
 from frappe.model.document import Document
-import requests
-import googlemaps
+from .maps import GoogleMapClient
+
+mapclient = GoogleMapClient()
+
 
 class IssueRapl(Document):
-	def get_sc_address(self):
-		return frappe.get_all('Service Centre', ['state', 'district', 'pincode', 'address', 'name'])
-	@frappe.whitelist()
-	def get_addresses(self):
-		gmaps = googlemaps.Client(key='AIzaSyAO5NhknKUS-KUOTjs48mRC9PBAWi2hB70	')
-		sc_addresses = []
-		for sc in self.get_sc_address():
-			sc_address = ''
-			for sc in sc.values():
-				sc_address = sc
-			sc_addresses.append(sc_address)
-		chunk_size = 25
-		split_sc_addresses = [sc_addresses[i:i + chunk_size] for i in range(0, len(sc_addresses), chunk_size)]
-		dms = []
-		matrix = {}
-		customer_address = " ".join([self.state, self.district, self.pin_code, self.customer_address])
-		for sc_address in split_sc_addresses:
-			distance_matrix = gmaps.distance_matrix(
-				origins=sc_address, destinations=customer_address)
-			dms.append(distance_matrix)
-		for dm in dms:
-			if 'rows' in dm and dm['rows']:
-				for i, row in enumerate(dm['rows']):
-					if 'elements' in row and row['elements']:
-						for j, element in enumerate(row['elements']):
-							origin_address = sc_addresses[i]
-							if 'status' in element and element['status'] == 'OK':
-								distance = int(element['distance']['value']/1000)
-								matrix[origin_address] = distance
-			options = [{'label': str(value) + ': ' + key, 'value': str(value) + ':' + key, 'km': value} for key, value in matrix.items()]
-			options_sorted = sorted(options, key=lambda x: x['km'], reverse=False)
-			return options_sorted
+    def get_sc_address(self):
+        service_centres = frappe.get_all(
+            "Service Centre",
+            ["state", "district", "pincode", "address", "name"],
+            filters={"state": self.state},
+        )
+        service_centres = [
+            {entry["name"]: " ".join([entry[k] for k in entry if k != "name"]).strip()}
+            for entry in service_centres
+        ]
+        sc_addresses = []
+        for sc in service_centres:
+            for v in sc.values():
+                sc_addresses.append(v)
+        return sc_addresses
+
+    def get_customer_address(self):
+        customer_address = " ".join(
+            [self.state, self.district, self.pin_code, self.customer_address]
+        )
+        return customer_address
+
+    def validate(self):
+        self.get_sc_address()
+        # self._get_rates()
+
+    def _get_rates(self, service_centre=None):
+        rates = frappe.get_all(
+            "Service Centre",
+            ["kilometer_category", "fixed_rate", "per_kilometer_rate"],
+            filters={"name": self.service_centre if not service_centre else service_centre},
+        )[0]
+        kilometer_category, fixed_rate, per_kilometer_rate = (
+            rates.get("kilometer_category"),
+            rates.get("fixed_rate"),
+            rates.get("per_kilometer_rate"),
+        )
+        rate = float(fixed_rate) + float(per_kilometer_rate) * float(self.kilometer)
+        self.amount = rate
+        return rate
+
+    @frappe.whitelist()
+    def get_addresses(self):
+        distances = mapclient.get_distance(
+            self.get_customer_address(), self.get_sc_address()
+        )
+        return distances[0:6]
+
+    @frappe.whitelist()
+    def set_rates(self):
+        issues = frappe.get_all('IssueRapl')
+        for issue in issues:
+            name = issue.get('name')
+            doc = frappe.get_doc('IssueRapl', name)
+            doc.amount = self._get_rates(service_centre=doc.service_centre)
+            print(doc.amount)
+            doc.save()
+        frappe.msgprint('Amounts has been set in all issues')
