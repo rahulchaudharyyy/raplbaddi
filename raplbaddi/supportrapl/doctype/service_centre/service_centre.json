@@ -82,16 +82,14 @@
    "fieldtype": "Link",
    "label": "State",
    "options": "States of India",
-   "permlevel": 7,
-   "reqd": 1
+   "permlevel": 7
   },
   {
    "fieldname": "district",
    "fieldtype": "Link",
    "label": "District",
    "options": "Districts of India",
-   "permlevel": 7,
-   "reqd": 1
+   "permlevel": 7
   },
   {
    "default": "India",
@@ -186,10 +184,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-06 10:53:27.749383",
+ "modified": "2023-11-09 14:30:24.870299",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "Service Centre",
+ "name_case": "Title Case",
  "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [

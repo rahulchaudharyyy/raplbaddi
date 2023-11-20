@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_rename": 1,
  "autoname": "format:RAPL{MM}{YY}{#}",
  "creation": "2023-04-29 12:46:27.860546",
  "default_view": "List",
@@ -12,6 +13,7 @@
   "column_break_9bolz",
   "expected_visit_date",
   "customer_details_section",
+  "customer_complaint_number",
   "customer_name",
   "customer_phone_number",
   "customer_address",
@@ -36,10 +38,15 @@
   "column_break_d5wze",
   "kilometer",
   "amount",
+  "pincode_service_centre",
   "feedback_tab",
   "customer_confirmation",
-  "section_break_ohopw",
+  "remarks",
   "spare_tab",
+  "lat_customer",
+  "lon_customer",
+  "lat_service_centre",
+  "lon_service_centre",
   "spare_parts_entry"
  ],
  "fields": [
@@ -171,8 +178,9 @@
   {
    "default": "0",
    "fieldname": "kilometer",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "label": "Kilometer",
+   "non_negative": 1,
    "permlevel": 3
   },
   {
@@ -208,7 +216,7 @@
    "fieldtype": "Select",
    "label": "Service Delivered",
    "options": "No\nYes",
-   "permlevel": 2,
+   "permlevel": 1,
    "reqd": 1
   },
   {
@@ -242,10 +250,6 @@
    "permlevel": 1
   },
   {
-   "fieldname": "section_break_ohopw",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "spare_tab",
    "fieldtype": "Tab Break",
    "label": "Spare"
@@ -269,11 +273,50 @@
    "label": "Geyser Capacity",
    "mandatory_depends_on": "eval:doc.product == \"Geyser\"",
    "options": "Geyser Capacity"
+  },
+  {
+   "fetch_from": "service_centre.pincode",
+   "fieldname": "pincode_service_centre",
+   "fieldtype": "Int",
+   "label": "Pincode Service Centre",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "lat_customer",
+   "fieldtype": "Data",
+   "label": "Lat Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "lon_customer",
+   "fieldtype": "Data",
+   "label": "Lon Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "lat_service_centre",
+   "fieldtype": "Data",
+   "label": "Lat Service Centre"
+  },
+  {
+   "fieldname": "lon_service_centre",
+   "fieldtype": "Data",
+   "label": "Lon Service Centre"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "customer_complaint_number",
+   "fieldtype": "Int",
+   "label": "Customer Complaint Number"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-06-30 10:49:23.760684",
+ "modified": "2023-11-18 19:17:08.137040",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
