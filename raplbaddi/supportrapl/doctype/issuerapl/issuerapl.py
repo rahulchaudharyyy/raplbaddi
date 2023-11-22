@@ -21,8 +21,8 @@ class IssueRapl(Document):
         ]
         sc_addresses = []
         for sc in service_centres:
-            for v in sc.values():
-                sc_addresses.append(v)
+            for k, v in sc.items():
+                sc_addresses.append(k + ': ' + v)
         return sc_addresses
 
     def get_customer_address(self):
@@ -64,6 +64,5 @@ class IssueRapl(Document):
             name = issue.get('name')
             doc = frappe.get_doc('IssueRapl', name)
             doc.amount = self._get_rates(service_centre=doc.service_centre)
-            print(doc.amount)
             doc.save()
         frappe.msgprint('Amounts has been set in all issues')

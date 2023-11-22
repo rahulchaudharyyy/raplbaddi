@@ -25,10 +25,13 @@ class GoogleMapClient(MapClient):
     def _distance_matix(self, origin, destinations):
         dms = []
         for destination in self._split_addresses(destinations):
-            distance_matrix = self._distance_matrix(
+            dm = self._distance_matrix(
                 origin=origin, destinations=destination
             )
-            dms.append(distance_matrix)
+            for i in range(len(dm['destination_addresses'])):
+                dm['destination_addresses'][i] = destination[i]
+            dms.append(dm)
+        print(dms)
         return dms
 
     def get_distance(self, origin: str, destinations: list[str]):
