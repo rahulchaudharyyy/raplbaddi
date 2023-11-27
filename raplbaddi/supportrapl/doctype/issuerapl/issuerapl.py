@@ -5,7 +5,6 @@ import frappe
 from frappe.model.document import Document
 from .maps import GoogleMapClient
 
-mapclient = GoogleMapClient()
 
 
 class IssueRapl(Document):
@@ -35,6 +34,7 @@ class IssueRapl(Document):
         self.get_sc_address()
         # self._get_rates()
 
+    
     def _get_rates(self, service_centre=None):
         rates = frappe.get_all(
             "Service Centre",
@@ -66,3 +66,5 @@ class IssueRapl(Document):
             doc.amount = self._get_rates(service_centre=doc.service_centre)
             doc.save()
         frappe.msgprint('Amounts has been set in all issues')
+
+mapclient = GoogleMapClient()

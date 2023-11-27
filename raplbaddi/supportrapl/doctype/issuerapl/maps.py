@@ -1,3 +1,4 @@
+import frappe
 import googlemaps
 import abc
 
@@ -20,7 +21,9 @@ class GoogleMapClient(MapClient):
         return self.client.distance_matrix(origin, destinations)
 
     def _get_api_key(self):
-        return "AIzaSyAO5NhknKUS-KUOTjs48mRC9PBAWi2hB70"
+        key = frappe.db.get_single_value('Google Settings', 'api_key')
+        print(key)
+        return key
 
     def _distance_matix(self, origin, destinations):
         dms = []
