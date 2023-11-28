@@ -18,7 +18,7 @@ class GoogleMapClient(MapClient):
         return googlemaps.Client(key=self.api_key)
 
     def _distance_matrix(self, origin, destinations):
-        return self.client.distance_matrix(origin, destinations)
+        return self.client.distance_matrix(origin, destinations, mode="driving")
 
     def _get_api_key(self):
         key = frappe.db.get_single_value('Google Settings', 'api_key')

@@ -1,7 +1,8 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
- "autoname": "format:RAPL{MM}{YY}{#}",
+ "autoname": "field:complaint_number",
  "creation": "2023-04-29 12:46:27.860546",
  "default_view": "List",
  "doctype": "DocType",
@@ -21,6 +22,7 @@
   "state",
   "district",
   "pin_code",
+  "complaint_number",
   "complaint_tab",
   "product",
   "geyser_capacity",
@@ -312,15 +314,21 @@
    "fieldname": "customer_complaint_number",
    "fieldtype": "Int",
    "label": "Customer Complaint Number"
+  },
+  {
+   "fieldname": "complaint_number",
+   "fieldtype": "Data",
+   "label": "Complaint Number",
+   "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-11-18 19:17:08.137040",
+ "modified": "2023-11-28 13:36:05.284969",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
- "naming_rule": "Expression",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
