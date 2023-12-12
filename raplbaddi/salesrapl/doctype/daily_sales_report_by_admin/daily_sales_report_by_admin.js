@@ -4,7 +4,7 @@
 frappe.ui.form.on('Daily Sales Report By Admin', {
 	km_travelled(frm) {
 		let doc = frm.doc
-		frm.set_value('amount_for_travel', doc.km_travelled * 7)
+		frm.set_value('amount_for_travel', doc.km_travelled * 8)
 		frm.refresh_field('amount_for_travel')
 	},
 	end_reading(frm) {
