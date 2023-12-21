@@ -1,0 +1,38 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "creation": "2023-12-21 15:30:30.371825",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letterhead": null,
+ "modified": "2023-12-21 15:30:30.371825",
+ "modified_by": "Administrator",
+ "module": "SalesRapl",
+ "name": "DSR Expense Analysis",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Daily Sales Report By Admin",
+ "report_name": "DSR Expense Analysis",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "Sales Order Auditor"
+  },
+  {
+   "role": "Dispatch Bill"
+  },
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Sales Rapl"
+  },
+  {
+   "role": "Payment Auditor"
+  }
+ ]
+}

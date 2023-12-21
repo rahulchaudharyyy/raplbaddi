@@ -13,9 +13,7 @@ frappe.query_reports["DSR Analysis"] = {
 	{
 		'fieldname': 'start_date',
 		'label': __('Start Date'),
-		'fieldtype': 'Date',
-		'reqd': 1
-		
+		'fieldtype': 'Date'
 	},
 	{
 		'fieldname': 'end_date',
