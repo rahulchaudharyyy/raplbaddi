@@ -27,18 +27,52 @@ def execute(filters=None):
 
 def get_columns(filters):
     columns = [
-        {"label": "Link", "fieldname": "name", "fieldtype": "Link",
-            "options": "Daily Sales Report By Admin", "width": 100},
-        {"label": "Start Reading", "fieldname": "start_reading",
-            "fieldtype": "Int", "width": 100, "disable_total": True},
-        {"label": "KM Travelled", "fieldname": "km_travelled",
-            "fieldtype": "Int", "width": 100},
-        {"label": "End Reading", "fieldname": "end_reading",
-            "fieldtype": "Int", "disable_total": 1, "width": 100, "disable_total": True},
-        {"label": "Date", "fieldname": "date", "fieldtype": "Date", "width": 100},
-        {"label": "Type", "fieldname": "type", "fieldtype": "Data", "width": 180},
-        {"label": "Amount", "fieldname": "amount",
-            "fieldtype": "Currency", "width": 150},
+        {
+            "label": "Link",
+            "fieldname": "name",
+            "fieldtype": "Link",
+            "options": "Daily Sales Report By Admin", 
+            "width": 100
+        },
+        {
+            "label": "Start Reading",
+            "fieldname": "start_reading",
+            "fieldtype": "Int", 
+            "width": 100, 
+            "disable_total": True
+        },
+        {
+            "label": "KM Travelled", 
+            "fieldname": "km_travelled",
+            "fieldtype": "Int", 
+            "width": 100
+        },
+        {
+            "label": "End Reading", 
+            "fieldname": "end_reading",
+            "fieldtype": "Int", 
+            "disable_total": 1, 
+            "width": 100, 
+            "disable_total": True
+        },
+        {
+            "label": "Date", 
+            "fieldname": "date", 
+            "fieldtype": "Date", 
+            "width": 100
+        },
+        {
+            "label": "Type", 
+            "fieldname": "type", 
+            "fieldtype": "Data", 
+            "width": 180
+        },
+        {
+            "label": "Amount", 
+            "fieldname": "amount",
+            "fieldtype": "Currency", 
+            "width": 150
+        },
     ]
     return columns
 

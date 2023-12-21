@@ -13,6 +13,7 @@ class GoogleMapClient(MapClient):
         self.api_key = self._get_api_key()
         self.chunk_size = 25
         self.client = self._get_map_client()
+        self._dms = []
 
     def _get_map_client(self):
         return googlemaps.Client(key=self.api_key)
@@ -38,9 +39,10 @@ class GoogleMapClient(MapClient):
         return dms
 
     def get_distance(self, origin: str, destinations: list[str]):
-        dms = self._distance_matix(origin, destinations)
+        if not self._dms:
+            dms = self._distance_matix(origin, destinations)
         matrix = {}
-        for dm in dms:
+        for dm in self._dms:
             if "rows" in dm and dm["rows"]:
                 for i, row in enumerate(dm["rows"]):
                     if "elements" in row and row["elements"]:

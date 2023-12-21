@@ -84,14 +84,14 @@ def get_columns(filters):
         columns.extend(common)
         columns.extend(add)
         columns.extend(total)
-    # elif item == "Element":
-    #     add = [
-    #         {"label": "Element Type Name", "fieldname": "element_type_name",
-    #             "fieldtype": "Data", "width": 150},
-    #     ]
-    #     columns.extend(common)
-    #     columns.extend(add)
-    #     columns.extend(total)
+    elif item == "Element":
+        add = [
+            {"label": "Element Type Name", "fieldname": "element_type_name",
+                "fieldtype": "Data", "width": 150},
+        ]
+        columns.extend(common)
+        columns.extend(add)
+        columns.extend(total)
     return columns
 
 

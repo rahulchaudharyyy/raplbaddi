@@ -8,20 +8,21 @@ from .maps import GoogleMapClient
 
 
 class IssueRapl(Document):
-    def get_sc_address(self):
+    def get_sc_addresses(self):
         service_centres = frappe.get_all(
             "Service Centre",
             ["state", "district", "pincode", "address", "name"],
             filters={"state": self.state},
         )
-        service_centres = [
-            {entry["name"]: " ".join([entry[k] for k in entry if k != "name"]).strip()}
-            for entry in service_centres
-        ]
+        
         sc_addresses = []
-        for sc in service_centres:
-            for k, v in sc.items():
-                sc_addresses.append(k + ': ' + v)
+        
+        for entry in service_centres:
+            components = [str(entry[k]) for k in entry if k != "name" and entry[k] is not None]
+            address = " ".join(components).strip()
+            formatted_entry = f"{entry['name']}: {address}"
+            sc_addresses.append(formatted_entry)
+
         return sc_addresses
 
     def get_customer_address(self):
@@ -31,7 +32,7 @@ class IssueRapl(Document):
         return customer_address
 
     def validate(self):
-        self.get_sc_address()
+        self.get_sc_addresses()
         # self._get_rates()
 
     
@@ -53,7 +54,7 @@ class IssueRapl(Document):
     @frappe.whitelist()
     def get_addresses(self):
         distances = mapclient.get_distance(
-            self.get_customer_address(), self.get_sc_address()
+            self.get_customer_address(), self.get_sc_addresses()
         )
         return distances[0:6]
 
