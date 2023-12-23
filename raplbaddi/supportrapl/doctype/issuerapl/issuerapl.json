@@ -2,7 +2,7 @@
  "actions": [],
  "allow_guest_to_view": 1,
  "allow_import": 1,
- "autoname": "format:{###}",
+ "autoname": "autoincrement",
  "creation": "2023-04-29 12:46:27.860546",
  "default_view": "List",
  "doctype": "DocType",
@@ -266,11 +266,11 @@
   }
  ],
  "links": [],
- "modified": "2023-12-23 16:46:34.107570",
+ "modified": "2023-12-23 16:56:36.921960",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
- "naming_rule": "Expression",
+ "naming_rule": "Autoincrement",
  "owner": "Administrator",
  "permissions": [
   {
