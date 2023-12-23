@@ -4,17 +4,18 @@ frappe.ui.form.on('IssueRapl', {
 		add_place_search('page-head-content')
 	},
 	refresh: function (frm) {
+		frappe.Autocomplete($('#places-input'), {})
 		add_buttons(frm)
 	}
 });
 
 function add_place_search() {
-	$(".page-head-content").append("<input type='text'>")
+	$(".page-head-content").append("<input type='text' id='places-input'>")
 }
 
 function LoadScript() {
 	var script = document.createElement('script');
-	script.src = 'https://maps.googleapis.com/maps/api/js?key=YOURKEY&libraries=places';
+	script.src = 'https://maps.googleapis.com/maps/api/js?key=YOURAPIKEY&libraries=places';
 	script.async = true;
 	script.defer = true;
 
@@ -25,6 +26,7 @@ function LoadScript() {
 	document.head.appendChild(script);
 }
 
+// Custom Buttons
 function add_buttons(frm) {
 	frm.add_custom_button(__('Set Rates in All Issues'), function () {
 		frm.call({
