@@ -2,8 +2,7 @@
  "actions": [],
  "allow_guest_to_view": 1,
  "allow_import": 1,
- "allow_rename": 1,
- "autoname": "field:complaint_number",
+ "autoname": "format:{###}",
  "creation": "2023-04-29 12:46:27.860546",
  "default_view": "List",
  "doctype": "DocType",
@@ -15,11 +14,9 @@
   "column_break_9bolz",
   "expected_visit_date",
   "customer_details_section",
-  "customer_complaint_number",
   "customer_address",
   "customer_address_state",
   "column_break_utfyp",
-  "complaint_number",
   "customer_name",
   "customer_phone_number",
   "complaint_tab",
@@ -256,17 +253,6 @@
    "label": "Remarks"
   },
   {
-   "fieldname": "customer_complaint_number",
-   "fieldtype": "Int",
-   "label": "Customer Complaint Number"
-  },
-  {
-   "fieldname": "complaint_number",
-   "fieldtype": "Data",
-   "label": "Complaint Number",
-   "unique": 1
-  },
-  {
    "fieldname": "customer_address",
    "fieldtype": "Data",
    "label": "Customer Address",
@@ -280,11 +266,11 @@
   }
  ],
  "links": [],
- "modified": "2023-12-23 15:36:10.595778",
+ "modified": "2023-12-23 16:46:34.107570",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
- "naming_rule": "By fieldname",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
