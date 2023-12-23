@@ -14,7 +14,6 @@
   "service_delivered",
   "column_break_9bolz",
   "expected_visit_date",
-  "title",
   "customer_details_section",
   "customer_complaint_number",
   "customer_name",
@@ -25,7 +24,6 @@
   "district",
   "pin_code",
   "complaint_number",
-  "route",
   "complaint_tab",
   "product",
   "geyser_capacity",
@@ -323,22 +321,10 @@
    "fieldtype": "Data",
    "label": "Complaint Number",
    "unique": 1
-  },
-  {
-   "fieldname": "route",
-   "fieldtype": "Data",
-   "label": "Route"
-  },
-  {
-   "fieldname": "title",
-   "fieldtype": "Data",
-   "label": "Title"
   }
  ],
- "has_web_view": 1,
- "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-22 11:38:05.695932",
+ "modified": "2023-12-23 11:10:03.331614",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
@@ -485,9 +471,7 @@
    "share": 1
   }
  ],
- "route": "customer_support",
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "website_search_field": "customer_complaint_number"
+ "states": []
 }
