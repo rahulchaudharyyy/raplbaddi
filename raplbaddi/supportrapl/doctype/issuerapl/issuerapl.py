@@ -2,12 +2,12 @@
 # For license information, please see license.txt
 
 import frappe
-from frappe.model.document import Document
+from frappe.website.website_generator import WebsiteGenerator
 from .maps import GoogleMapClient
 
 
 
-class IssueRapl(Document):
+class IssueRapl(WebsiteGenerator):
     def get_sc_address(self):
         service_centres = frappe.get_all(
             "Service Centre",

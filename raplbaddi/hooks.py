@@ -207,3 +207,5 @@ override_whitelisted_methods = {
 }
 
 fixtures = ["Custom Field", "Custom DocPerm", "Client Script"]
+
+website_route_rules = [{'from_route': '/customer_support/<path:app_path>', 'to_route': 'customer_support'},]
