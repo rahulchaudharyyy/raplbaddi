@@ -8,6 +8,9 @@ from frappe.model.document import Document
 mapclient = GoogleMapClient()
 
 class IssueRapl(Document):
+    def autoname(self):
+        pass
+
     def get_sc_addresses(self):
         service_centres = frappe.get_all(
             "Service Centre",
