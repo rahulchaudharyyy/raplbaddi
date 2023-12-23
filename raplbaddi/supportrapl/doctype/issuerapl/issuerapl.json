@@ -16,14 +16,12 @@
   "expected_visit_date",
   "customer_details_section",
   "customer_complaint_number",
+  "customer_address",
+  "customer_address_state",
+  "column_break_utfyp",
+  "complaint_number",
   "customer_name",
   "customer_phone_number",
-  "customer_address",
-  "column_break_utfyp",
-  "state",
-  "district",
-  "pin_code",
-  "complaint_number",
   "complaint_tab",
   "product",
   "geyser_capacity",
@@ -46,10 +44,6 @@
   "customer_confirmation",
   "remarks",
   "spare_tab",
-  "lat_customer",
-  "lon_customer",
-  "lat_service_centre",
-  "lon_service_centre",
   "spare_parts_entry"
  ],
  "fields": [
@@ -66,14 +60,6 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Customer Phone Number",
-   "permlevel": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "customer_address",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Customer Address",
    "permlevel": 1,
    "reqd": 1
   },
@@ -110,6 +96,7 @@
    "label": "Service Centre",
    "options": "Service Centre",
    "permlevel": 1,
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -123,29 +110,6 @@
    "fieldtype": "Select",
    "label": "Payment Done",
    "options": "Unpaid\nPaid",
-   "permlevel": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "state",
-   "fieldtype": "Link",
-   "label": "State",
-   "options": "States of India",
-   "permlevel": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "district",
-   "fieldtype": "Link",
-   "label": "District",
-   "options": "Districts of India",
-   "permlevel": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "pin_code",
-   "fieldtype": "Data",
-   "label": "Pin Code",
    "permlevel": 1,
    "reqd": 1
   },
@@ -175,13 +139,15 @@
    "fieldname": "amount",
    "fieldtype": "Currency",
    "label": "Amount",
+   "non_negative": 1,
    "permlevel": 3,
+   "precision": "2",
    "read_only": 1
   },
   {
    "default": "0",
    "fieldname": "kilometer",
-   "fieldtype": "Int",
+   "fieldtype": "Float",
    "label": "Kilometer",
    "non_negative": 1,
    "permlevel": 3
@@ -285,28 +251,6 @@
    "non_negative": 1
   },
   {
-   "fieldname": "lat_customer",
-   "fieldtype": "Data",
-   "label": "Lat Customer",
-   "read_only": 1
-  },
-  {
-   "fieldname": "lon_customer",
-   "fieldtype": "Data",
-   "label": "Lon Customer",
-   "read_only": 1
-  },
-  {
-   "fieldname": "lat_service_centre",
-   "fieldtype": "Data",
-   "label": "Lat Service Centre"
-  },
-  {
-   "fieldname": "lon_service_centre",
-   "fieldtype": "Data",
-   "label": "Lon Service Centre"
-  },
-  {
    "fieldname": "remarks",
    "fieldtype": "Small Text",
    "label": "Remarks"
@@ -321,10 +265,22 @@
    "fieldtype": "Data",
    "label": "Complaint Number",
    "unique": 1
+  },
+  {
+   "fieldname": "customer_address",
+   "fieldtype": "Data",
+   "label": "Customer Address",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer_address_state",
+   "fieldtype": "Data",
+   "label": "Customer Address State",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2023-12-23 11:10:03.331614",
+ "modified": "2023-12-23 15:36:10.595778",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",

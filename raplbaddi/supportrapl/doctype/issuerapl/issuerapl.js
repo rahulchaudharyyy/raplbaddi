@@ -1,30 +1,54 @@
 frappe.ui.form.on('IssueRapl', {
-	setup(frm) {
-		LoadScript()
-		add_place_search('page-head-content')
-	},
-	refresh: function (frm) {
-		frappe.Autocomplete($('#places-input'), {})
-		add_buttons(frm)
+    setup(frm) {
+        get_google_api_key(frm);
+        add_elements();
+    },
+    refresh: function (frm) {
+        add_buttons(frm);
+    },
+	after_save: function(frm) {
+		$('#places-input').val('')
 	}
 });
 
-function add_place_search() {
-	$(".page-head-content").append("<input type='text' id='places-input'>")
+
+function add_elements() {
+    $("#form-tabs").append("<input type='text' id='places-input' style='width: 700px; height: 40px;'>");
 }
 
-function LoadScript() {
-	var script = document.createElement('script');
-	script.src = 'https://maps.googleapis.com/maps/api/js?key=YOURAPIKEY&libraries=places';
-	script.async = true;
-	script.defer = true;
-
-	script.addEventListener('load', function () {
-		frappe.google = new google.maps.places.Autocomplete(document.getElementById('places-input'));
-	});
-
-	document.head.appendChild(script);
+function get_google_api_key(frm) {
+    frappe.db.get_single_value('Google Settings', 'api_key')
+        .then(r => {
+            LoadScript(r, frm);
+        });
 }
+
+function LoadScript(api_key, frm) {
+    let script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${api_key}&libraries=places`;
+    script.async = true;
+    script.defer = true;
+
+    script.addEventListener('load', function () {
+        frappe.google = new google.maps.places.Autocomplete(document.getElementById('places-input'));
+        frappe.google.addListener('place_changed', function () {
+            frm.selectedPlace = frappe.google.getPlace();
+			console.log(frm.selectedPlace)
+			frm.set_value('customer_address', frm.selectedPlace.formatted_address)
+			let state = ""
+			frm.selectedPlace.address_components.forEach( r => {
+				if(r.types.includes("administrative_area_level_1")) {
+					state = r.long_name
+				}
+			})
+			frm.set_value('customer_address', frm.selectedPlace.formatted_address)
+			frm.set_value('customer_address_state', state)
+        });
+    });
+
+    document.head.appendChild(script);
+}
+
 
 // Custom Buttons
 function add_buttons(frm) {
@@ -54,7 +78,7 @@ function add_buttons(frm) {
 						(values) => {
 							var value = values.selected_address.split(':');
 							frm.set_value('service_centre', value[1]);
-							frm.set_value('kilometer', value[0]);
+							frm.set_value('kilometer', parseFloat(value[0]));
 						});
 				}
 			}
