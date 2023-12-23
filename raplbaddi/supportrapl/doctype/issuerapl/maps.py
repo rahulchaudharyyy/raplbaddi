@@ -23,7 +23,6 @@ class GoogleMapClient(MapClient):
 
     def _get_api_key(self):
         key = frappe.db.get_single_value('Google Settings', 'api_key')
-        print(key)
         return key
 
     def _distance_matix(self, origin, destinations):
@@ -35,14 +34,12 @@ class GoogleMapClient(MapClient):
             for i in range(len(dm['destination_addresses'])):
                 dm['destination_addresses'][i] = destination[i]
             dms.append(dm)
-        print(dms)
         return dms
 
     def get_distance(self, origin: str, destinations: list[str]):
-        if not self._dms:
-            dms = self._distance_matix(origin, destinations)
+        dms = self._distance_matix(origin, destinations)
         matrix = {}
-        for dm in self._dms:
+        for dm in dms:
             if "rows" in dm and dm["rows"]:
                 for i, row in enumerate(dm["rows"]):
                     if "elements" in row and row["elements"]:
