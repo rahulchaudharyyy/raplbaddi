@@ -13,10 +13,11 @@ class IssueRapl(Document):
         pass
 
     def get_sc_addresses(self):
+        filters = {"state": self.customer_address_state} if self.customer_address_state else {}
         service_centres = frappe.get_all(
             "Service Centre",
             ["state", "district", "pincode", "address", "name"],
-            filters={"state": self.customer_address_state},
+            filters=filters,
         )
 
         sc_addresses = []
@@ -71,7 +72,6 @@ class IssueRapl(Document):
             + (float(per_kilometer_rate) * float(net_kilometer))
             + self.extra_cost
         )
-        print(final_rate)
         final_rate = self.no_of_visits * final_rate
         return final_rate
 
