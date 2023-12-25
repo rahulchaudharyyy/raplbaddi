@@ -267,9 +267,8 @@
    "options": "RAPL-"
   }
  ],
- "is_submittable": 1,
  "links": [],
- "modified": "2023-12-25 09:41:00.884371",
+ "modified": "2023-12-25 10:12:43.197576",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
@@ -287,7 +286,6 @@
    "role": "System Manager",
    "select": 1,
    "share": 1,
-   "submit": 1,
    "write": 1
   },
   {
@@ -300,7 +298,6 @@
    "role": "Support Team",
    "select": 1,
    "share": 1,
-   "submit": 1,
    "write": 1
   }
  ],
