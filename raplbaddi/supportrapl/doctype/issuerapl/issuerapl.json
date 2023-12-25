@@ -34,10 +34,13 @@
   "service_centre_phone_number",
   "service_centre",
   "payment_done",
+  "pincode_service_centre",
+  "extra_cost",
   "column_break_d5wze",
+  "no_of_pcs",
+  "no_of_visits",
   "kilometer",
   "amount",
-  "pincode_service_centre",
   "feedback_tab",
   "customer_confirmation",
   "remarks",
@@ -138,7 +141,8 @@
    "fieldname": "kilometer",
    "fieldtype": "Float",
    "label": "Kilometer",
-   "non_negative": 1
+   "non_negative": 1,
+   "read_only": 1
   },
   {
    "fieldname": "column_break_d5wze",
@@ -265,10 +269,31 @@
    "hidden": 1,
    "label": "Naming Series",
    "options": "RAPL-"
+  },
+  {
+   "default": "1",
+   "fieldname": "no_of_visits",
+   "fieldtype": "Int",
+   "label": "No of Visits",
+   "precision": "2"
+  },
+  {
+   "default": "1",
+   "fieldname": "no_of_pcs",
+   "fieldtype": "Float",
+   "label": "No of Pcs",
+   "precision": "2"
+  },
+  {
+   "default": "0",
+   "fieldname": "extra_cost",
+   "fieldtype": "Float",
+   "label": "Extra Cost",
+   "precision": "2"
   }
  ],
  "links": [],
- "modified": "2023-12-25 10:12:43.197576",
+ "modified": "2023-12-25 12:35:56.415594",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
