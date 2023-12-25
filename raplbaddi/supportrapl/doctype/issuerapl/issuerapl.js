@@ -52,15 +52,6 @@ function LoadScript(api_key, frm) {
 
 // Custom Buttons
 function add_buttons(frm) {
-	frm.add_custom_button(__('Set Rates in All Issues'), function () {
-		frm.call({
-			method: 'set_rates',
-			doc: frm.doc,
-			callback: function (response) {
-			}
-		});
-	});
-
 	frm.add_custom_button(__('Select SC'), function () {
 		frm.call({
 			method: 'get_addresses',

@@ -2,7 +2,7 @@
  "actions": [],
  "allow_guest_to_view": 1,
  "allow_import": 1,
- "autoname": "autoincrement",
+ "autoname": "naming_series:",
  "creation": "2023-04-29 12:46:27.860546",
  "default_view": "List",
  "doctype": "DocType",
@@ -19,6 +19,7 @@
   "column_break_utfyp",
   "customer_name",
   "customer_phone_number",
+  "naming_series",
   "complaint_tab",
   "product",
   "geyser_capacity",
@@ -41,7 +42,8 @@
   "customer_confirmation",
   "remarks",
   "spare_tab",
-  "spare_parts_entry"
+  "spare_parts_entry",
+  "amended_from"
  ],
  "fields": [
   {
@@ -49,7 +51,6 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Customer Name",
-   "permlevel": 1,
    "reqd": 1
   },
   {
@@ -57,7 +58,6 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Customer Phone Number",
-   "permlevel": 1,
    "reqd": 1
   },
   {
@@ -70,7 +70,6 @@
    "fieldtype": "Select",
    "label": "Product",
    "options": "Geyser\nDesert Air Cooler",
-   "permlevel": 1,
    "reqd": 1
   },
   {
@@ -79,8 +78,7 @@
    "fieldtype": "Link",
    "label": "Geyser Model",
    "mandatory_depends_on": "eval:doc.product == \"Geyser\"",
-   "options": "Geyser Model",
-   "permlevel": 1
+   "options": "Geyser Model"
   },
   {
    "fieldname": "service_centre_tab",
@@ -92,22 +90,19 @@
    "fieldtype": "Link",
    "label": "Service Centre",
    "options": "Service Centre",
-   "permlevel": 1,
    "read_only": 1,
    "reqd": 1
   },
   {
    "fieldname": "product_photo",
    "fieldtype": "Attach Image",
-   "label": "Product Photo",
-   "permlevel": 1
+   "label": "Product Photo"
   },
   {
    "fieldname": "payment_done",
    "fieldtype": "Select",
    "label": "Payment Done",
    "options": "Unpaid\nPaid",
-   "permlevel": 1,
    "reqd": 1
   },
   {
@@ -119,7 +114,6 @@
    "fieldtype": "Link",
    "label": "Issue Type",
    "options": "Issue Type",
-   "permlevel": 1,
    "reqd": 1
   },
   {
@@ -129,15 +123,13 @@
   {
    "fieldname": "invoice_date",
    "fieldtype": "Date",
-   "label": "Date of Purchase",
-   "permlevel": 1
+   "label": "Date of Purchase"
   },
   {
    "fieldname": "amount",
    "fieldtype": "Currency",
    "label": "Amount",
    "non_negative": 1,
-   "permlevel": 3,
    "precision": "2",
    "read_only": 1
   },
@@ -146,8 +138,7 @@
    "fieldname": "kilometer",
    "fieldtype": "Float",
    "label": "Kilometer",
-   "non_negative": 1,
-   "permlevel": 3
+   "non_negative": 1
   },
   {
    "fieldname": "column_break_d5wze",
@@ -158,8 +149,7 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Status",
-   "options": "Open\nClosed",
-   "permlevel": 1
+   "options": "Open\nClosed"
   },
   {
    "fieldname": "customer_details_section",
@@ -169,8 +159,7 @@
   {
    "fieldname": "expected_visit_date",
    "fieldtype": "Date",
-   "label": "Expected Visit Date",
-   "permlevel": 2
+   "label": "Expected Visit Date"
   },
   {
    "fieldname": "column_break_9bolz",
@@ -182,7 +171,6 @@
    "fieldtype": "Select",
    "label": "Service Delivered",
    "options": "No\nYes",
-   "permlevel": 1,
    "reqd": 1
   },
   {
@@ -194,8 +182,7 @@
    "fieldname": "customer_confirmation",
    "fieldtype": "Select",
    "label": "Customer Confirmation",
-   "options": "Not Taken\nPositive\nNegative",
-   "permlevel": 3
+   "options": "Not Taken\nPositive\nNegative"
   },
   {
    "depends_on": "eval:doc.product == \"Geyser\"",
@@ -203,8 +190,7 @@
    "fieldtype": "Link",
    "label": "Brand Name",
    "mandatory_depends_on": "eval:doc.product == \"Geyser\"",
-   "options": "Brand",
-   "permlevel": 1
+   "options": "Brand"
   },
   {
    "depends_on": "eval:doc.product == \"Desert Air Cooler\"",
@@ -212,8 +198,7 @@
    "fieldtype": "Link",
    "label": "Cooler Model",
    "mandatory_depends_on": "eval:doc.product == \"Desert Air Cooler\"",
-   "options": "Cooler Model",
-   "permlevel": 1
+   "options": "Cooler Model"
   },
   {
    "fieldname": "spare_tab",
@@ -263,14 +248,32 @@
    "fieldtype": "Data",
    "label": "Customer Address State",
    "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "IssueRapl",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "RAPL-"
   }
  ],
+ "is_submittable": 1,
  "links": [],
- "modified": "2023-12-23 16:56:36.921960",
+ "modified": "2023-12-25 09:41:00.884371",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
- "naming_rule": "Autoincrement",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -282,135 +285,23 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Service Center",
    "select": 1,
    "share": 1,
+   "submit": 1,
    "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "permlevel": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Service Center",
-   "share": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "permlevel": 2,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Service Center",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "permlevel": 5,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Service Center",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "permlevel": 6,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Service Center",
-   "share": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "permlevel": 7,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Service Center",
-   "share": 1
   },
   {
    "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Support Team",
+   "select": 1,
    "share": 1,
+   "submit": 1,
    "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "permlevel": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Support Team",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "permlevel": 2,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Support Team",
-   "share": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "permlevel": 3,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Support Team",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "permlevel": 4,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Support Team",
-   "share": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "permlevel": 7,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Support Team",
-   "share": 1
   }
  ],
  "sort_field": "modified",
