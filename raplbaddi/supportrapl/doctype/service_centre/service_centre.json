@@ -29,7 +29,8 @@
   "fixed_rate",
   "column_break_pfsvv",
   "per_kilometer_rate",
-  "single_rate"
+  "per_kilometer_rate_for_2",
+  "per_kilometer_rate_for_3_or_more"
  ],
  "fields": [
   {
@@ -129,33 +130,29 @@
   {
    "default": "3",
    "fieldname": "per_kilometer_rate",
-   "fieldtype": "Select",
+   "fieldtype": "Float",
    "label": "Per Kilometer Rate",
-   "options": "3\n4",
-   "permlevel": 3
-  },
-  {
-   "default": "0",
-   "fieldname": "single_rate",
-   "fieldtype": "Check",
-   "label": "Have Single Rate ?",
-   "permlevel": 3
+   "non_negative": 1,
+   "permlevel": 3,
+   "precision": "2"
   },
   {
    "default": "10",
    "fieldname": "kilometer_category",
-   "fieldtype": "Select",
+   "fieldtype": "Float",
    "label": "Kilometer Category",
-   "options": "10\n20\n30\n40\n50",
-   "permlevel": 3
+   "non_negative": 1,
+   "permlevel": 3,
+   "precision": "2"
   },
   {
    "default": "250",
    "fieldname": "fixed_rate",
-   "fieldtype": "Select",
+   "fieldtype": "Float",
    "label": "Fixed Rate",
-   "options": "250\n275\n300\n350\n375\n450",
-   "permlevel": 3
+   "non_negative": 1,
+   "permlevel": 3,
+   "precision": "2"
   },
   {
    "fieldname": "rates_section",
@@ -180,11 +177,27 @@
    "label": "Account Holder Name",
    "permlevel": 2,
    "reqd": 1
+  },
+  {
+   "default": "150",
+   "fieldname": "per_kilometer_rate_for_2",
+   "fieldtype": "Float",
+   "label": "Per Kilometer Rate For 2",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "default": "100",
+   "fieldname": "per_kilometer_rate_for_3_or_more",
+   "fieldtype": "Float",
+   "label": "Per Kilometer Rate For 3 or More",
+   "non_negative": 1,
+   "precision": "2"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-11-09 14:30:24.870299",
+ "modified": "2023-12-25 12:41:28.611544",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "Service Centre",

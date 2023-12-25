@@ -69,7 +69,7 @@ function add_buttons(frm) {
 						(values) => {
 							var value = values.selected_address.split(':');
 							frm.set_value('service_centre', value[1]);
-							frm.set_value('kilometer', parseFloat(value[0]));
+							frm.set_value('kilometer', 2 * parseFloat(value[0]));
 						});
 				}
 			}
