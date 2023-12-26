@@ -18,6 +18,7 @@
   "customer_address_state",
   "column_break_utfyp",
   "customer_name",
+  "complaint_source_group",
   "customer_phone_number",
   "naming_series",
   "customer_contact",
@@ -60,9 +61,9 @@
   {
    "fieldname": "customer_phone_number",
    "fieldtype": "Data",
+   "hidden": 1,
    "in_list_view": 1,
-   "label": "Customer Phone Number",
-   "reqd": 1
+   "label": "Customer Phone Number"
   },
   {
    "fieldname": "complaint_tab",
@@ -298,10 +299,15 @@
    "fieldtype": "Table",
    "label": "Customer Contact",
    "options": "Contact Phone"
+  },
+  {
+   "fieldname": "complaint_source_group",
+   "fieldtype": "Data",
+   "label": "Complaint Source Group"
   }
  ],
  "links": [],
- "modified": "2023-12-26 11:54:21.990834",
+ "modified": "2023-12-26 12:34:23.438750",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
