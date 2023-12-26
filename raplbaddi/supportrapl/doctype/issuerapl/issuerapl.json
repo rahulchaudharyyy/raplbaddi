@@ -20,6 +20,7 @@
   "customer_name",
   "customer_phone_number",
   "naming_series",
+  "customer_contact",
   "complaint_tab",
   "product",
   "geyser_capacity",
@@ -290,10 +291,17 @@
    "fieldtype": "Float",
    "label": "Extra Cost",
    "precision": "2"
+  },
+  {
+   "allow_bulk_edit": 1,
+   "fieldname": "customer_contact",
+   "fieldtype": "Table",
+   "label": "Customer Contact",
+   "options": "Contact Phone"
   }
  ],
  "links": [],
- "modified": "2023-12-26 11:33:29.435829",
+ "modified": "2023-12-26 11:54:21.990834",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
