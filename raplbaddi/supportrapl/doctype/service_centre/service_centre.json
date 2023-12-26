@@ -30,7 +30,10 @@
   "column_break_pfsvv",
   "per_kilometer_rate",
   "per_kilometer_rate_for_2",
-  "per_kilometer_rate_for_3_or_more"
+  "per_kilometer_rate_for_3_or_more",
+  "meta_tab",
+  "longitude",
+  "latitude"
  ],
  "fields": [
   {
@@ -193,11 +196,26 @@
    "label": "Per Kilometer Rate For 3 or More",
    "non_negative": 1,
    "precision": "2"
+  },
+  {
+   "fieldname": "meta_tab",
+   "fieldtype": "Tab Break",
+   "label": "Meta"
+  },
+  {
+   "fieldname": "longitude",
+   "fieldtype": "Data",
+   "label": "Longitude"
+  },
+  {
+   "fieldname": "latitude",
+   "fieldtype": "Data",
+   "label": "Latitude"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-25 12:41:28.611544",
+ "modified": "2023-12-26 16:05:23.486932",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "Service Centre",

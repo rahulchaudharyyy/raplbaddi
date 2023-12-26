@@ -33,7 +33,6 @@ function LoadScript(api_key, frm) {
         frappe.google = new google.maps.places.Autocomplete(document.getElementById('places-input'));
         frappe.google.addListener('place_changed', function () {
             frm.selectedPlace = frappe.google.getPlace();
-			console.log(frm.selectedPlace)
 			frm.set_value('customer_address', frm.selectedPlace.formatted_address)
 			let state = ""
 			frm.selectedPlace.address_components.forEach( r => {
