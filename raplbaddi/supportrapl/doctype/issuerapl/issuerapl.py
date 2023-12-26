@@ -11,15 +11,36 @@ mapclient = GoogleMapClient()
 class IssueRapl(Document):
     def autoname(self):
         pass
+    
+    def _nearest_sc(self, top: int = 3):
+        service_centres = frappe.get_all(
+            "Service Centre",
+            ["latitude", "longitude", "name"],
+        )
+        scs = []
+
+        for sc in service_centres:
+            distance = mapclient._get_lat_lng_distance(
+                (self.latitude, self.longitude),
+                (sc["latitude"], sc["longitude"])
+            )
+            scs.append({"name": sc["name"], "distance": distance})
+
+        scs.sort(key=lambda x: x["distance"])
+        ret = [key["name"] for key in scs[:top]]
+        print(ret)
+        return ret
 
     def get_sc_addresses(self):
-        filters = {"state": self.customer_address_state} if self.customer_address_state else {}
+        nearest_sc_names = self._nearest_sc()
+
+        filters = {"name": ["in", nearest_sc_names]}
+
         service_centres = frappe.get_all(
             "Service Centre",
             ["state", "district", "pincode", "address", "name"],
             filters=filters,
         )
-
         sc_addresses = []
 
         for entry in service_centres:

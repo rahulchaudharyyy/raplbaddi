@@ -48,7 +48,10 @@
   "remarks",
   "spare_tab",
   "spare_parts_entry",
-  "amended_from"
+  "amended_from",
+  "meta_tab",
+  "latitude",
+  "longitude"
  ],
  "fields": [
   {
@@ -304,10 +307,26 @@
    "fieldname": "complaint_source_group",
    "fieldtype": "Data",
    "label": "Complaint Source Group"
+  },
+  {
+   "fieldname": "meta_tab",
+   "fieldtype": "Tab Break",
+   "hidden": 1,
+   "label": "Meta"
+  },
+  {
+   "fieldname": "latitude",
+   "fieldtype": "Data",
+   "label": "Latitude"
+  },
+  {
+   "fieldname": "longitude",
+   "fieldtype": "Data",
+   "label": "Longitude"
   }
  ],
  "links": [],
- "modified": "2023-12-26 12:34:23.438750",
+ "modified": "2023-12-26 17:26:07.706497",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
