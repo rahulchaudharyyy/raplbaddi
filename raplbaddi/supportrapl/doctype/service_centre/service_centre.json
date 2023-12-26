@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:service_centre_name",
  "creation": "2023-04-28 09:45:38.134462",
@@ -215,7 +216,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-26 16:05:23.486932",
+ "modified": "2023-12-26 17:14:44.441374",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "Service Centre",

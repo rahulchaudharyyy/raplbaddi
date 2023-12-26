@@ -1,6 +1,7 @@
 import frappe
 import googlemaps
 import abc
+import geopy.distance
 
 
 class MapClient(abc.ABC):
@@ -14,6 +15,10 @@ class GoogleMapClient(MapClient):
         self.chunk_size = 25
         self.client = self._get_map_client()
         self._dms = []
+
+    def _get_lat_lng_distance(self, coords_1, coords_2):
+        print(geopy.distance.geodesic(coords_1, coords_2))
+        return geopy.distance.geodesic(coords_1, coords_2).km
 
     def _get_map_client(self):
         return googlemaps.Client(key=self.api_key)
