@@ -28,7 +28,6 @@ class IssueRapl(Document):
 
         scs.sort(key=lambda x: x["distance"])
         ret = [key["name"] for key in scs[:top]]
-        print(ret)
         return ret
 
     def get_sc_addresses(self):
