@@ -42,6 +42,8 @@ function LoadScript(api_key, frm) {
 			})
 			frm.set_value('customer_address', frm.selectedPlace.formatted_address)
 			frm.set_value('customer_address_state', state)
+			frm.set_value('latitude', frm.selectedPlace.geometry.location.lat())
+			frm.set_value('longitude', frm.selectedPlace.geometry.location.lng())
         });
     });
 
