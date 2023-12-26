@@ -249,7 +249,7 @@
   },
   {
    "fieldname": "customer_address_state",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "Customer Address State",
    "read_only": 1
   },
@@ -293,7 +293,7 @@
   }
  ],
  "links": [],
- "modified": "2023-12-25 12:35:56.415594",
+ "modified": "2023-12-26 11:27:25.455395",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
