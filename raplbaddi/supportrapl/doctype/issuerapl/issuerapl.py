@@ -27,7 +27,7 @@ class IssueRapl(Document):
             scs.append({"name": sc["name"], "distance": distance})
 
         scs.sort(key=lambda x: x["distance"])
-        ret = [key["name"] for key in scs[:top]]
+        ret = [key["name"] for key in scs[: frappe.db.get_single_value('Support Team Settings', 'no_of_google_maps_results')]]
         return ret
 
     def get_sc_addresses(self):
