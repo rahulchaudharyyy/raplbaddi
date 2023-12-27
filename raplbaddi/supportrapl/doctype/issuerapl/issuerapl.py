@@ -27,7 +27,8 @@ class IssueRapl(Document):
             scs.append({"name": sc["name"], "distance": distance})
 
         scs.sort(key=lambda x: x["distance"])
-        ret = [key["name"] for key in scs[: frappe.db.get_single_value('Support Team Settings', 'no_of_google_maps_results')]]
+        top = frappe.db.get_single_value('Support Team Settings', 'no_of_google_maps_results')
+        ret = [key["name"] for key in scs[:top]]
         return ret
 
     def get_sc_addresses(self):
@@ -100,7 +101,7 @@ class IssueRapl(Document):
         distances = mapclient.get_distance(
             self.get_customer_address(), self.get_sc_addresses()
         )
-        return distances[0:6]
+        return distances
 
     @frappe.whitelist()
     def set_rates(self):
