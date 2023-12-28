@@ -51,58 +51,50 @@
    "in_list_view": 1,
    "label": "User",
    "options": "User",
-   "permlevel": 1,
    "reqd": 1
   },
   {
    "fieldname": "phone_no",
    "fieldtype": "Data",
    "label": "Phone No",
-   "permlevel": 2,
    "reqd": 1
   },
   {
    "fieldname": "bank_account_no",
    "fieldtype": "Data",
    "label": "Bank Account No",
-   "permlevel": 2,
    "reqd": 1
   },
   {
    "fieldname": "ifsc_code",
    "fieldtype": "Data",
    "label": "IFSC Code",
-   "permlevel": 2,
    "reqd": 1
   },
   {
    "fieldname": "upi_id",
    "fieldtype": "Data",
    "label": "Gpay / PhonePe / Paytm Number",
-   "permlevel": 2,
    "reqd": 1
   },
   {
    "fieldname": "state",
    "fieldtype": "Link",
    "label": "State",
-   "options": "States of India",
-   "permlevel": 7
+   "options": "States of India"
   },
   {
    "fieldname": "district",
    "fieldtype": "Link",
    "label": "District",
-   "options": "Districts of India",
-   "permlevel": 7
+   "options": "Districts of India"
   },
   {
    "default": "India",
    "fieldname": "country",
    "fieldtype": "Link",
    "label": "Country",
-   "options": "Country",
-   "permlevel": 7
+   "options": "Country"
   },
   {
    "fieldname": "column_break_bzyxv",
@@ -116,7 +108,6 @@
    "fieldname": "bank_name",
    "fieldtype": "Data",
    "label": "Bank Name",
-   "permlevel": 2,
    "reqd": 1
   },
   {
@@ -128,7 +119,6 @@
    "fieldname": "address",
    "fieldtype": "Data",
    "label": "Address",
-   "permlevel": 2,
    "reqd": 1
   },
   {
@@ -137,7 +127,6 @@
    "fieldtype": "Float",
    "label": "Per Kilometer Rate",
    "non_negative": 1,
-   "permlevel": 3,
    "precision": "2"
   },
   {
@@ -146,7 +135,6 @@
    "fieldtype": "Float",
    "label": "Kilometer Category",
    "non_negative": 1,
-   "permlevel": 3,
    "precision": "2"
   },
   {
@@ -155,7 +143,6 @@
    "fieldtype": "Float",
    "label": "Fixed Rate",
    "non_negative": 1,
-   "permlevel": 3,
    "precision": "2"
   },
   {
@@ -172,14 +159,12 @@
    "fieldname": "pincode",
    "fieldtype": "Data",
    "label": "Pincode",
-   "permlevel": 2,
    "reqd": 1
   },
   {
    "fieldname": "account_holder_name",
    "fieldtype": "Data",
    "label": "Account Holder Name",
-   "permlevel": 2,
    "reqd": 1
   },
   {
@@ -216,7 +201,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-26 17:14:44.441374",
+ "modified": "2023-12-28 16:24:35.369122",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "Service Centre",
