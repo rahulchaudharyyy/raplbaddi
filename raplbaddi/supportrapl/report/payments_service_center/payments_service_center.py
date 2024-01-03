@@ -30,7 +30,7 @@ class PayementReport:
 		
 		result = frappe.db.sql(query, as_dict=True)
 		
-		return result
+		self.data = result
         
 	def get_columns(self):
 		columns = [
@@ -51,9 +51,9 @@ class PayementReport:
 		start_date = self.filters.get('start_date')
 		end_date = self.filters.get('end_date')
 		service_centre = self.filters.get('Service_Centre')
-		data = self.get_data()
+		self.get_data()
 		filterd_data = []
-		for i in data:
+		for i in self.data:
 			if (not service_centre or i['Service Center'] == service_centre)and(not start_date or i['Date'] >= start_date) and (not end_date or i['Date'] <= end_date):
 				filterd_data.append(i)
 		return filterd_data
