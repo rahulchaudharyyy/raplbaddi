@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestContractorItemwiseRates(FrappeTestCase):
+class TestContractorManufacturingSettings(FrappeTestCase):
 	pass

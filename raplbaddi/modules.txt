@@ -8,3 +8,4 @@ Stock Rapl
 Purchase Rapl
 Tasks Rapl
 Reporting Rapl
+Contract Manufacturing
