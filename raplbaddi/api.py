@@ -1,5 +1,22 @@
 import frappe
 
+def update_total_amount(dsra_doc):
+    dsra = frappe.get_doc('Daily Sales Report By Admin', dsra_doc.name)
+    expense = dsra.amount_for_travel
+    for e in dsra.daily_sales_expenses_by_admin:
+        expense += e.amount
+    dsra.total_amount = expense
+    if not dsra.date:
+        dsra.date = dsra.creation
+    dsra.save()
+
+def update():
+    for dsra in frappe.get_all('Daily Sales Report By Admin'):
+        update_total_amount(dsra)
+
+def hello():
+    print('hello')
+
 @frappe.whitelist()
 def get_customer_details(customer):
     return frappe.db.sql(f"""
