@@ -1,6 +1,8 @@
 // Copyright (c) 2023, Nishant Bhickta and contributors
 // For license information, please see license.txt
 
+
+
 frappe.query_reports["DSR Expense Analysis"] = {
 	onload: function(report) {
 		// arr = frappe.datetime.get_today().split("-")
@@ -32,7 +34,6 @@ frappe.query_reports["DSR Expense Analysis"] = {
             frappe.query_report.get_filter('to_date').set_value(frappe.datetime.year_end());
         }, "Range");
     },
-
 	"filters": [
 			{
 				'fieldname':'sales_person',
@@ -44,12 +45,12 @@ frappe.query_reports["DSR Expense Analysis"] = {
 			{
 				'fieldname': 'from_date',
 				'label': __('Start Date'),
-				'fieldtype': 'Date'
+				'fieldtype': 'Date',
 			},
 			{
 				'fieldname': 'to_date',
 				'label': __('End Date'),
-				'fieldtype': 'Date'
-			}
+				'fieldtype': 'Date',
+			}					
 		]
 };

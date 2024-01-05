@@ -15,7 +15,7 @@ class expenseAnalysis:
         self.set_data()
 
     def format_date(self, date_str):
-        return datetime.strptime(date_str, "%Y-%m-%d")
+        return datetime.strptime(date_str, "%Y-%m-%d").date() if date_str else None
 
     def set_data(self):
         self.data['dsra'] = DSRA().get_dsra()
@@ -49,8 +49,8 @@ class expenseAnalysis:
 
     def get_filtered_data(self):
         sales_person = self.filters.get("sales_person")
-        from_date = self.format_date(self.filters.get("from_date")).date()
-        to_date = self.format_date(self.filters.get("to_date")).date()
+        from_date = self.format_date(self.filters.get("from_date"))
+        to_date = self.format_date(self.filters.get("to_date"))
         self.filtered_data = []
 
         for i in self.data['dsra']:
