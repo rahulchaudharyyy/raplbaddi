@@ -11,7 +11,7 @@ def update_total_amount(dsra_doc):
     dsra.save()
 
 def update():
-    for dsra in frappe.get_all('Daily Sales Report By Admin'):
+    for dsra in frappe.get_all('Daily Sales Report By Admin', filters={'docstatus': 1}):
         update_total_amount(dsra)
 
 def hello():
