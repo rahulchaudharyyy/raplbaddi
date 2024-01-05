@@ -5,4 +5,8 @@
 from frappe.model.document import Document
 
 class DailySalesReportByAdmin(Document):
-	pass
+	def validate(self):
+		amt = self.amount_for_travel
+		for x in self.daily_sales_expenses_by_admin:
+			amt += x.amount
+		self.total_amount = amt
