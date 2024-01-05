@@ -2,10 +2,6 @@
 # For license information, please see license.txt
 
 import frappe
-
-
-
-
 class PayementReport:
 	def __init__(self, filters):
 		self.filters = filters
@@ -14,7 +10,7 @@ class PayementReport:
 		query = f"""
 		select 
 		i.name AS complaint_no,
-		SUBSTRING_INDEX(i.creation," ",1) as 'Date', 
+		SUBSTRING_INDEX(i.custom_creation_date," ",1) as 'Date', 
 		j.service_centre_name as 'Service Center',
 		j.bank_name as 'Bank',
 		j.bank_account_no as 'Account No.',
@@ -64,4 +60,3 @@ def execute(filters=None):
 	payment = PayementReport(filters)
 	columns, data = [], []
 	return payment.get_columns(), payment.get_filtered_data()
-
