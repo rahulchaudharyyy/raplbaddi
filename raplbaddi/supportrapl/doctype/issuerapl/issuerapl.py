@@ -15,8 +15,10 @@ class IssueRapl(Document):
     def _nearest_sc(self, top: int = 3):
         service_centres = frappe.get_all(
             "Service Centre",
-            ["latitude", "longitude", "name"],
+            filters={'is_disabled': 0},
+            fields=["latitude", "longitude", "name"]
         )
+        print(service_centres)
         scs = []
 
         for sc in service_centres:
