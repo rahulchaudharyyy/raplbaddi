@@ -2,18 +2,86 @@
 // For license information, please see license.txt
 
 frappe.query_reports["Monthly Service Center Payment"] = {
+	onload: function (report) {
+
+		report.page.add_inner_button(__("To be Paid"), function () {
+			frappe.query_report.get_filter('payment_done').set_value("Unpaid");
+			frappe.query_report.get_filter('customer_confirmation').set_value("Positive");
+			frappe.query_report.get_filter('service_delivered').set_value("Yes")
+		});
+		report.page.add_inner_button(__("Remove Filters"), function () {
+			frappe.query_report.get_filter('payment_done').set_value("");
+			frappe.query_report.get_filter('customer_confirmation').set_value("");
+			frappe.query_report.get_filter('service_delivered').set_value("");
+			frappe.query_report.get_filter('service_centre').set_value("");
+			frappe.query_report.get_filter('group_by_sc').set_value(0)
+		}),
+			report.page.add_inner_button(__("Today"), function () {
+				frappe.query_report.get_filter('start_date').set_value(frappe.datetime.get_today());
+				frappe.query_report.get_filter('end_date').set_value(frappe.datetime.get_today());
+			}, "Range");
+		report.page.add_inner_button(__("Week"), function () {
+			frappe.query_report.get_filter('start_date').set_value(frappe.datetime.week_start());
+			frappe.query_report.get_filter('end_date').set_value(frappe.datetime.week_end());
+		}, "Range");
+		report.page.add_inner_button(__("Month"), function () {
+			console.log(typeof (frappe.datetime.month_start()))
+			frappe.query_report.get_filter('start_date').set_value(frappe.datetime.month_start());
+			frappe.query_report.get_filter('end_date').set_value(frappe.datetime.month_end());
+		}, "Range");
+		report.page.add_inner_button(__("Quarter"), function () {
+			frappe.query_report.get_filter('start_date').set_value(frappe.datetime.quarter_start());
+			frappe.query_report.get_filter('end_date').set_value(frappe.datetime.quarter_end());
+		}, "Range");
+		report.page.add_inner_button(__("Year"), function () {
+			frappe.query_report.get_filter('start_date').set_value(frappe.datetime.year_start());
+			frappe.query_report.get_filter('end_date').set_value(frappe.datetime.year_end());
+		}, "Range");
+	},
+
 	"filters": [
 		{
-			'fieldname':'service_centre',
-			'label':__('Service Centre'),
-			'fieldtype':'Link',
-			'options':'Service Centre'
+			'fieldname': 'service_centre',
+			'label': __('Service Centre'),
+			'fieldtype': 'Link',
+			'options': 'Service Centre'
 		},
 		{
-			'fieldname':'months',
-			'label':__('Months'),
-			'fieldtype':'Link',
-			'options':'Months'
-		}
+			'fieldname': 'start_date',
+			'label': __('Start Date'),
+			'fieldtype': 'Date',
+			'reqd': 1
+		},
+		{
+			'fieldname': 'end_date',
+			'label': __('End Date'),
+			'fieldtype': 'Date',
+			'reqd': 1
+		},
+		{
+			'fieldname': 'payment_done',
+			'label': __('Paid'),
+			'fieldtype': 'Select',
+			'options': ' \nPaid\nUnpaid'
+		},
+		{
+			'fieldname': 'customer_confirmation',
+			'label': __('Feedback'),
+			'fieldtype': 'Select',
+			'options': '\nNot Taken\nPositive\nNegative',
+			'default': 'Not Taken'
+		},
+		{
+			'fieldname': 'service_delivered',
+			'label': __('Delivered'),
+			'fieldtype': 'Select',
+			'options': ' \nYes\nNo'
+		},
+		{
+			'fieldname': 'group_by_sc',
+			'label': __('Group By Service Centre'),
+			'fieldtype': 'Check',
+			'default': 1
+		},
 	]
 };

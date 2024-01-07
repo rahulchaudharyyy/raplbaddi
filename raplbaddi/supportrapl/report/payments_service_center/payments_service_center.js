@@ -53,7 +53,13 @@ frappe.query_reports["Payments Service Center"] = {
 			'fieldname': 'is_paid',
 			'label': __('Paid'),
 			'fieldtype': 'Check'
-		}
+		},
+		{
+			'fieldname':'group_by_sc',
+			'label': __('Group By Service Centre'),
+			'fieldtype':'Check',
+			'default': 1
+		},
 
 	]
 };
