@@ -30,7 +30,7 @@ function LoadScript(api_key, frm) {
     script.defer = true;
 
     script.addEventListener('load', function () {
-        frappe.google = new google.maps.places.Autocomplete(document.getElementById('places-input'));
+        frappe.google = new google.maps.places.Autocomplete(document.getElementById('places-input'), {componentRestrictions: { country: "in" }});
         frappe.google.addListener('place_changed', function () {
             frm.selectedPlace = frappe.google.getPlace();
 			frm.set_value('customer_address', frm.selectedPlace.formatted_address)
