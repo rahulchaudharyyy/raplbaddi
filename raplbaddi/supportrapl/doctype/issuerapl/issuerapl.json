@@ -11,9 +11,10 @@
  "field_order": [
   "status",
   "service_delivered",
-  "column_break_9bolz",
   "expected_visit_date",
   "customer_details_section",
+  "address_description",
+  "column_break_9bolz",
   "customer_address",
   "customer_address_state",
   "column_break_utfyp",
@@ -32,6 +33,7 @@
   "issue_type",
   "product_photo",
   "invoice_date",
+  "serial_no",
   "service_centre_tab",
   "service_centre_phone_number",
   "service_centre",
@@ -43,6 +45,7 @@
   "no_of_visits",
   "kilometer",
   "amount",
+  "aerial",
   "feedback_tab",
   "customer_confirmation",
   "remarks",
@@ -98,7 +101,6 @@
    "fieldtype": "Link",
    "label": "Service Centre",
    "options": "Service Centre",
-   "read_only": 1,
    "reqd": 1
   },
   {
@@ -134,12 +136,13 @@
    "label": "Date of Purchase"
   },
   {
+   "default": "0",
    "fieldname": "amount",
    "fieldtype": "Currency",
    "label": "Amount",
    "non_negative": 1,
    "precision": "2",
-   "read_only": 1
+   "reqd": 1
   },
   {
    "default": "0",
@@ -147,7 +150,7 @@
    "fieldtype": "Float",
    "label": "Kilometer",
    "non_negative": 1,
-   "read_only": 1
+   "reqd": 1
   },
   {
    "fieldname": "column_break_d5wze",
@@ -311,7 +314,6 @@
   {
    "fieldname": "meta_tab",
    "fieldtype": "Tab Break",
-   "hidden": 1,
    "label": "Meta"
   },
   {
@@ -323,10 +325,30 @@
    "fieldname": "longitude",
    "fieldtype": "Data",
    "label": "Longitude"
+  },
+  {
+   "default": "0",
+   "fieldname": "aerial",
+   "fieldtype": "Int",
+   "label": "Aerial",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "address_description",
+   "fieldtype": "Long Text",
+   "label": "Address Description"
+  },
+  {
+   "fieldname": "serial_no",
+   "fieldtype": "Data",
+   "label": "Serial No",
+   "no_copy": 1,
+   "unique": 1
   }
  ],
  "links": [],
- "modified": "2023-12-27 16:05:18.982191",
+ "modified": "2024-01-09 09:45:31.728175",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
