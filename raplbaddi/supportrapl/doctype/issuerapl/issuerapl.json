@@ -45,6 +45,7 @@
   "no_of_visits",
   "kilometer",
   "amount",
+  "aerial_kilometer",
   "feedback_tab",
   "customer_confirmation",
   "remarks",
@@ -336,10 +337,16 @@
    "label": "Serial No",
    "no_copy": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "aerial_kilometer",
+   "fieldtype": "Int",
+   "label": "Aerial Kilometer"
   }
  ],
+ "is_submittable": 1,
  "links": [],
- "modified": "2024-01-09 12:18:51.154226",
+ "modified": "2024-01-09 15:07:24.200357",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
