@@ -46,17 +46,19 @@ class payment:
             data.ifsc = data.ifsc.upper()
             data.date = data.date.date()
             data.per_complaint = int(data.amount / data.count)
+         
             if (
-                (
-                    not self.filters.service_centre
-                    or data.service_centre == self.filters.service_centre
-                )
-                and (
-                    not self.filters.start_date or data.date >= self.filters.start_date
-                )
-                and (not self.filters.end_date or data.date <= self.filters.end_date)
+            (
+                not self.filters.service_centre
+                or data.service_centre == self.filters.service_centre
+            )
+            and (
+                not self.filters.start_date or data.date >= self.filters.start_date
+            )
+            and (not self.filters.end_date or data.date <= self.filters.end_date)                
             ):
                 self.filtered_data.append(data)
+            
         return self.filtered_data
 
     def get_columns(self):
@@ -110,5 +112,6 @@ def execute(filters=None):
     payee = payment(filters)
     columns, data = [], []
     return payee.get_columns(), payee.filtered_data(),payee.get_msg() if not filters.group_by_sc else ""
+
 
 
