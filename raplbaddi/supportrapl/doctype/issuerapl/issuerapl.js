@@ -26,9 +26,6 @@ class IssueRaplForm {
 
 		script.addEventListener('load', () => this.handleScriptLoad());
 
-		document.head.appendChild(script);
-	}
-
 	handleScriptLoad() {
 		frappe.google = new google.maps.places.Autocomplete(document.getElementById(this.placeInput), { componentRestrictions: { country: "in" } });
 		frappe.google.addListener('place_changed', () => this.handlePlaceChanged());
