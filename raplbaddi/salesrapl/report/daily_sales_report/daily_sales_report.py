@@ -93,7 +93,7 @@ def get_data(filters):
         JOIN
         `tabDaily Sales Expenses By Admin` as dse ON dse.parent = dsr.name
     WHERE
-        {get_conditions(filters)}
+        {get_conditions(filters)} and dsr.docstatus = 1
     {get_group(filters)}
     """
     result = frappe.db.sql(query, as_dict=True)

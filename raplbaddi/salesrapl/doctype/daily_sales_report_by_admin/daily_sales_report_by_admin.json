@@ -112,6 +112,7 @@
    "permlevel": 1
   },
   {
+   "default": "0",
    "fieldname": "km_travelled",
    "fieldtype": "Int",
    "label": "Km Travelled",
@@ -119,6 +120,7 @@
    "permlevel": 1
   },
   {
+   "default": "0",
    "fieldname": "amount_for_travel",
    "fieldtype": "Currency",
    "label": "Amount For Travel",
@@ -265,13 +267,13 @@
    "permlevel": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "amended_from",
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
    "options": "Daily Sales Report By Admin",
-   "print_hide": 1,
-   "read_only": 1
+   "print_hide": 1
   },
   {
    "fieldname": "section_break_ajmix",
@@ -296,7 +298,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-05 16:16:10.583990",
+ "modified": "2024-01-08 15:18:46.214349",
  "modified_by": "Administrator",
  "module": "SalesRapl",
  "name": "Daily Sales Report By Admin",

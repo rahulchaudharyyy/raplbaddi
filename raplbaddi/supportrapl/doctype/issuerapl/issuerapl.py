@@ -9,63 +9,73 @@ mapclient = GoogleMapClient()
 
 
 class IssueRapl(Document):
-    def autoname(self):
-        pass
-    
-    def _nearest_sc(self, top: int = 3):
-        service_centres = frappe.get_all(
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.get_sc()
+
+    def get_sc(self):
+        self.service_centres = frappe.get_all(
             "Service Centre",
-            filters={'is_disabled': 0},
-            fields=["latitude", "longitude", "name"]
+            filters={"is_disabled": 0},
+            fields=["latitude", "longitude", "name"],
         )
-        print(service_centres)
-        scs = []
 
-        for sc in service_centres:
+    def _nearest_sc(self, top: int = 3):
+        self.areal_distances = []
+        for sc in self.service_centres:
             distance = mapclient._get_lat_lng_distance(
-                (self.latitude, self.longitude),
-                (sc["latitude"], sc["longitude"])
+                (self.latitude, self.longitude), (sc["latitude"], sc["longitude"])
             )
-            scs.append({"name": sc["name"], "distance": distance})
+            self.areal_distances.append(
+                {
+                    sc["name"]: {
+                        "distance": int(distance),
+                        "coordinates": {
+                            "latitude": sc["latitude"],
+                            "longitude": sc["longitude"],
+                        },
+                    }
+                }
+            )
 
-        scs.sort(key=lambda x: x["distance"])
-        top = frappe.db.get_single_value('Support Team Settings', 'no_of_google_maps_results')
-        ret = [key["name"] for key in scs[:top]]
+        self.areal_distances.sort(key=lambda x: list(x.values())[0]["distance"])
+
+    @frappe.whitelist()
+    def get_addresses(self):
+        self._nearest_sc()
+        ret = []
+        for sc in self.areal_distances:
+            key = list(sc.keys())[0]
+            distance = list(sc.values())[0]["distance"]
+            formatted_output = f"{key}: {distance}"
+            ret.append(formatted_output)
         return ret
 
-    def get_sc_addresses(self):
-        nearest_sc_names = self._nearest_sc()
-
-        filters = {"name": ["in", nearest_sc_names]}
-
-        service_centres = frappe.get_all(
-            "Service Centre",
-            ["state", "district", "pincode", "address", "name"],
-            filters=filters,
+    @frappe.whitelist()
+    def set_kilometers(self, service_centre, aerial):
+        self.curr_service_centre = service_centre
+        for sc in self.service_centres:
+            if sc["name"] == service_centre:
+                lat = sc["latitude"]
+                lng = sc["longitude"]
+        distance = mapclient.road_distance(
+            origin=(lat, lng), destination=(self.latitude, self.longitude)
         )
-        sc_addresses = []
-
-        for entry in service_centres:
-            components = [
-                str(entry[k]) for k in entry if k != "name" and entry[k] is not None
-            ]
-            address = " ".join(components).strip()
-            formatted_entry = f"{entry['name']}: {address}"
-            sc_addresses.append(formatted_entry)
-
-        return sc_addresses
-
-    def get_customer_address(self):
-        return self.customer_address
-
-    def validate(self):
-        self.get_sc_addresses()
-        self.amount = self._get_rates()
+        self.kilometer = distance * 2
+        self.aerial = aerial * 2
+        self._get_rates(self.curr_service_centre)
+        return
 
     def _get_rates(self, service_centre=None):
         rates = frappe.get_all(
             "Service Centre",
-            ["kilometer_category", "fixed_rate", "per_kilometer_rate", "per_kilometer_rate_for_2", "per_kilometer_rate_for_3_or_more",],
+            [
+                "kilometer_category",
+                "fixed_rate",
+                "per_kilometer_rate",
+                "per_kilometer_rate_for_2",
+                "per_kilometer_rate_for_3_or_more",
+            ],
             filters={
                 "name": self.service_centre if not service_centre else service_centre
             },
@@ -96,21 +106,4 @@ class IssueRapl(Document):
             + self.extra_cost
         )
         final_rate = self.no_of_visits * final_rate
-        return final_rate
-
-    @frappe.whitelist()
-    def get_addresses(self):
-        distances = mapclient.get_distance(
-            self.get_customer_address(), self.get_sc_addresses()
-        )
-        return distances
-
-    @frappe.whitelist()
-    def set_rates(self):
-        issues = frappe.get_all("IssueRapl")
-        for issue in issues:
-            name = issue.get("name")
-            doc = frappe.get_doc("IssueRapl", name)
-            doc.amount = self._get_rates(service_centre=doc.service_centre)
-            doc.save()
-        frappe.msgprint("Amounts has been set in all issues")
+        self.amount = final_rate
