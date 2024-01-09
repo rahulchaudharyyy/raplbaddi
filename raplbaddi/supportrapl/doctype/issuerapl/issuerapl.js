@@ -1,11 +1,12 @@
 class IssueRaplForm {
 	constructor(frm) {
 		this.frm = frm;
-		this.placeInput = $('places-input')
+		this.placeInputId = '#places-input'
+		this.placeInput = $(this.placeInputId)
 	}
 
 	setup() {
-		$("#form-tabs").append(`<input type='text' id='${this.placeInput}' style='width: 700px; height: 40px;'>`);
+		$("#form-tabs").append(`<input type='text' id='${this.placeInputId}' style='width: 700px; height: 40px;'>`);
 		this.getGoogleApiKey();
 		this.addButtons()
 	}
@@ -13,8 +14,12 @@ class IssueRaplForm {
 	getGoogleApiKey() {
 		frappe.db.get_single_value('Google Settings', 'api_key')
 			.then(apiKey => {
-				this.apiKey = apiKey
-				this.loadScript()
+				if (apiKey) {
+					this.apiKey = apiKey;
+					this.loadScript();
+				} else {
+					console.error("Google API key is not set in 'Google Settings'.");
+				}
 			});
 	}
 
@@ -25,8 +30,9 @@ class IssueRaplForm {
 		script.defer = true;
 
 		script.addEventListener('load', () => this.handleScriptLoad());
-
+	}
 	handleScriptLoad() {
+		console.log('In script')
 		frappe.google = new google.maps.places.Autocomplete(document.getElementById(this.placeInput), { componentRestrictions: { country: "in" } });
 		frappe.google.addListener('place_changed', () => this.handlePlaceChanged());
 	}
