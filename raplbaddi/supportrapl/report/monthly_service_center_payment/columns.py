@@ -8,7 +8,7 @@ def get_columns(filters):
                 "label": ("Service Centre"),
                 "fieldtype": "Link",
                 "options": "Service Centre",
-                "width": 220,
+                "width": 170,
             },
             {
                 "fieldname": "bank",
