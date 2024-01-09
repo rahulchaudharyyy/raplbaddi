@@ -45,7 +45,6 @@
   "no_of_visits",
   "kilometer",
   "amount",
-  "aerial",
   "feedback_tab",
   "customer_confirmation",
   "remarks",
@@ -327,14 +326,6 @@
    "label": "Longitude"
   },
   {
-   "default": "0",
-   "fieldname": "aerial",
-   "fieldtype": "Int",
-   "label": "Aerial",
-   "non_negative": 1,
-   "reqd": 1
-  },
-  {
    "fieldname": "address_description",
    "fieldtype": "Long Text",
    "label": "Address Description"
@@ -348,7 +339,7 @@
   }
  ],
  "links": [],
- "modified": "2024-01-09 09:45:31.728175",
+ "modified": "2024-01-09 12:18:51.154226",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
