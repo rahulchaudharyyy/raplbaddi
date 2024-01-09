@@ -20,6 +20,7 @@ class IssueRapl(Document):
             fields=["latitude", "longitude", "name"],
         )
 
+
     def _nearest_sc(self, top: int = 3):
         self.areal_distances = []
         for sc in self.service_centres:
@@ -52,18 +53,21 @@ class IssueRapl(Document):
         return ret
 
     @frappe.whitelist()
-    def set_kilometers(self, service_centre, aerial):
+    def set_kilometers(self, service_centre):
         self.curr_service_centre = service_centre
+        lat, lng = None, None
         for sc in self.service_centres:
             if sc["name"] == service_centre:
                 lat = sc["latitude"]
                 lng = sc["longitude"]
-        distance = mapclient.road_distance(
-            origin=(lat, lng), destination=(self.latitude, self.longitude)
-        )
-        self.kilometer = distance * 2
-        self.aerial = aerial * 2
-        self._get_rates(self.curr_service_centre)
+                break
+        if lat is not None and lng is not None:
+            distance = mapclient.road_distance(
+                origin=(lat, lng), destination=(self.latitude, self.longitude)
+            )
+            self.kilometer = distance * 2
+            self._get_rates(self.curr_service_centre)
+            self.save()
         return
 
     def _get_rates(self, service_centre=None):
