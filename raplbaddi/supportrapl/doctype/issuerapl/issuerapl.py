@@ -67,7 +67,6 @@ class IssueRapl(Document):
             )
             self.kilometer = distance * 2
             self._get_rates(self.curr_service_centre)
-            self.save()
         return
 
     def _get_rates(self, service_centre=None):
