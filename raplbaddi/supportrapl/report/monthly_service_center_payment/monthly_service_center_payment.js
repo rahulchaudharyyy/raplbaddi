@@ -83,5 +83,11 @@ frappe.query_reports["Monthly Service Center Payment"] = {
 			'fieldtype': 'Check',
 			'default': 1
 		},
+		{
+			'fieldname': 'payment',
+			'label': __('Payment'),
+			'fieldtype': 'Check',
+			'default': 1
+		},
 	]
 };

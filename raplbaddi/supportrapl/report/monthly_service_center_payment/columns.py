@@ -58,6 +58,11 @@ def get_columns(filters):
                 "label": ("Per Complaint"),
                 "fieldtype": "int",
                 "width": 140,
+            },{
+                "fieldname": "payment_status",
+                "label": ("payemnt done or not"),
+                "fieldtype": "int",
+                "width": 140,
             },
         ]
         columns.extend(group_by_list)
