@@ -10,17 +10,17 @@ def get_columns(filters):
                 "options": "Service Centre",
                 "width": 220,
             },
+             {
+                "fieldname": "account_no",
+                "label": ("Account No"),
+                "fieldtype": "Data",    
+                "width": 180,
+            },
             {
                 "fieldname": "bank",
                 "label": ("Bank Name"),
                 "fieldtype": "Data",
         
-                "width": 180,
-            },
-            {
-                "fieldname": "account_no",
-                "label": ("Account No"),
-                "fieldtype": "Data",    
                 "width": 180,
             },
             {
