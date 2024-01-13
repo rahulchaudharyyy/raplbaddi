@@ -11,6 +11,7 @@ class payment:
         self.process_filters()
         self.get_conditions()
         self.get_data()
+        self.set_paid()
 
     def process_filters(self):
         self.filters.end_date = datetime.strptime(self.filters.end_date, "%Y-%m-%d").date()
@@ -105,6 +106,10 @@ class payment:
         """
         return ret
 
+    def set_paid(self):
+        if self.filters.service_centre :
+            pass
+    
 
 def execute(filters=None):
     payee = payment(filters)

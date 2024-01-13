@@ -33,7 +33,6 @@
   "issue_type",
   "product_photo",
   "invoice_date",
-  "serial_no",
   "service_centre_tab",
   "service_centre_phone_number",
   "service_centre",
@@ -161,7 +160,7 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Status",
-   "options": "Open\nClosed"
+   "options": "Open\nClosed\nCancelled"
   },
   {
    "fieldname": "customer_details_section",
@@ -332,13 +331,6 @@
    "label": "Address Description"
   },
   {
-   "fieldname": "serial_no",
-   "fieldtype": "Data",
-   "label": "Serial No",
-   "no_copy": 1,
-   "unique": 1
-  },
-  {
    "fieldname": "aerial_kilometer",
    "fieldtype": "Int",
    "label": "Aerial Kilometer"
@@ -346,7 +338,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-09 15:07:24.200357",
+ "modified": "2024-01-13 12:40:01.148706",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "IssueRapl",
