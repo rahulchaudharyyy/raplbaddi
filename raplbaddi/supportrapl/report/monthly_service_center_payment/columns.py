@@ -42,6 +42,12 @@ def get_columns(filters):
                 "width": 100,
             },
             {
+                "fieldname": "kilometer",
+                "label": ("Kilometer"),
+                "fieldtype": "int",
+                "width": 110,
+            },
+            {
                 "fieldname": "amount",
                 "label": ("Amount"),
                 "fieldtype": "int",

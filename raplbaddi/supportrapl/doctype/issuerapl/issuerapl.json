@@ -161,7 +161,7 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Status",
-   "options": "Open\nClosed"
+   "options": "Open\nClosed\nCancel"
   },
   {
    "fieldname": "customer_details_section",
