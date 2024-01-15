@@ -111,3 +111,4 @@ class IssueRapl(Document):
         )
         final_rate = self.no_of_visits * final_rate
         self.amount = final_rate
+        

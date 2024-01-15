@@ -9,8 +9,8 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "service_centre_name",
   "is_disabled",
+  "service_centre_name",
   "user",
   "address",
   "state",
@@ -208,7 +208,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-01-06 10:03:22.814424",
+ "modified": "2024-01-15 12:01:30.233885",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "Service Centre",

@@ -43,7 +43,7 @@ def get_columns(filters):
             },
             {
                 "fieldname": "kilometer",
-                "label": ("Kilometer"),
+                "label": ("Kilometers"),
                 "fieldtype": "int",
                 "width": 110,
             },
@@ -56,6 +56,12 @@ def get_columns(filters):
             {
                 "fieldname": "per_complaint",
                 "label": ("Per Complaint"),
+                "fieldtype": "int",
+                "width": 140,
+            },
+            {
+                "fieldname": "payment_status",
+                "label": ("Payment Status"),
                 "fieldtype": "int",
                 "width": 140,
             },
@@ -73,7 +79,7 @@ def get_columns(filters):
             },
             {
                 "fieldname": "date",
-                "label": ("date"),
+                "label": ("Date"),
                 "fieldtype": "date",
                 "width": 300,
             },
@@ -85,10 +91,10 @@ def get_columns(filters):
                 "width": 300,
             },
             {
-                "fieldname": "kms",
-                "label": ("KMs"),
+                "fieldname": "kilometer",
+                "label": ("Kilometers"),
                 "fieldtype": "Data",
-                "width": 150,
+                "width": 100,
             },
             {
                 "fieldname": "amount",
@@ -96,6 +102,13 @@ def get_columns(filters):
                 "fieldtype": "int",
                 "width": 137,
             },
+            {
+                "fieldname": "payment_status",
+                "label": ("Payment Status"),
+                "fieldtype": "int",
+                "width": 137,
+            },
+            
         ]
         columns.extend(ungrouped_list)
 

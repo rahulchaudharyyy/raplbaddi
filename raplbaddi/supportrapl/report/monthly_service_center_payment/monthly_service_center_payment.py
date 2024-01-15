@@ -11,6 +11,7 @@ class payment:
         self.process_filters()
         self.get_conditions()
         self.get_data()
+        self.filtred_data()
 
     def process_filters(self):
         self.filters.end_date = datetime.strptime(self.filters.end_date, "%Y-%m-%d").date()
@@ -39,12 +40,11 @@ class payment:
                 f" and i.service_delivered = '{self.filters.service_delivered}'"
             )
 
-    def filtered_data(self):
+    def filtred_data(self):
         self.filtered_data = []
         for data in self.data:
             data.amount = int(data.amount)
             data.ifsc = data.ifsc.upper()
-            data.date = data.date.date()
             data.per_complaint = int(data.amount / data.count)
             if (
                 (
@@ -105,10 +105,24 @@ class payment:
         """
         return ret
 
-
+    def update_status_to_paid(self):
+        self.rapl_complaint = []
+        if self.filters.service_centre and self.filters.customer_confirmation == 'Positive' and self.filters.service_delivered == 'Yes' and self.filters.payment_done == 'Unpaid':
+            if not self.filters.group_by_sc:
+                if self.filters.is_paid:
+                    for data in self.filtered_data:
+                        data['payment_status'] = 'Paid'
+                        print(data)
+                        self.rapl_complaint.append(data.complaint_no)
+                    print(self.rapl_complaint)
+                    for comp in self.rapl_complaint:
+                        frappe.db.set_value('IssueRapl',comp,'payment_done','Paid')
+                        frappe.db.commit()
+            
 def execute(filters=None):
     payee = payment(filters)
+    payee.update_status_to_paid()
     columns, data = [], []
-    return payee.get_columns(), payee.filtered_data(),payee.get_msg() if not filters.group_by_sc else ""
+    return payee.get_columns(), payee.filtred_data(),payee.get_msg() if not filters.group_by_sc else ""
 
 
