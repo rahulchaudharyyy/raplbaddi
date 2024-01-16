@@ -14,14 +14,14 @@ def get_columns(filters):
                 "fieldname": "account_no",
                 "label": ("Account No"),
                 "fieldtype": "Data",    
-                "width": 180,
+                "width": 160,
             },
             {
                 "fieldname": "bank",
                 "label": ("Bank Name"),
                 "fieldtype": "Data",
         
-                "width": 180,
+                "width": 170,
             },
             {
                 "fieldname": "ifsc",
@@ -51,20 +51,14 @@ def get_columns(filters):
                 "fieldname": "amount",
                 "label": ("Amount"),
                 "fieldtype": "int",
-                "width": 110,
+                "width": 90,
             },
             {
                 "fieldname": "per_complaint",
                 "label": ("Per Complaint"),
                 "fieldtype": "int",
-                "width": 140,
-            },
-            {
-                "fieldname": "payment_status",
-                "label": ("Payment Status"),
-                "fieldtype": "int",
-                "width": 140,
-            },
+                "width": 100,
+            }
         ]
         columns.extend(group_by_list)
 

@@ -1,13 +1,8 @@
 // Copyright (c) 2024, Nishant Bhickta and contributors
 // For license information, please see license.txt
 
-frappe.query_reports["Monthly Service Center Payment"] = {
+frappe.query_reports["Payment Report For Service Centre"] = {
 	onload: function (report) {
-
-		report.page.add_inner_button(__("Payment Done"), function () {
-			frappe.query_report.get_filter('is_paid').set_value(1);
-			frappe.msgprint('Payment Status (Paid),Changed successfully for ' + frappe.query_report.get_filter('service_centre').get_value());
-		});
 		report.page.add_inner_button(__("Already Paid"), function () {
 			frappe.query_report.get_filter('payment_done').set_value("Paid");
 			frappe.query_report.get_filter('customer_confirmation').set_value("Positive");
@@ -15,7 +10,7 @@ frappe.query_reports["Monthly Service Center Payment"] = {
 			frappe.query_report.get_filter('service_centre').set_value("");
 			frappe.query_report.get_filter('group_by_sc').set_value(1);
 		});
-		report.page.add_inner_button(__("To be Paid"), function () {
+		report.page.add_inner_button(__("To be Paid"), function rahul() {
 			frappe.query_report.get_filter('payment_done').set_value("Unpaid");
 			frappe.query_report.get_filter('customer_confirmation').set_value("Positive");
 			frappe.query_report.get_filter('service_delivered').set_value("Yes")
@@ -26,8 +21,8 @@ frappe.query_reports["Monthly Service Center Payment"] = {
 			frappe.query_report.get_filter('customer_confirmation').set_value("");
 			frappe.query_report.get_filter('service_delivered').set_value("");
 			frappe.query_report.get_filter('service_centre').set_value("");
-			frappe.query_report.get_filter('group_by_sc').set_value(0);
-			frappe.query_report.get_filter('is_paid').set_value(0);
+			frappe.query_report.get_filter('group_by_sc').set_value(0)
+			frappe.query_report.get_filter('is_paid').set_value(0)
 			frappe.query_report.get_filter('payment_remarks').set_value("")
 		}),
 		report.page.add_inner_button(__("Today"), function () {
@@ -51,7 +46,8 @@ frappe.query_reports["Monthly Service Center Payment"] = {
 			frappe.query_report.get_filter('start_date').set_value(frappe.datetime.year_start());
 			frappe.query_report.get_filter('end_date').set_value(frappe.datetime.year_end());
 		}, "Range");
-	},
+		},
+		
 
 	"filters": [
 		{
@@ -96,18 +92,6 @@ frappe.query_reports["Monthly Service Center Payment"] = {
 			'fieldtype': 'Check',
 			'default': 1
 			
-		},
-		{
-			'fieldname': 'is_paid',
-			'label': __('Paid to Service Centre'),
-			'fieldtype': 'Check',
-			'default': 0,
-		},
-		{
-            'fieldname': 'payment_remarks',
-            'label': 'Remarks for the payment:',
-            'fieldtype': 'Data',
-        }
-	
+		}
 	]
 };
