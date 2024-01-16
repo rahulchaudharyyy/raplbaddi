@@ -108,27 +108,10 @@ class payment:
         </div>
         """
         return ret
-
-
-    def update_status_to_paid(self):
-        self.rapl_complaint = []
-        if self.filters.service_centre and self.filters.customer_confirmation == 'Positive' and self.filters.service_delivered == 'Yes' and self.filters.payment_done == 'Unpaid':
-            if not self.filters.group_by_sc:
-                if self.filters.is_paid ==1:
-                    for data in self.filtered_data:
-                        data['payment_status'] = 'Paid'
-                        print(data)
-                        self.rapl_complaint.append(data.complaint_no)
-                    for comp in self.rapl_complaint:
-                        print(self.filters.payment_remarks)
-                        frappe.db.set_value('IssueRapl',comp,'payment_done','Paid')
-                        frappe.db.set_value('IssueRapl',comp,'remarks',self.filters.payment_remarks)
-                        frappe.db.set_value('IssueRapl',comp,'docstatus',1)
-                        frappe.db.commit()
+                        
             
 def execute(filters=None):
     payee = payment(filters)
-    payee.update_status_to_paid()
     columns, data = [], []
     return payee.get_columns(), payee.filtred_data(),payee.get_msg() if not filters.group_by_sc else ""
 
