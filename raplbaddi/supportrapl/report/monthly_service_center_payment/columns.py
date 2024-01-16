@@ -10,17 +10,17 @@ def get_columns(filters):
                 "options": "Service Centre",
                 "width": 170,
             },
+             {
+                "fieldname": "account_no",
+                "label": ("Account No"),
+                "fieldtype": "Data",    
+                "width": 180,
+            },
             {
                 "fieldname": "bank",
                 "label": ("Bank Name"),
                 "fieldtype": "Data",
         
-                "width": 180,
-            },
-            {
-                "fieldname": "account_no",
-                "label": ("Account No"),
-                "fieldtype": "Data",    
                 "width": 180,
             },
             {
@@ -45,7 +45,7 @@ def get_columns(filters):
                 "fieldname": "kilometer",
                 "label": ("Kilometers"),
                 "fieldtype": "int",
-                "width": 110,
+                "width": 100,
             },
             {
                 "fieldname": "amount",
@@ -56,6 +56,11 @@ def get_columns(filters):
             {
                 "fieldname": "per_complaint",
                 "label": ("Per Complaint"),
+                "fieldtype": "int",
+                "width": 140,
+            },{
+                "fieldname": "payment_status",
+                "label": ("payemnt done or not"),
                 "fieldtype": "int",
                 "width": 140,
             },

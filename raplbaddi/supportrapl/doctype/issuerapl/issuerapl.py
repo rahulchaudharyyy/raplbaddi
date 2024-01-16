@@ -67,7 +67,6 @@ class IssueRapl(Document):
             )
             self.kilometer = distance * 2
             self._get_rates(self.curr_service_centre)
-            self.save()
         return
 
     def _get_rates(self, service_centre=None):
@@ -79,6 +78,7 @@ class IssueRapl(Document):
                 "per_kilometer_rate",
                 "per_kilometer_rate_for_2",
                 "per_kilometer_rate_for_3_or_more",
+                "is_payable"
             ],
             filters={
                 "name": self.service_centre if not service_centre else service_centre
@@ -90,12 +90,14 @@ class IssueRapl(Document):
             per_kilometer_rate,
             per_kilometer_rate_for_2,
             per_kilometer_rate_for_3_or_more,
+            is_payable
         ) = (
             rates.get("kilometer_category"),
             rates.get("fixed_rate"),
             rates.get("per_kilometer_rate"),
             rates.get("per_kilometer_rate_for_2"),
             rates.get("per_kilometer_rate_for_3_or_more"),
+            rates.get("is_payable"),
         )
         net_kilometer = max(0, float(self.kilometer) - float(kilometer_category))
         extra_pcs_rate = 0
@@ -110,5 +112,7 @@ class IssueRapl(Document):
             + self.extra_cost
         )
         final_rate = self.no_of_visits * final_rate
-        self.amount = final_rate
-        
+        if is_payable:
+            self.amount = final_rate
+        else:
+            self.amount = 0

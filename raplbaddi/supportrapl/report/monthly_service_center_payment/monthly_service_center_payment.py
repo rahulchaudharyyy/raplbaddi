@@ -13,6 +13,7 @@ class payment:
         self.get_data()
         self.filtred_data()
 
+
     def process_filters(self):
         self.filters.end_date = datetime.strptime(self.filters.end_date, "%Y-%m-%d").date()
         self.filters.start_date = datetime.strptime(self.filters.start_date, "%Y-%m-%d").date()
@@ -45,6 +46,9 @@ class payment:
         for data in self.data:
             data.amount = int(data.amount)
             data.ifsc = data.ifsc.upper()
+            data.ifsc = data.ifsc
+            
+
             data.per_complaint = int(data.amount / data.count)
             if (
                 (
@@ -104,6 +108,7 @@ class payment:
         </div>
         """
         return ret
+
 
     def update_status_to_paid(self):
         self.rapl_complaint = []

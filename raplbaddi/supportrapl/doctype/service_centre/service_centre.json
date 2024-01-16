@@ -26,6 +26,7 @@
   "column_break_ucnnc",
   "ifsc_code",
   "upi_id",
+  "is_payable",
   "rates_section",
   "kilometer_category",
   "fixed_rate",
@@ -204,11 +205,17 @@
    "fieldname": "is_disabled",
    "fieldtype": "Check",
    "label": "Is Disabled"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_payable",
+   "fieldtype": "Check",
+   "label": "Is Payable"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-01-15 12:01:30.233885",
+ "modified": "2024-01-06 10:03:22.814424",
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "Service Centre",

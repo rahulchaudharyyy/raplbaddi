@@ -14,6 +14,7 @@ def get_query(filters, conditions):
             sum(i.kilometer) as 'kilometer',
             i.customer_confirmation as 'customer_confirmation',
             i.payment_done as 'payment_status'
+            
         from tabIssueRapl as i
             left Join
             `tabService Centre` as j on i.service_centre = j.service_centre_name
@@ -51,3 +52,5 @@ def get_query(filters, conditions):
         
     query = group_by_query if filters.group_by_sc else ungrouped_query
     return query
+
+
