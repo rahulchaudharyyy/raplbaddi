@@ -4,10 +4,21 @@
 frappe.query_reports["Monthly Service Center Payment"] = {
 	onload: function (report) {
 
+		report.page.add_inner_button(__("Payment Done"), function () {
+			frappe.query_report.get_filter('is_paid').set_value(1);
+		});
+		report.page.add_inner_button(__("Already Paid"), function () {
+			frappe.query_report.get_filter('payment_done').set_value("Paid");
+			frappe.query_report.get_filter('customer_confirmation').set_value("Positive");
+			frappe.query_report.get_filter('service_delivered').set_value("Yes");
+			frappe.query_report.get_filter('service_centre').set_value("");
+			frappe.query_report.get_filter('group_by_sc').set_value(1);
+		});
 		report.page.add_inner_button(__("To be Paid"), function () {
 			frappe.query_report.get_filter('payment_done').set_value("Unpaid");
 			frappe.query_report.get_filter('customer_confirmation').set_value("Positive");
 			frappe.query_report.get_filter('service_delivered').set_value("Yes")
+			
 		});
 		report.page.add_inner_button(__("Remove Filters"), function () {
 			frappe.query_report.get_filter('payment_done').set_value("");
@@ -16,7 +27,7 @@ frappe.query_reports["Monthly Service Center Payment"] = {
 			frappe.query_report.get_filter('service_centre').set_value("");
 			frappe.query_report.get_filter('group_by_sc').set_value(0)
 		}),
-			report.page.add_inner_button(__("Today"), function () {
+		report.page.add_inner_button(__("Today"), function () {
 				frappe.query_report.get_filter('start_date').set_value(frappe.datetime.get_today());
 				frappe.query_report.get_filter('end_date').set_value(frappe.datetime.get_today());
 			}, "Range");
@@ -60,20 +71,19 @@ frappe.query_reports["Monthly Service Center Payment"] = {
 		},
 		{
 			'fieldname': 'payment_done',
-			'label': __('Paid'),
+			'label': __('Payment Status'),
 			'fieldtype': 'Select',
 			'options': ' \nPaid\nUnpaid'
 		},
 		{
 			'fieldname': 'customer_confirmation',
-			'label': __('Feedback'),
+			'label': __('Customer Feedback'),
 			'fieldtype': 'Select',
 			'options': '\nNot Taken\nPositive\nNegative',
-			'default': 'Not Taken'
 		},
 		{
 			'fieldname': 'service_delivered',
-			'label': __('Delivered'),
+			'label': __('Service Delivered'),
 			'fieldtype': 'Select',
 			'options': ' \nYes\nNo'
 		},
@@ -82,12 +92,24 @@ frappe.query_reports["Monthly Service Center Payment"] = {
 			'label': __('Group By Service Centre'),
 			'fieldtype': 'Check',
 			'default': 1
+			
 		},
 		{
-			'fieldname': 'payment',
-			'label': __('Payment'),
+			'fieldname': 'is_paid',
+			'label': __('Paid'),
 			'fieldtype': 'Check',
-			'default': 1
+			'default': 0,
+			'hidden': 1			
 		},
+		{
+			'fieldname': 'payment_remark',
+			'label': __('Add Payment Remark '),
+			'fieldtype': 'TextArea',
+			'default': 0,
+			'style': {
+				'width': '1px',
+				'height': '1px'
+			}
+		}
 	]
 };
