@@ -104,7 +104,7 @@ frappe.query_reports["Monthly Service Center Payment"] = {
 		{
 			'fieldname': 'payment_remark',
 			'label': __('Add Payment Remark '),
-			'fieldtype': 'Text',
+			'fieldtype': 'TextArea',
 			'default': 0,
 			'style': {
 				'width': '1px',
