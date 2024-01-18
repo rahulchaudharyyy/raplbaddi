@@ -1,7 +1,6 @@
 # Copyright (c) 2024, Nishant Bhickta and contributors
 # For license information, please see license.txt
 
-<<<<<<< Updated upstream
 import frappe
 from datetime import datetime
 class dailyIssue:
@@ -75,11 +74,3 @@ def execute(filters=None):
 
 
 
-=======
-# import frappe
-
-
-def execute(filters=None):
-	columns, data = [], []
-	return columns, data
->>>>>>> Stashed changes
