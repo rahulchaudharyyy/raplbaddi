@@ -36,7 +36,7 @@ class dailyIssue:
 
 	def convert_date(self):
 		self.filters.start_date = datetime.strptime(self.filters.start_date, "%Y-%m-%d").date()
-  
+		return self.filters
 	def get_data(self):
 		self.query = f"""
         select 
