@@ -36,7 +36,8 @@ class dailyIssue:
 
 	def convert_date(self):
 		self.filters.start_date = datetime.strptime(self.filters.start_date, "%Y-%m-%d").date()
-		return self.filters
+
+
 	def get_data(self):
 		self.query = f"""
         select 
@@ -46,7 +47,6 @@ class dailyIssue:
         from tabIssueRapl
         """
 		self.result = frappe.db.sql(self.query, as_dict=True)
-		print(self.result[0])
   
 	def filtred_data(self):
 		self.filtered_data = []
