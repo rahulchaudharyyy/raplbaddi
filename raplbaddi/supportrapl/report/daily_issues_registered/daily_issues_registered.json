@@ -1,7 +1,11 @@
 {
  "add_total_row": 1,
  "columns": [],
+<<<<<<< Updated upstream
  "creation": "2024-01-17 09:34:01.511605",
+=======
+ "creation": "2024-01-17 12:08:06.208409",
+>>>>>>> Stashed changes
  "disabled": 0,
  "docstatus": 0,
  "doctype": "Report",
@@ -9,13 +13,20 @@
  "idx": 0,
  "is_standard": "Yes",
  "letterhead": null,
+<<<<<<< Updated upstream
  "modified": "2024-01-17 09:37:34.226867",
+=======
+ "modified": "2024-01-17 12:08:06.208409",
+>>>>>>> Stashed changes
  "modified_by": "Administrator",
  "module": "SupportRapl",
  "name": "Daily Issues Registered",
  "owner": "Administrator",
  "prepared_report": 0,
+<<<<<<< Updated upstream
  "query": "select \nname as 'Complaint No',\nservice_centre,\n1\nfrom tabIssueRapl\n",
+=======
+>>>>>>> Stashed changes
  "ref_doctype": "IssueRapl",
  "report_name": "Daily Issues Registered",
  "report_type": "Script Report",
@@ -27,10 +38,17 @@
    "role": "Support Team"
   },
   {
+<<<<<<< Updated upstream
    "role": "Software Operator"
   },
   {
    "role": "Service Center"
+=======
+   "role": "Service Center"
+  },
+  {
+   "role": "Software Operator"
+>>>>>>> Stashed changes
   }
  ]
 }
