@@ -2,7 +2,6 @@
 // For license information, please see license.txt
 
 frappe.query_reports["Daily Issues Registered"] = {
-<<<<<<< Updated upstream
 	onload : function(report){
 		report.page.add_inner_button(__("Today"), function () {
 		frappe.query_report.get_filter('start_date').set_value(frappe.datetime.get_today());
@@ -18,9 +17,5 @@ frappe.query_reports["Daily Issues Registered"] = {
 			'reqd': 1,
 			'hidden': 1
 		}
-=======
-	"filters": [
-
->>>>>>> Stashed changes
 	]
 };

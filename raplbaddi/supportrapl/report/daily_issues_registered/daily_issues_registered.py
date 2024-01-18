@@ -35,7 +35,8 @@ class dailyIssue:
 		return columns
 
 	def convert_date(self):
-		self.filters.start_date = datetime.strptime(self.filters.start_date, "%Y-%m-%d").date()
+		if self.filters.start_date:
+			self.filters.start_date = datetime.strptime(self.filters.start_date, "%Y-%m-%d").date()
 
 
 	def get_data(self):
