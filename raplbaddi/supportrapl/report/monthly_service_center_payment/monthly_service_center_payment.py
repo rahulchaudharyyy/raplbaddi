@@ -45,7 +45,7 @@ class payment:
         self.filtered_data = []
         for data in self.data:
             data.amount = int(data.amount)
-            data.ifsc = data.ifsc.upper()
+            # data.ifsc = data.ifsc.upper()
             data.ifsc = data.ifsc
             
 
