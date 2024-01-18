@@ -90,6 +90,7 @@ class payment:
     def get_msg(self):
         self.get_count()
         self.get_total_amount()
+        print(self.payment)
         self.get_account_details()
         ret = f"""
         <div style="display: flex; justify-content: space-between;">
