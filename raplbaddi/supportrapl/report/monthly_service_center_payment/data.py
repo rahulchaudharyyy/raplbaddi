@@ -51,6 +51,7 @@ def get_query(filters, conditions):
         """
         
     query = group_by_query if filters.group_by_sc else ungrouped_query
+    print(query)
     return query
 
 
