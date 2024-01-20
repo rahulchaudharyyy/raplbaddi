@@ -40,7 +40,15 @@ class payment:
             self.conditions += (
                 f" and i.service_delivered = '{self.filters.service_delivered}'"
             )
-
+  
+              
+        if self.filters.group_by_sc:
+            if self.filters.start_date and self.filters.end_date:
+                self.conditions += (
+                    f" and i.custom_creation_date BETWEEN '{self.filters.start_date}' AND '{self.filters.end_date}'"
+                )
+                
+                
     def filtred_data(self):
         self.filtered_data = []
         for data in self.data:
