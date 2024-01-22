@@ -3,7 +3,7 @@
 
 import frappe
 
-class daysDealine():
+class daysDeadline():
 	def __init__(self,filters):
 		self.countComplaints()
 		self.get_data()
@@ -27,26 +27,26 @@ class daysDealine():
 	def get_columns(self,filters):
 		columns = [
 			{
-				'fieldname':'custom_creation_date',
-				'label':'Complaint Register Date',
-				'fieldtype':'Date',
-				'width':'250'
-			},
-			{
-				'fieldname':'today',
-				'label':'Today',
-				'fieldtype':'Date',
-				'width':'250'
-			},
-			{
 				'fieldname':'name',
 				'label':'Complaint No',
 				'fieldtype':'Data',
-				'width':'250'
+				'width':'300'
+			},
+			{
+				'fieldname':'custom_creation_date',
+				'label':'Complaint Register Date',
+				'fieldtype':'Date',
+				'width':'310'
+			},
+			{
+				'fieldname':'today',
+				'label':'Current Day',
+				'fieldtype':'Date',
+				'width':'280'
 			},
 			{
 				'fieldname':'days_diff',
-				'label':'Date diff',		
+				'label':'Date Difference',		
 				'fieldtype':'Int',
 				'width':'250'
 			}
@@ -66,7 +66,7 @@ class daysDealine():
 
   
 def execute(filters=None):
-	deadline = daysDealine(filters)
+	deadline = daysDeadline(filters)
 	deadline.countComplaints()
 	columns, data = [], []
 	return deadline.get_columns(filters), deadline.get_data(), deadline.get_msg()
