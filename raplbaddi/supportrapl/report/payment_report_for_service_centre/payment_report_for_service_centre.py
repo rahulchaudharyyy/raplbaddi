@@ -29,7 +29,7 @@ class payment:
         self.data = result
 
     def get_conditions(self):
-        self.conditions = "1 "
+        self.conditions = "i.service_centre NOT IN ('Geo Appliances', 'Amit Company', 'HIMANSHU COMPANY') "
         if self.filters.payment_done:
             self.conditions += f" and i.payment_done = '{self.filters.payment_done}'"
         if self.filters.customer_confirmation:
