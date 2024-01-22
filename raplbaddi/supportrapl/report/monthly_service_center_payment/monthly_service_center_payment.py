@@ -13,7 +13,6 @@ class payment:
         self.get_data()
         self.filtred_data()
 
-
     def process_filters(self):
         self.filters.end_date = datetime.strptime(self.filters.end_date, "%Y-%m-%d").date()
         self.filters.start_date = datetime.strptime(self.filters.start_date, "%Y-%m-%d").date()
