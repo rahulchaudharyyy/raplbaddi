@@ -41,7 +41,7 @@ class payment:
                 f" and i.service_delivered = '{self.filters.service_delivered}'"
             )
   
-              
+        # when group_by_sc filter then it this date condition will be applied to the group_by_query
         if self.filters.group_by_sc:
             if self.filters.start_date and self.filters.end_date:
                 self.conditions += (
