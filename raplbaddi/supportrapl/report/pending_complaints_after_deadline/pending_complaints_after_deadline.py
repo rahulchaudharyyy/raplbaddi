@@ -29,7 +29,8 @@ class daysDeadline():
 			{
 				'fieldname':'name',
 				'label':'Complaint No',
-				'fieldtype':'Data',
+				'fieldtype':'Link',
+				'options':'IssueRapl',
 				'width':'300'
 			},
 			{
