@@ -3,6 +3,12 @@
 
 frappe.query_reports["Pending Complaints After Deadline"] = {
 	"filters": [
-
+		{
+			'fieldname': 'group_by_date',
+			'label': __('Group By Date'),
+			'fieldtype': 'Check',
+			'default': 1,
+			'hidden':1
+		}
 	]
 };

@@ -5,8 +5,9 @@ import frappe
 
 class daysDeadline():
 	def __init__(self,filters):
-		self.countComplaints()
+		self.filters = filters
 		self.get_data()
+		self.count = 0
   
 	def get_data(self):
 		query = f"""
@@ -18,21 +19,32 @@ class daysDeadline():
 			FROM 
 				tabIssueRapl
 			WHERE 
-				DATEDIFF(CURDATE(),custom_creation_date) >3
+				DATEDIFF(CURDATE(),custom_creation_date) >3 AND service_delivered = "No"
 
 		"""
-		self.result = frappe.db.sql(query, as_dict=True)
-		return self.result
+		group_by_query = f"""
+			SELECT 
+				custom_creation_date ,
+				count(name) as 'no_of_complaints'
+			FROM 
+				tabIssueRapl
+			WHERE 
+				DATEDIFF(CURDATE(),custom_creation_date) >3 AND service_delivered = "No"
+			GROUP BY 
+				custom_creation_date
+  
+  		"""
+    
+		result = frappe.db.sql(query, as_dict=True)
+		self.count = len(result)   
+		self.group_by_result = frappe.db.sql(group_by_query,as_dict = True)
+		# getting the group_by_date filter
+		self.filters.group_by_date = self.filters.group_by_date
+		data = self.group_by_result if self.filters.group_by_date else result
+		return data
 
 	def get_columns(self,filters):
 		columns = [
-			{
-				'fieldname':'name',
-				'label':'Complaint No',
-				'fieldtype':'Link',
-				'options':'IssueRapl',
-				'width':'300'
-			},
 			{
 				'fieldname':'custom_creation_date',
 				'label':'Complaint Register Date',
@@ -40,26 +52,14 @@ class daysDeadline():
 				'width':'310'
 			},
 			{
-				'fieldname':'today',
-				'label':'Current Day',
-				'fieldtype':'Date',
-				'width':'280'
-			},
-			{
-				'fieldname':'days_diff',
-				'label':'Date Difference',		
+				'fieldname':'no_of_complaints',
+				'label':'No of Complaints',		
 				'fieldtype':'Int',
 				'width':'250'
 			}
 		]
 		return columns
 
-	def countComplaints(self):
-		data = self.get_data()
-		self.count = 0
-		for i in data:
-			self.count+=1
-  
 	def get_msg(self):
 		return f'''
 			<h1 style = 'text-align:center; color:orange;'>No. of pending complaints after deadline are : {self.count} </h1>
@@ -68,7 +68,6 @@ class daysDeadline():
   
 def execute(filters=None):
 	deadline = daysDeadline(filters)
-	deadline.countComplaints()
 	columns, data = [], []
-	return deadline.get_columns(filters), deadline.get_data(), deadline.get_msg()
+	return deadline.get_columns(filters), deadline.get_data(),deadline.get_msg()
 
