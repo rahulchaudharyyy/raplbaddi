@@ -10,7 +10,7 @@ def get_so_items():
 		.from_(so)
 		.left_join(soi).on(so.name == soi.parent)
 		.where(so.status.notin(['Stopped', 'Closed']) & so.docstatus == 1)
-		.where(soi.item_group.isin(["Geyser Unit", "Cooler"]))
+		.where(soi.item_group.isin(["Geyser Unit"]))
 		.where(so.delivery_status.isin(['Partly Delivered', 'Not Delivered']))
 		.where((soi.qty - soi.delivered_qty) > 0)
 		.where(soi.item_code.like('G%%'))
