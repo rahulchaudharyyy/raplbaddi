@@ -3,6 +3,7 @@
 from frappe import _
 from raplbaddi.utils import report_utils
 from raplbaddi.salesrapl.report.geyser_production_planning import sales_order_data
+import frappe
 
 def execute(filters=None):
 	columns, datas = [], []
@@ -16,8 +17,18 @@ def soi():
 	data = sales_order_data.get_so_items()
 	bin = sales_order_data.get_bin_stock()
 	boxes = sales_order_data.get_box_qty()
+	item_units = {}
+	item_names_count = {}
+    
 	for soi in data:
-		soi['brand'] = soi['brand'].replace('- RAPL', '')
+		brand = soi['brand'] = soi['brand'].replace('- RAPL', '')
+		item_name = soi['item_name'] = soi['item_code'] + ' ' + brand
+
+		if item_name in item_names_count:
+			item_names_count[item_name] += 1
+		else:
+			item_names_count[item_name] = 1
+
 		for bin_val in bin:
 			if bin_val['item_code'] == soi['item_code'] and bin_val['warehouse'].replace('- RAPL', '') == soi['brand']:
 				short = 0
@@ -28,11 +39,45 @@ def soi():
 				soi['%'] = 100 - (short / soi['pending_qty']) * 100
 				soi['actual_qty'] = bin_val['actual_qty']
 				soi['short_qty'] = short
+    
 		for box in boxes:
 			if box.get('box') == soi['box']:
 				soi['box_stock_qty'] = box['warehouse_qty']
+
+		if soi['item_code'] not in item_units:
+			item_units[soi['item_code']] = frappe.get_cached_value("Item", soi['item_code'], "unit")
+
+	for d in data:
+		d['unit'] = item_units[d['item_code']]
+		d["count"] = item_names_count[d.item_name]
+	set_box_ordered_data(data)
 	data.sort(reverse=True, key= lambda entry: entry['%'])
 	return data
+
+def set_box_ordered_data(data):
+	box_order_data = get_ordered_qty()
+	box_ordered = {}
+	for d in box_order_data:
+		box_ordered[d.item_code] = d.ordered
+	for d in data:
+		d['box_order'] = box_ordered.get(d.get('box'), 0)
+
+def get_ordered_qty():
+    query = f"""
+		SELECT
+			poi.item_code, 
+			SUM(GREATEST(qty - received_qty, 0)) AS ordered
+		FROM
+			`tabPurchase Order Item` poi
+			JOIN `tabPurchase Order` po ON po.name = poi.parent
+		WHERE
+			po.docstatus = 1
+			AND po.status NOT IN ('Stopped', 'Closed')
+			AND poi.item_group = 'Packing Boxes'
+		GROUP BY
+			poi.item_code;
+    """
+    return frappe.db.sql(query, as_dict=True)
 
 def so():
 	data = []
@@ -79,8 +124,11 @@ def get_columns(filters=None):
 			.add_column("Date", "Date", 100, "date")
 			.add_column("Planning", "HTML", 100, "planning_remarks")
 			.add_column("Item", "Link", 100, "item_code", options="Item")
+			.add_column("Item Name", "Data", 130, "item_name")
+			.add_column("Name Count", "Int", 130, "count")
 			.add_column("Box", "Link", 100, "box", options="Item")
 			.add_column("Box Qty", "Int", 120, "box_stock_qty")
+			.add_column("Box Order", "HTML", 130, "box_order")
 			.add_column("Sales Order", "Link", 100, "sales_order", options="Sales Order")
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
 			.add_column("Order Qty", "Int", 120, "pending_qty")
@@ -89,6 +137,7 @@ def get_columns(filters=None):
 			.add_column("%", "Int", 40, "%", disable_total=True)
 			.add_column("Brand", "Data", 100, "brand")
    			.add_column("SO Remark", "HTML", 130, "so_remarks")
+			.add_column("Unit", "Data", 130, "unit")
 			.build()
 		)
 	if filters.get('report_type') == 'Order and Shortage':
