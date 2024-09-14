@@ -78,7 +78,7 @@ def get_ordered_qty():
 			AND po.status NOT IN ('Stopped', 'Closed')
 			AND poi.item_group = 'Packing Boxes'
 		GROUP BY
-			poi.item_code;
+			poi.item_code
     """
     return frappe.db.sql(query, as_dict=True)
 
