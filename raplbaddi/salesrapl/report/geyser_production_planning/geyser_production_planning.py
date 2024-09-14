@@ -58,15 +58,18 @@ def set_box_ordered_data(data):
 	box_order_data = get_ordered_qty()
 	box_ordered = {}
 	for d in box_order_data:
-		box_ordered[d.item_code] = d.ordered
+		box_ordered[d.item_code] = {"ordered": d.ordered, "supplier": d.supplier}
 	for d in data:
-		d['box_order'] = box_ordered.get(d.get('box'), 0)
+		box_detail = box_ordered.get(d.get('box'), {})
+		d['box_order'] = box_detail.get("ordered", 0)
+		d['supplier'] = box_detail.get("supplier", None)
 
 def get_ordered_qty():
     query = f"""
 		SELECT
 			poi.item_code, 
-			SUM(GREATEST(qty - received_qty, 0)) AS ordered
+			SUM(GREATEST(qty - received_qty, 0)) AS ordered,
+			po.supplier
 		FROM
 			`tabPurchase Order Item` poi
 			JOIN `tabPurchase Order` po ON po.name = poi.parent
@@ -111,9 +114,7 @@ def so():
 			entry['so_shortage'] += soi_shortage
 		entry['items'] = ', '.join(items)
 		entry['brands'] = ', '.join(brands)
-		entry['%'] = 100 - (entry['so_shortage'] / entry['pending_qty']) * 100
 		data.append(entry)
-		data.sort(reverse=True, key= lambda entry: entry['%'])
 	return data
 
 def get_columns(filters=None):
@@ -121,22 +122,22 @@ def get_columns(filters=None):
 	if filters.get('report_type') == 'Itemwise Order and Shortage':
 		builder = report_utils.ColumnBuilder()
 		cols = (builder
-			.add_column("Date", "Date", 100, "date")
-			.add_column("Planning", "HTML", 100, "planning_remarks")
-			.add_column("Item", "Link", 100, "item_code", options="Item")
-			.add_column("Item Name", "Data", 130, "item_name")
-			.add_column("Name Count", "Int", 130, "count")
-			.add_column("Box", "Link", 100, "box", options="Item")
-			.add_column("Box Qty", "Int", 120, "box_stock_qty")
-			.add_column("Box Order", "HTML", 130, "box_order")
-			.add_column("Sales Order", "Link", 100, "sales_order", options="Sales Order")
+			.add_column("Order Date", "Date", 100, "date")
+			.add_column("Planning Remarks", "HTML", 100, "planning_remarks")
+			.add_column("SO Number", "Link", 100, "sales_order", options="Sales Order")
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
+			.add_column("Item", "Data", 100, "item_code", options="")
+			.add_column("Brand", "Data", 100, "brand")
 			.add_column("Order Qty", "Int", 120, "pending_qty")
 			.add_column("Actual Qty", "Int", 120, "actual_qty")
-			.add_column("Short Qty", "Int", 120, "short_qty")
-			.add_column("%", "Int", 40, "%", disable_total=True)
-			.add_column("Brand", "Data", 100, "brand")
+			.add_column("Item Name", "Data", 130, "item_name")
+			.add_column("Name Count", "Int", 130, "count")
    			.add_column("SO Remark", "HTML", 130, "so_remarks")
+			.add_column("Box name", "Link", 100, "box", options="Item")
+			.add_column("Box Qty", "Int", 120, "box_stock_qty")
+			.add_column("Box Order", "HTML", 130, "box_order")
+			.add_column("Short Qty", "Int", 120, "short_qty")
+			.add_column("Supplier", "Data", 120, "supplier")
 			.add_column("Unit", "Data", 130, "unit")
 			.build()
 		)
