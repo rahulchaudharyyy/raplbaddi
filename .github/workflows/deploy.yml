@@ -24,17 +24,21 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Deploy code to DigitalOcean
+        if: contains(github.event.head_commit.message, 'p2p')
         run: |
           ssh -i ~/.ssh/id_rsa frappe@${{ secrets.PROD_IP }} << 'EOF'
           cd /home/frappe/frappe-bench/apps/raplbaddi
-          git pull origin production
-          PULL_STATUS=$?
+          PULL_OUTPUT=$(git pull origin production)
 
-          if [ $PULL_STATUS -eq 0 ]; then
-            echo "Already up-to-date, no need to migrate or restart."
+          if [[ $PULL_OUTPUT == *"Already up to date."* ]]; then
+              echo "Already up-to-date, no need to migrate or restart."
           else
-            echo "Changes detected, running bench migrate and restart."
-            cd /home/frappe/frappe-bench
-            bench migrate
-            bench restart
+              echo "Changes detected, running bench migrate and restart."
+              cd /home/frappe/frappe-bench
+              bench migrate
+              bench restart
           fi
+
+      - name: Skip deployment
+        if: ${{ !contains(github.event.head_commit.message, 'p2p') }}
+        run: echo "Commit message does not contain 'p2p'. Skipping deployment."
