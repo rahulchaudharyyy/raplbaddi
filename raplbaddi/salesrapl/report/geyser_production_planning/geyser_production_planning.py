@@ -114,7 +114,9 @@ def so():
 			entry['so_shortage'] += soi_shortage
 		entry['items'] = ', '.join(items)
 		entry['brands'] = ', '.join(brands)
+		entry['%'] = 100 - (entry['so_shortage'] / entry['pending_qty']) * 100
 		data.append(entry)
+		data.sort(reverse=True, key= lambda entry: entry['%'])
 	return data
 
 def get_columns(filters=None):
