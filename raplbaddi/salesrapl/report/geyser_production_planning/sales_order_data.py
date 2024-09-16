@@ -27,6 +27,7 @@ def get_so_items():
 			report_utils.Greatest(0, soi.qty - soi.delivered_qty).as_('pending_qty'),
 			(soi.stock_reserved_qty).as_('stock_reserved_qty'),
 			soi.warehouse.as_('brand'),
+			soi.color.as_('color'),
 			so.delivery_status,
 			so.delivery_status.as_('delivery_status')
 		)

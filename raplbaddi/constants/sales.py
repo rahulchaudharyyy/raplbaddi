@@ -1,0 +1,24 @@
+from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
+
+custom_fields = {
+    "Sales Order Item": [
+        {
+            "is_system_generated": 1,
+            "label": "Color",
+            "fieldname": "color",
+            "insert_after": "delivery_date",
+            "fieldtype": "Link",
+            "default": "Regular",
+            "options": "Color",
+            "reqd": 0,
+            "allow_on_submit": 1,
+            "in_list_view": 1,
+            "columns": 1,
+            "reqd": 1
+        }
+    ]
+}
+
+
+def execute():
+    create_custom_fields(custom_fields)

@@ -8,12 +8,12 @@ import frappe
 def execute(filters=None):
 	columns, datas = [], []
 	if filters.get('report_type') == "Order and Shortage":
-		datas = so()
+		datas = order_and_shortage_date()
 	elif filters.get('report_type') == "Itemwise Order and Shortage":
-		datas = soi()
+		datas = itemwise_order_and_shortage_data()
 	return get_columns(filters), datas
 
-def soi():
+def itemwise_order_and_shortage_data():
 	data = sales_order_data.get_so_items()
 	bin = sales_order_data.get_bin_stock()
 	boxes = sales_order_data.get_box_qty()
@@ -82,7 +82,7 @@ def get_ordered_qty():
     """
     return frappe.db.sql(query, as_dict=True)
 
-def so():
+def order_and_shortage_date():
 	data = []
 	so = report_utils.accum_mapper(data=(sales_order_data.get_so_items()), key='sales_order')
 	bin = sales_order_data.get_bin_stock()
@@ -115,6 +115,7 @@ def so():
 		entry['items'] = ', '.join(items)
 		entry['brands'] = ', '.join(brands)
 		entry['%'] = 100 - (entry['so_shortage'] / entry['pending_qty']) * 100
+		entry["color"] = soi["color"]
 		data.append(entry)
 		data.sort(reverse=True, key= lambda entry: entry['%'])
 	return data
@@ -130,15 +131,16 @@ def get_columns(filters=None):
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
 			.add_column("Item", "Data", 100, "item_code", options="")
 			.add_column("Brand", "Data", 100, "brand")
+			.add_column("Color", "Data", 100, "color")
 			.add_column("Order Qty", "Int", 120, "pending_qty")
 			.add_column("Actual Qty", "Int", 120, "actual_qty")
+			.add_column("Short Qty", "Int", 120, "short_qty")
 			.add_column("Item Name", "Data", 130, "item_name")
 			.add_column("Name Count", "Int", 130, "count")
    			.add_column("SO Remark", "HTML", 130, "so_remarks")
 			.add_column("Box name", "Link", 100, "box", options="Item")
 			.add_column("Box Qty", "Int", 120, "box_stock_qty")
 			.add_column("Box Order", "HTML", 130, "box_order")
-			.add_column("Short Qty", "Int", 120, "short_qty")
 			.add_column("Supplier", "Data", 120, "supplier")
 			.add_column("Unit", "Data", 130, "unit")
 			.build()
