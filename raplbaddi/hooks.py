@@ -103,13 +103,12 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-#	"*": {
-#		"on_update": "method",
-#		"on_cancel": "method",
-#		"on_trash": "method"
-#	}
-# }
+doc_events = {
+	"User Permission": {
+		"validate": ["raplbaddi.overrides.user_permissions.validate", ],
+		"on_trash": ["raplbaddi.overrides.user_permissions.validate", ],
+	},
+}
 
 # Scheduled Tasks
 # ---------------
@@ -205,6 +204,8 @@ app_license = "MIT"
 override_whitelisted_methods = {
 	"erpnext.selling.doctype.sales_order.sales_order.make_delivery_note": "raplbaddi.overrides.make_delivery_note"
 }
+
+export_python_type_annotations = True
 
 fixtures = ["Custom Field", "Custom DocPerm", "Client Script"]
 
