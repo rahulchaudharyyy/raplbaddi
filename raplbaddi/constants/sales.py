@@ -16,6 +16,19 @@ custom_fields = {
             "columns": 1,
             "reqd": 1
         }
+    ],
+    "Delivery Note": [
+        {
+            "is_system_generated": 1,
+            "label": "Branch",
+            "fieldname": "branch",
+            "insert_after": "company",
+            "fieldtype": "Link",
+            "default": "Real Appliances Private Limited",
+            "options": "Branch",
+            "reqd": 1,
+            "allow_on_submit": 0,
+        }
     ]
 }
 

@@ -108,6 +108,10 @@ doc_events = {
 		"validate": ["raplbaddi.overrides.user_permissions.validate", ],
 		"on_trash": ["raplbaddi.overrides.user_permissions.validate", ],
 	},
+	"Delivery Note": {
+		"before_insert": ["raplbaddi.overrides.delivery_note.before_insert", ],
+		"validate": ["raplbaddi.overrides.delivery_note.validate", ],
+	},
 }
 
 # Scheduled Tasks
