@@ -14,7 +14,7 @@ custom_fields = {
             "allow_on_submit": 1,
             "in_list_view": 1,
             "columns": 1,
-            "reqd": 1
+            "reqd": 1,
         }
     ],
     "Delivery Note": [
@@ -28,8 +28,26 @@ custom_fields = {
             "options": "Branch",
             "reqd": 1,
             "allow_on_submit": 0,
-        }
-    ]
+        },
+        {
+            "is_system_generated": 1,
+            "label": "Driver Number",
+            "fieldname": "driver_number",
+            "insert_after": "lr_date",
+            "fieldtype": "Int",
+            "reqd": 1,
+            "allow_on_submit": 0,
+        },
+        {
+            "is_system_generated": 1,
+            "label": "Bilty/LR No,",
+            "fieldname": "bilty_no",
+            "insert_after": "driver_number",
+            "fieldtype": "Data",
+            "reqd": 1,
+            "allow_on_submit": 0,
+        },
+    ],
 }
 
 
