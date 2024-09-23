@@ -5,6 +5,9 @@ from frappe.core.doctype.user_permission.user_permission import UserPermission
 
 
 class UserAccessControl(Document):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        frappe.flags.ignore_permission = True
 
     def validate(self):
         self.sort_by_doctype()
