@@ -34,7 +34,7 @@ custom_fields = {
             "label": "Driver Number",
             "fieldname": "driver_number",
             "insert_after": "lr_date",
-            "fieldtype": "Int",
+            "fieldtype": "Data",
             "reqd": 1,
             "allow_on_submit": 0,
         },
