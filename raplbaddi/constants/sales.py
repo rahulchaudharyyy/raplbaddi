@@ -1,6 +1,20 @@
 from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 
 custom_fields = {
+    "Sales Order": [
+        {
+            "is_system_generated": 1,
+            "label": "Dispatch Remarks",
+            "fieldname": "dispatch_remarks",
+            "insert_after": "planning_remarks",
+            "fieldtype": "Data",
+            "depends_on": 'eval:frappe.session.user == "kumarom906@gmail.com" ||\n    frappe.session.user == "Administrator" || \n    frappe.session.user == "iamcasg@gmail.com" ||\n    frappe.session.user == "abhishek.rapl417@gmail.com"',
+            "read_only": 0,
+            "hidden": 0,
+            "no_copy": 0,
+            "allow_on_submit": 1,
+        },
+    ],
     "Sales Order Item": [
         {
             "is_system_generated": 1,
@@ -59,6 +73,17 @@ custom_fields = {
             "no_copy": 1,
             "reqd": 0,
             "allow_on_submit": 1,
+        },
+        {
+            "is_system_generated": 1,
+            "label": "Branch",
+            "fieldname": "Freight Status",
+            "insert_after": "amount",
+            "fieldtype": "Select",
+            "default": "Already Paid by us",
+            "options": "Already Paid by us\nPlease pay to Driver",
+            "reqd": 1,
+            "allow_on_submit": 0,
         },
     ],
 }
