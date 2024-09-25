@@ -93,6 +93,7 @@ def order_and_shortage_date():
 			entry['pending_qty'] += soi['pending_qty']
 			entry['status'] = soi['status']
 			entry['planning_remarks'] = soi['planning_remarks']
+			entry['dispatch_remarks'] = soi['dispatch_remarks']
 			entry['so_remarks'] = soi['so_remarks']
 			entry['date'] = soi['date']
 			entry['customer'] = soi['customer']

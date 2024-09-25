@@ -22,6 +22,7 @@ def get_so_items():
 			so.conditions.as_('so_remarks'),
 			soi.custom_box.as_('box'),
 			so.planning_remarks.as_('planning_remarks'),
+			so.dispatch_remarks.as_('dispatch_remarks'),
 			so.name.as_('sales_order'),
 			soi.item_code.as_('item_code'),
 			report_utils.Greatest(0, soi.qty - soi.delivered_qty).as_('pending_qty'),
