@@ -111,6 +111,8 @@ doc_events = {
 	"Delivery Note": {
 		"before_insert": ["raplbaddi.overrides.delivery_note.before_insert", ],
 		"validate": ["raplbaddi.overrides.delivery_note.validate", ],
+		"on_submit": ["raplbaddi.overrides.delivery_note.on_submit", ],
+		"on_cancel": ["raplbaddi.overrides.delivery_note.on_cancel", ],
 	},
 }
 

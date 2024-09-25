@@ -47,6 +47,19 @@ custom_fields = {
             "reqd": 1,
             "allow_on_submit": 0,
         },
+        {
+            "is_system_generated": 1,
+            "label": "Internal Receipt",
+            "fieldname": "internal_receipt",
+            "insert_after": "is_return",
+            "fieldtype": "Link",
+            "options": "Stock Entry",
+            "is_hidden": 1,
+            "read_only": 1,
+            "no_copy": 1,
+            "reqd": 0,
+            "allow_on_submit": 1,
+        },
     ],
 }
 
