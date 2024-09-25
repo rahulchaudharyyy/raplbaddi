@@ -18,16 +18,10 @@ def itemwise_order_and_shortage_data():
 	bin = sales_order_data.get_bin_stock()
 	boxes = sales_order_data.get_box_qty()
 	item_units = {}
-	item_names_count = {}
     
 	for soi in data:
 		brand = soi['brand'] = soi['brand'].replace('- RAPL', '')
 		item_name = soi['item_name'] = soi['item_code'] + ' ' + brand
-
-		if item_name in item_names_count:
-			item_names_count[item_name] += 1
-		else:
-			item_names_count[item_name] = 1
 
 		for bin_val in bin:
 			if bin_val['item_code'] == soi['item_code'] and bin_val['warehouse'].replace('- RAPL', '') == soi['brand']:
@@ -49,8 +43,10 @@ def itemwise_order_and_shortage_data():
 
 	for d in data:
 		d['unit'] = item_units[d['item_code']]
-		d["count"] = item_names_count[d.item_name]
+
 	set_box_ordered_data(data)
+	for d in data:
+		d['box_short_qty'] = d['short_qty'] - d.get('box_order', 0) - d.get('box_stock_qty', 0)
 	data.sort(reverse=True, key= lambda entry: entry['%'])
 	return data
 
@@ -136,10 +132,10 @@ def get_columns(filters=None):
 			.add_column("Actual Qty", "Int", 120, "actual_qty")
 			.add_column("Short Qty", "Int", 120, "short_qty")
 			.add_column("Item Name", "Data", 130, "item_name")
-			.add_column("Name Count", "Int", 130, "count")
    			.add_column("SO Remark", "HTML", 130, "so_remarks")
 			.add_column("Box name", "Link", 100, "box", options="Item")
 			.add_column("Box Qty", "Int", 120, "box_stock_qty")
+			.add_column("Box Shortage", "Int", 120, "box_short_qty")
 			.add_column("Box Order", "HTML", 130, "box_order")
 			.add_column("Supplier", "Data", 120, "supplier")
 			.add_column("Unit", "Data", 130, "unit")
