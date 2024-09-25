@@ -76,8 +76,8 @@ custom_fields = {
         },
         {
             "is_system_generated": 1,
-            "label": "Branch",
-            "fieldname": "Freight Status",
+            "label": "Freight Status",
+            "fieldname": "freight_status",
             "insert_after": "amount",
             "fieldtype": "Select",
             "default": "Already Paid by us",
