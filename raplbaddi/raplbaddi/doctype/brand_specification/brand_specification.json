@@ -1,0 +1,117 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-09-27 08:26:55.905688",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_section",
+  "brand",
+  "brand_alias_section",
+  "default_alias",
+  "column_break_zxwk",
+  "populate_alias",
+  "section_break_plfy",
+  "brand_aliases",
+  "stickers_tab",
+  "bypass_standard_stickers",
+  "stickers",
+  "links_tab",
+  "links"
+ ],
+ "fields": [
+  {
+   "fieldname": "brand",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Brand",
+   "options": "Brand",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "brand_alias_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "brand_aliases",
+   "fieldtype": "Table",
+   "label": "Brand Aliases",
+   "options": "Brand Alias"
+  },
+  {
+   "fieldname": "basic_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "default_alias",
+   "fieldtype": "Data",
+   "label": "Default Alias"
+  },
+  {
+   "fieldname": "column_break_zxwk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "populate_alias",
+   "fieldtype": "Button",
+   "label": "Populate Alias"
+  },
+  {
+   "fieldname": "section_break_plfy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "stickers_tab",
+   "fieldtype": "Tab Break",
+   "label": "Stickers"
+  },
+  {
+   "fieldname": "stickers",
+   "fieldtype": "Table",
+   "label": "Stickers",
+   "options": "Sticker Item"
+  },
+  {
+   "fieldname": "links_tab",
+   "fieldtype": "Tab Break",
+   "label": "Links"
+  },
+  {
+   "fieldname": "links",
+   "fieldtype": "Table",
+   "label": "Links",
+   "options": "Dynamic Link"
+  },
+  {
+   "default": "0",
+   "fieldname": "bypass_standard_stickers",
+   "fieldtype": "Check",
+   "label": "Bypass Standard Stickers"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-27 09:56:17.336679",
+ "modified_by": "Administrator",
+ "module": "Raplbaddi",
+ "name": "Brand Specification",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,64 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-09-27 08:54:45.176515",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sticker",
+  "model",
+  "column_break_hdoa",
+  "sticker_type",
+  "capacity"
+ ],
+ "fields": [
+  {
+   "fieldname": "model",
+   "fieldtype": "Link",
+   "label": "Model",
+   "options": "Geyser Model"
+  },
+  {
+   "fieldname": "column_break_hdoa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Link",
+   "label": "Capacity",
+   "options": "Geyser Capacity"
+  },
+  {
+   "fieldname": "sticker",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Sticker",
+   "options": "Sticker",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "sticker.sticker_type",
+   "fieldname": "sticker_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Sticker Type",
+   "options": "\nLogo\nLahar\nISI\nSpecification Plate\nFive Star\nBox Model Sticker"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-09-27 09:30:11.684390",
+ "modified_by": "Administrator",
+ "module": "Raplbaddi",
+ "name": "Sticker Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

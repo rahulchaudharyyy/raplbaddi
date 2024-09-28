@@ -1,0 +1,71 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{title} {sticker_type}",
+ "creation": "2024-09-27 09:15:55.914559",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "column_break_ahft",
+  "sticker_type",
+  "section_break_jyvm",
+  "sample"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ahft",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sticker_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Sticker Type",
+   "options": "\nLogo\nLahar\nISI\nSpecification Plate\nFive Star\nBox Model Sticker",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sample",
+   "fieldtype": "Attach Image",
+   "label": "Sample"
+  },
+  {
+   "fieldname": "section_break_jyvm",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "image_field": "sample",
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-27 09:25:06.072370",
+ "modified_by": "Administrator",
+ "module": "Raplbaddi",
+ "name": "Sticker",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
