@@ -4,6 +4,7 @@ from frappe import _
 from raplbaddi.utils import report_utils
 from raplbaddi.salesrapl.report.geyser_production_planning import sales_order_data
 import frappe
+from collections import Counter
 
 def execute(filters=None):
 	columns, datas = [], []
@@ -33,6 +34,8 @@ def itemwise_order_and_shortage_data():
 				soi['%'] = 100 - (short / soi['pending_qty']) * 100
 				soi['actual_qty'] = bin_val['actual_qty']
 				soi['short_qty'] = short
+				city = get_city_from_shipping(soi.get('shipping_address_name', None))
+				soi["city"] = city
     
 		for box in boxes:
 			if box.get('box') == soi['box']:
@@ -47,6 +50,8 @@ def itemwise_order_and_shortage_data():
 	set_box_ordered_data(data)
 	for d in data:
 		d['box_short_qty'] = d['short_qty'] - d.get('box_order', 0) - d.get('box_stock_qty', 0)
+
+	append_city_count(data)
 	data.sort(reverse=True, key= lambda entry: entry['%'])
 	return data
 
@@ -59,6 +64,11 @@ def set_box_ordered_data(data):
 		box_detail = box_ordered.get(d.get('box'), {})
 		d['box_order'] = box_detail.get("ordered", 0)
 		d['supplier'] = box_detail.get("supplier", None)
+
+def append_city_count(data):
+	city_counts = Counter(d['city'] for d in data)
+	for d in data:
+		d['city_count'] = city_counts[d['city']]
 
 def get_ordered_qty():
     query = f"""
@@ -90,6 +100,8 @@ def order_and_shortage_date():
 		entry['so_shortage'] = 0
 		items, brands = set(), set()
 		for soi in so_val:
+			city = get_city_from_shipping(soi.get('shipping_address_name', None))
+			entry["city"] = city
 			entry['pending_qty'] += soi['pending_qty']
 			entry['status'] = soi['status']
 			entry['planning_remarks'] = soi['planning_remarks']
@@ -114,7 +126,8 @@ def order_and_shortage_date():
 		entry['%'] = 100 - (entry['so_shortage'] / entry['pending_qty']) * 100
 		entry["color"] = soi["color"]
 		data.append(entry)
-		data.sort(reverse=True, key= lambda entry: entry['%'])
+	append_city_count(data)
+	data.sort(reverse=True, key= lambda entry: entry['%'])
 	return data
 
 def get_columns(filters=None):
@@ -124,7 +137,10 @@ def get_columns(filters=None):
 		cols = (builder
 			.add_column("Order Date", "Date", 100, "date")
 			.add_column("Planning Remarks", "HTML", 100, "planning_remarks")
+			.add_column("Dispatch Remarks", "HTML", 100, "dispatch_remarks")
 			.add_column("SO Number", "Link", 100, "sales_order", options="Sales Order")
+			.add_column("City", "Data", 100, "city", options="")
+			.add_column("City Count", "Int", 100, "city_count", options="")
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
 			.add_column("Item", "Data", 100, "item_code", options="")
 			.add_column("Brand", "Data", 100, "brand")
@@ -147,9 +163,12 @@ def get_columns(filters=None):
 		cols = (builder
 			.add_column("Date", "Date", 100, "date")
 			.add_column("Items", "Data", 100, "items")
-			.add_column("Planning", "HTML", 100, "planning_remarks")
+			.add_column("Planning Remarks", "HTML", 100, "planning_remarks")
+			.add_column("Dispatch Remarks", "HTML", 100, "dispatch_remarks")
 			.add_column("Status", "Data", 100, "status")
 			.add_column("Sales Order", "Link", 100, "sales_order", options="Sales Order")
+			.add_column("City", "Data", 100, "city", options="")
+			.add_column("City Count", "Int", 100, "city_count", options="")
 			.add_column("Customer", "Link", 300, "customer", options="Customer")
 			.add_column("Order Qty", "Int", 120, "pending_qty")
 			.add_column("Shortage Qty", "Int", 100, "so_shortage")
@@ -159,3 +178,6 @@ def get_columns(filters=None):
 			.build()
 		)
 	return cols
+
+def get_city_from_shipping(shipping_address):
+    return frappe.get_value("Address", shipping_address, "city")
