@@ -114,6 +114,9 @@ doc_events = {
 		"on_submit": ["raplbaddi.overrides.delivery_note.on_submit", ],
 		"on_cancel": ["raplbaddi.overrides.delivery_note.on_cancel", ],
 	},
+	"Sales Order": {
+		"validate": ["raplbaddi.overrides.sales_order.validate", ],
+	},
 }
 
 # Scheduled Tasks

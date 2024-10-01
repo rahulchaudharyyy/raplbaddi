@@ -14,6 +14,18 @@ custom_fields = {
             "no_copy": 0,
             "allow_on_submit": 1,
         },
+        {
+            "is_system_generated": 1,
+            "label": "Bill To Ship To",
+            "fieldname": "is_bill_to_ship_to",
+            "insert_after": "no_delivery_date",
+            "fieldtype": "Check",
+            "read_only": 0,
+            "hidden": 0,
+            "no_copy": 0,
+            "reqd": 1,
+            "allow_on_submit": 0,
+        },
     ],
     "Sales Order Item": [
         {
