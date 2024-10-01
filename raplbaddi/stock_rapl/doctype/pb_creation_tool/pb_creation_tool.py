@@ -25,6 +25,8 @@ class PBCreationTool(Document):
                 box.disabled = True
             paper.disabled = not enable_paper
             box.save(), paper.save()
+            print(box.brand, box.geyser_model)
+        frappe.throw("heheh")
 
     def get_or_create_item(self, box_code, paper_code, item, total_safety_stock):
         try:
@@ -37,6 +39,8 @@ class PBCreationTool(Document):
         except frappe.exceptions.DoesNotExistError:
             paper = self.create_item(paper_code, item)
 
+        self.set_item_details(box, box_code, item)
+        self.set_item_details(paper, paper_code, item)
         item.box = box.name
         item.paper = paper.name
         box.disabled = not item.box_enabled
@@ -44,8 +48,7 @@ class PBCreationTool(Document):
         box.custom_paper_name, paper.custom_paper_name = item.paper_name, item.paper_name
         return box, paper
 
-    def create_item(self, box_code, i):
-        item = frappe.new_doc("Item")
+    def set_item_details(self, item, box_code, i):
         item.item_code = box_code
         item.item_name = box_code
         item.name = box_code
@@ -57,11 +60,18 @@ class PBCreationTool(Document):
         item.paper_name = i.paper_name
         item.stock_uom = 'Nos' if item.item_group == 'Packing Boxes' else 'Set 2'
         item.is_stock_item = 1
-        item.append("item_defaults", {"default_warehouse": 'Packing Boxes - Rapl', "company": 'Real Appliances Private Limited'})
+
         if self.box_type == 'Brand':
             item.brand = self.box_particular
         else:
             item.plain_box_type = self.box_particular
+
+        if not item.item_defaults:
+            item.append("item_defaults", {"default_warehouse": 'Packing Boxes - Rapl', "company": 'Real Appliances Private Limited'})
+
+    def create_item(self, box_code, i):
+        item = frappe.new_doc("Item")
+        self.set_item_details(item, box_code, i)
         item.save()
         return item
 
