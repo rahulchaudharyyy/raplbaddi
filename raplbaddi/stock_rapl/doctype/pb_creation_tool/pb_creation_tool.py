@@ -26,7 +26,6 @@ class PBCreationTool(Document):
             paper.disabled = not enable_paper
             box.save(), paper.save()
             print(box.brand, box.geyser_model)
-        frappe.throw("heheh")
 
     def get_or_create_item(self, box_code, paper_code, item, total_safety_stock):
         try:
