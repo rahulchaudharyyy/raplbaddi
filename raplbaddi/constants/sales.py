@@ -23,7 +23,7 @@ custom_fields = {
             "read_only": 0,
             "hidden": 0,
             "no_copy": 0,
-            "reqd": 1,
+            "reqd": 0,
             "allow_on_submit": 0,
         },
     ],
