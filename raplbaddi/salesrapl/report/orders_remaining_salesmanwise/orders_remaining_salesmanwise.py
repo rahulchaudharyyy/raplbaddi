@@ -1,7 +1,6 @@
-# Copyright (c) 2023, Nishant Bhickta and contributors
-# For license information, please see license.txt
 import frappe
 from frappe.core.doctype.user_permission.user_permission import get_user_permissions
+import frappe.utils
 from raplbaddi.datarapl.doctype.report_full_access_users.report_full_access_users import get_wildcard_users
 
 def get_groups(user):
@@ -19,73 +18,102 @@ def permissions(filters):
 def execute(filters=None):
     columns, data = [], []
     if permissions(filters):
-        data = get_data(filters)
+        data = process_data(filters)
         return get_columns(filters), data
     else:
         return None
 
-def get_data(filters):
+def process_data(filters):
+    # Fetch raw data
+    sales_orders = fetch_sales_orders(filters)
+    
+    # Process data in Python
+    processed_data = []
+    for order in sales_orders:
+        order_data = {
+            'date': order.transaction_date,
+            'sales_orders': format_sales_order_link(order.name),
+            'salesman': order.sales_person,
+            'customer_group': order.customer_group,
+            'delivery_date': get_delivery_date(order),
+            'customer': order.customer,
+            'brand': order.name_of_brand,
+            'orders': order.qty,
+            'delivered': order.delivered_qty,
+            'remarks': order.conditions,
+            'shipping_address': order.shipping_address,
+        }
+        processed_data.append(order_data)
+    
+    return processed_data
+
+def fetch_sales_orders(filters):
+    # Basic atomic query fetching only necessary fields
     query = f"""
         SELECT
-			so.transaction_date as date,
-			GROUP_CONCAT(DISTINCT CONCAT('<a href="https://raplbaddi.com/app/sales-order/', so.name, '">', so.name, '</a>')) AS sales_orders,
-			so.sales_person as salesman,
-			cu.customer_group as customer_group,
-			IF(so.delivery_date='2023-12-31' OR so.delivery_date < NOW(), IF(so.status = 'On Hold', 'Hold', 'Current'), DATE_FORMAT(so.delivery_date, '%d/%b/%Y')) as delivery_date,
-			so.customer AS `customer`,
-			GROUP_CONCAT(DISTINCT soi.name_of_brand) AS `brand`,
-		--    GROUP_CONCAT(DISTINCT soi.item_code, "-", soi.name_of_brand) as `Item-Brand`,
-			SUM(soi.qty - soi.delivered_qty) AS `orders`,
-			CONVERT(SUM(IF(
-				( IF(b.actual_qty < 0, 0, b.actual_qty) / (soi.qty - soi.delivered_qty)) * 100 > 100,
-				100,
-				IF(
-					( IF(b.actual_qty < 0, 0, b.actual_qty) / (soi.qty - soi.delivered_qty)) * 100 < 0,
-					0,
-					CONVERT(( IF(b.actual_qty < 0, 0, b.actual_qty) / (soi.qty - soi.delivered_qty)) * 100, UNSIGNED)
-				)
-			))/COUNT(soi.item_name), UNSIGNED) as '%%:Int:80',
-			SUM(IF((soi.qty - soi.delivered_qty) -  IF(b.actual_qty < 0, 0, b.actual_qty) <= 0, 0, (soi.qty - soi.delivered_qty) -  IF(b.actual_qty < 0, 0, b.actual_qty))) as `shortage`,
-			so.conditions as 'remarks',
-			so.shipping_address as `shipping_address`
-		FROM
-			`tabSales Order` so
-		JOIN
-			`tabSales Order Item` soi ON soi.parent = so.name
-		LEFT JOIN
-			`tabBin` AS b ON b.item_code = soi.item_code AND b.warehouse = soi.warehouse
-		LEFT JOIN
-			`tabCustomer` as cu ON cu.name = so.customer_name
-		WHERE {get_conditions(filters)}
-		GROUP BY so.customer_name, delivery_date, so.shipping_address
-		ORDER BY delivery_date, `shortage` ASC, `%%:Int:80` DESC
+            so.transaction_date,
+            so.name,
+            so.sales_person,
+            so.delivery_date,
+            so.customer AS customer,
+            so.total_qty qty,
+            soi.delivered_qty,
+            soi.name_of_brand,
+            cu.customer_group,
+            so.conditions,
+            so.shipping_address
+        FROM `tabSales Order` so
+        JOIN `tabSales Order Item` soi ON soi.parent = so.name
+        LEFT JOIN `tabCustomer` as cu ON cu.name = so.customer
+        WHERE {get_conditions(filters)}
+        AND so.docstatus = 1 AND soi.qty > soi.delivered_qty
+        GROUP BY so.name
     """
-    result = frappe.db.sql(query, as_dict=True)
-    return result
+    data = frappe.db.sql(query, as_dict=True)
+    return frappe.db.sql(query, as_dict=True)
+
+def get_delivery_date(order):
+    if order.delivery_date == '2023-12-31' or order.delivery_date < frappe.utils.now_datetime().date():
+        return 'Hold' if order.conditions == 'On Hold' else 'Current'
+    return frappe.utils.formatdate(order.delivery_date, 'dd/MMM/YYYY')
+
+def format_sales_order_link(order_name):
+    return f'<a href="https://raplbaddi.com/app/sales-order/{order_name}">{order_name}</a>'
+
+def calculate_percentage(order):
+    actual_qty = frappe.db.get_value("Bin", {"item_code": order.name_of_brand}, "actual_qty") or 0
+    required_qty = order.qty - order.delivered_qty
+    if required_qty == 0:
+        return 0
+    percentage = (actual_qty / required_qty) * 100
+    return min(max(int(percentage), 0), 100)
+
+def calculate_shortage(order):
+    actual_qty = frappe.db.get_value("Bin", {"item_code": order.name_of_brand}, "actual_qty") or 0
+    required_qty = order.qty - order.delivered_qty
+    shortage = required_qty - actual_qty
+    return max(shortage, 0)
 
 def get_columns(filters):
-    columns = [
+    return [
         {"label": "Customer", "fieldname": "customer", "fieldtype": "Link", "options": "Customer", "width": 250},
         {"label": "Sales Orders", "fieldname": "sales_orders", "fieldtype": "Data", "options": "Sales Order", "width": 150},
         {"label": "Order Date", "fieldname": "date", "fieldtype": "Date", "width": 100},
         {"label": "Delivery Date", "fieldname": "delivery_date", "fieldtype": "Data", "width": 100},
         {"label": "Orders", "fieldname": "orders", "fieldtype": "Int", "width": 50},
+        {"label": "Delivered", "fieldname": "delivered", "fieldtype": "Int", "width": 50},
         {"label": "Brand", "fieldname": "brand", "fieldtype": "Data", "width": 50},
-        {"label": "Shipping", "fieldname": "shipping_address", "fieldtype": "Data", "width": 150},
+        {"label": "Shipping Address", "fieldname": "shipping_address", "fieldtype": "Data", "width": 150},
         {"label": "Salesman", "fieldname": "customer_group", "fieldtype": "HTML", "width": 50},
-		{"label": "Shipping", "fieldname": "remarks", "fieldtype": "Data", "width": 150},
+        {"label": "Remarks", "fieldname": "remarks", "fieldtype": "Data", "width": 150},
     ]
-    return columns
 
 def get_conditions(filters):
-    conditions = "so.status NOT IN ('Stopped', 'Closed') AND so.docstatus = 1 AND (soi.qty - soi.delivered_qty) > 0"
-    if filters and filters.get("from_date"):
-        from_date = filters.get("from_date")
-        conditions += f" AND so.transaction_date >= '{from_date}'"
-    if filters and filters.get("to_date"):
-        to_date = filters.get("to_date")
-        conditions += f" AND so.transaction_date <= '{to_date}'"
-    if filters and filters.get("sales_person"):
-        sales_person = filters.get("sales_person")
-        conditions += f" AND cu.customer_group = '{sales_person}'"
+    conditions = "so.status NOT IN ('Stopped', 'Closed')"
+    if filters.get("from_date"):
+        conditions += f" AND so.transaction_date >= '{filters['from_date']}'"
+    if filters.get("to_date"):
+        conditions += f" AND so.transaction_date <= '{filters['to_date']}'"
+    if filters.get("sales_person"):
+        conditions += f" AND cu.customer_group = '{filters['sales_person']}'"
     return conditions
