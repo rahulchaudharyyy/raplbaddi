@@ -37,7 +37,7 @@ def get_data(filters):
             GROUP_CONCAT(DISTINCT dni.item_name) as items
         FROM
             `tabDelivery Note` as dn
-            LEFT JOIN `tabCustomer` as cu ON dn.customer_name = cu.customer_name
+            LEFT JOIN `tabCustomer` as cu ON dn.customer = cu.name
             LEFT JOIN `tabDelivery Note Item` as dni ON dni.parent = dn.name
         WHERE {get_conditions(filters)}
         GROUP BY
