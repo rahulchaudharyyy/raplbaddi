@@ -29,7 +29,10 @@ app_license = "MIT"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+    "Purchase Order": "public/js/purchase_order.js",
+    "Sales Order": "public/js/sales_order.js",
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -42,7 +45,7 @@ app_license = "MIT"
 
 # website user home page (by Role)
 # role_home_page = {
-#	"Role": "home_page"
+# 	"Role": "home_page"
 # }
 
 # Generators
@@ -56,8 +59,8 @@ app_license = "MIT"
 
 # add methods and filters to jinja environment
 # jinja = {
-#	"methods": "raplbaddi.utils.jinja_methods",
-#	"filters": "raplbaddi.utils.jinja_filters"
+# 	"methods": "raplbaddi.utils.jinja_methods",
+# 	"filters": "raplbaddi.utils.jinja_filters"
 # }
 
 # Installation
@@ -83,11 +86,11 @@ app_license = "MIT"
 # Permissions evaluated in scripted ways
 
 # permission_query_conditions = {
-#	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
+# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
 # }
 #
 # has_permission = {
-#	"Event": "frappe.desk.doctype.event.event.has_permission",
+# 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
 
 # DocType Class
@@ -104,40 +107,59 @@ app_license = "MIT"
 # Hook on document methods and events
 
 doc_events = {
-	"User Permission": {
-		"validate": ["raplbaddi.overrides.user_permissions.validate", ],
-		"on_trash": ["raplbaddi.overrides.user_permissions.validate", ],
-	},
-	"Delivery Note": {
-		"before_insert": ["raplbaddi.overrides.delivery_note.before_insert", ],
-		"validate": ["raplbaddi.overrides.delivery_note.validate", ],
-		"on_submit": ["raplbaddi.overrides.delivery_note.on_submit", ],
-		"on_cancel": ["raplbaddi.overrides.delivery_note.on_cancel", ],
-	},
-	"Sales Order": {
-		"validate": ["raplbaddi.overrides.sales_order.validate", ],
-	},
+    "User Permission": {
+        "validate": [
+            "raplbaddi.overrides.user_permissions.validate",
+        ],
+        "on_trash": [
+            "raplbaddi.overrides.user_permissions.validate",
+        ],
+    },
+    "Delivery Note": {
+        "before_insert": [
+            "raplbaddi.overrides.delivery_note.before_insert",
+        ],
+        "validate": [
+            "raplbaddi.overrides.delivery_note.validate",
+        ],
+        "on_submit": [
+            "raplbaddi.overrides.delivery_note.on_submit",
+        ],
+        "on_cancel": [
+            "raplbaddi.overrides.delivery_note.on_cancel",
+        ],
+    },
+    "Sales Order": {
+        "validate": [
+            "raplbaddi.overrides.sales_order.validate",
+        ],
+    },
+    "Purchase Order": {
+        "before_insert": [
+            "raplbaddi.overrides.purchase_order.before_insert",
+        ],
+    },
 }
 
 # Scheduled Tasks
 # ---------------
 
 # scheduler_events = {
-#	"all": [
-#		"raplbaddi.tasks.all"
-#	],
-#	"daily": [
-#		"raplbaddi.tasks.daily"
-#	],
-#	"hourly": [
-#		"raplbaddi.tasks.hourly"
-#	],
-#	"weekly": [
-#		"raplbaddi.tasks.weekly"
-#	],
-#	"monthly": [
-#		"raplbaddi.tasks.monthly"
-#	],
+# 	"all": [
+# 		"raplbaddi.tasks.all"
+# 	],
+# 	"daily": [
+# 		"raplbaddi.tasks.daily"
+# 	],
+# 	"hourly": [
+# 		"raplbaddi.tasks.hourly"
+# 	],
+# 	"weekly": [
+# 		"raplbaddi.tasks.weekly"
+# 	],
+# 	"monthly": [
+# 		"raplbaddi.tasks.monthly"
+# 	],
 # }
 
 # Testing
@@ -149,14 +171,14 @@ doc_events = {
 # ------------------------------
 #
 # override_whitelisted_methods = {
-#	"frappe.desk.doctype.event.event.get_events": "raplbaddi.event.get_events"
+# 	"frappe.desk.doctype.event.event.get_events": "raplbaddi.event.get_events"
 # }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
 # override_doctype_dashboards = {
-#	"Task": "raplbaddi.task.get_dashboard_data"
+# 	"Task": "raplbaddi.task.get_dashboard_data"
 # }
 
 # exempt linked doctypes from being automatically cancelled
@@ -182,40 +204,42 @@ doc_events = {
 # --------------------
 
 # user_data_fields = [
-#	{
-#		"doctype": "{doctype_1}",
-#		"filter_by": "{filter_by}",
-#		"redact_fields": ["{field_1}", "{field_2}"],
-#		"partial": 1,
-#	},
-#	{
-#		"doctype": "{doctype_2}",
-#		"filter_by": "{filter_by}",
-#		"partial": 1,
-#	},
-#	{
-#		"doctype": "{doctype_3}",
-#		"strict": False,
-#	},
-#	{
-#		"doctype": "{doctype_4}"
-#	}
+# 	{
+# 		"doctype": "{doctype_1}",
+# 		"filter_by": "{filter_by}",
+# 		"redact_fields": ["{field_1}", "{field_2}"],
+# 		"partial": 1,
+# 	},
+# 	{
+# 		"doctype": "{doctype_2}",
+# 		"filter_by": "{filter_by}",
+# 		"partial": 1,
+# 	},
+# 	{
+# 		"doctype": "{doctype_3}",
+# 		"strict": False,
+# 	},
+# 	{
+# 		"doctype": "{doctype_4}"
+# 	}
 # ]
 
 # Authentication and authorization
 # --------------------------------
 
 # auth_hooks = [
-#	"raplbaddi.auth.validate"
+# 	"raplbaddi.auth.validate"
 # ]
 
 
 override_whitelisted_methods = {
-	"erpnext.selling.doctype.sales_order.sales_order.make_delivery_note": "raplbaddi.overrides.make_delivery_note"
+    "erpnext.selling.doctype.sales_order.sales_order.make_delivery_note": "raplbaddi.overrides.make_delivery_note"
 }
 
 export_python_type_annotations = True
 
 fixtures = ["Custom Field", "Custom DocPerm", "Client Script"]
 
-website_route_rules = [{'from_route': '/customer_support/<path:app_path>', 'to_route': 'customer_support'},]
+website_route_rules = [
+    {"from_route": "/customer_support/<path:app_path>", "to_route": "customer_support"},
+]

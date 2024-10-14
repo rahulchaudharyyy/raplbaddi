@@ -29,7 +29,7 @@ def get_data(filters):
     query = f"""
         SELECT DISTINCT
             dn.name as dn,
-            dn.customer_name as customer_name,
+            dn.customer as customer_name,
             dn.posting_date as posting_date,
             dn.total_qty as total_qty,
             dni.uom as uom,
