@@ -26,7 +26,7 @@ custom_fields = {
             "is_system_generated": 1,
             "label": "Billing Rule",
             "fieldname": "billing_rule",
-            "insert_after": "supplier_invoice_no",
+            "insert_after": "supplier_section_rapl",
             "fieldtype": "Link",
             "options": "Billing Rule Rapl",
             "no_copy": 0,
@@ -51,7 +51,7 @@ custom_fields = {
         {
             "is_system_generated": 1,
             "fieldname": "supplier_section_rapl_2",
-            "insert_after": "bill_attachment",
+            "insert_after": "is_billed",
             "fieldtype": "Section Break",
         },
     ],
