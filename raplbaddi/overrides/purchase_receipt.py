@@ -6,10 +6,10 @@ def before_insert(doc, method):
 def set_naming_series(doc):
     naming_series_map = {
         "Real Appliances Private Limited": {
-            False: "PO-.YY.-RAPL-.####",
+            False: "PR-.YY.-RAPL-.####",
         },
         "Red Star Unit 2": {
-            False: "PO-.YY.-RSI-.####",
+            False: "PR-.YY.-RSI-.####",
         }
     }
 

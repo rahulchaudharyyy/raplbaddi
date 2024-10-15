@@ -139,6 +139,11 @@ doc_events = {
             "raplbaddi.overrides.purchase_order.before_insert",
         ],
     },
+    "Purchase Receipt": {
+        "before_insert": [
+            "raplbaddi.overrides.purchase_receipt.before_insert",
+        ],
+    },
 }
 
 # Scheduled Tasks
