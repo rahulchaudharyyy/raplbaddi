@@ -13,8 +13,10 @@ class AttendanceRapl(Document):
 
 	if TYPE_CHECKING:
 		from frappe.types import DF
+		from raplbaddi.raplbaddi.doctype.attendance_rapl_item.attendance_rapl_item import AttendanceRaplItem
 
 		amended_from: DF.Link | None
 		date: DF.Date
+		items: DF.Table[AttendanceRaplItem]
 	# end: auto-generated types
 	pass

@@ -14,9 +14,9 @@ class AttendanceRaplItem(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
-		attendance: DF.Literal[None]
-		check_in: DF.Time | None
-		check_out: DF.Time | None
+		attendance: DF.Literal["", "Full", "Half", "Leave"]
+		check_in: DF.Time
+		check_out: DF.Time
 		duration: DF.Duration | None
 		employee: DF.Link
 		parent: DF.Data

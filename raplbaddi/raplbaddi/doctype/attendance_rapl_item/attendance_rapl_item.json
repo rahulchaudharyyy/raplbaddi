@@ -23,30 +23,41 @@
    "reqd": 1
   },
   {
+   "columns": 1,
    "fieldname": "check_in",
    "fieldtype": "Time",
-   "label": "Check In"
+   "in_list_view": 1,
+   "label": "Check In",
+   "reqd": 1
   },
   {
+   "columns": 1,
    "fieldname": "check_out",
    "fieldtype": "Time",
-   "label": "Check Out"
+   "in_list_view": 1,
+   "label": "Check Out",
+   "reqd": 1
   },
   {
+   "columns": 1,
    "fieldname": "duration",
    "fieldtype": "Duration",
+   "in_list_view": 1,
    "label": "Duration"
   },
   {
+   "columns": 1,
    "fieldname": "attendance",
    "fieldtype": "Select",
-   "label": "Attendance"
+   "in_list_view": 1,
+   "label": "Attendance",
+   "options": "\nFull\nHalf\nLeave"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-10-22 20:18:28.035931",
+ "modified": "2024-10-22 20:24:07.146591",
  "modified_by": "Administrator",
  "module": "Raplbaddi",
  "name": "Attendance Rapl Item",

@@ -8,6 +8,7 @@
   "section_break_0bdz",
   "date",
   "section_break_pida",
+  "items",
   "amended_from"
  ],
  "fields": [
@@ -37,12 +38,19 @@
   {
    "fieldname": "section_break_pida",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Attendance Rapl Item",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-22 20:14:57.612039",
+ "modified": "2024-10-22 20:23:17.260807",
  "modified_by": "Administrator",
  "module": "Raplbaddi",
  "name": "Attendance Rapl",
