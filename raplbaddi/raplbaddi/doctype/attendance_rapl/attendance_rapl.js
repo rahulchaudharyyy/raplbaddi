@@ -3,7 +3,7 @@
 
 frappe.ui.form.on("Attendance Rapl", {
     onload: function(frm) {
-        if(!frm.doc.docstatus) {
+        if(cur_frm.doc.__unsaved) {
             fill_items_onload(frm)
         }
     },
@@ -23,6 +23,7 @@ function fill_items_onload(frm) {
                     row.shift_type = info.default_shift;
                     row.check_in = info.start_time;
                     row.check_out = info.end_time;
+                    row.duration = info.duration;
                 });
                 frm.refresh_field('items');
             }
