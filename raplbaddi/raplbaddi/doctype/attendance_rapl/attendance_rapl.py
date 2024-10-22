@@ -3,7 +3,8 @@
 
 import frappe
 from frappe.model.document import Document
-from datetime import datetime
+from frappe import _
+from frappe.utils import time_diff_in_seconds
 
 
 class AttendanceRapl(Document):
@@ -21,6 +22,16 @@ class AttendanceRapl(Document):
 		items: DF.Table[AttendanceRaplItem]
 	# end: auto-generated types
 	pass
+
+	def validate(self):
+		self.validate_employee_duration()
+	
+	def validate_employee_duration(self):
+		for item in self.items:
+			if item.duration and item.duration < 0:
+				frappe.throw(_("Duration of {0} must be greater than or equal to 0").format(item.name))
+			item.duration = time_diff_in_seconds(item.check_out, item.check_in)
+			print(item.duration)
 
 @frappe.whitelist()
 def get_employee_shift_info():

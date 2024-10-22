@@ -25,8 +25,6 @@ def attendance_data(filters, detailed):
         select
             ar.name,
             ar.date,
-            ari.check_in,
-            ari.check_out,
             ari.employee,
             ari.employee_name,
             ari.attendance,
@@ -47,6 +45,27 @@ def attendance_data(filters, detailed):
         query += ' and ari.shift_type = "{}"'.format(shift_type)
 
     if not detailed:
+        query = f"""
+            select
+                ari.employee,
+                ari.employee_name,
+                ari.attendance,
+                ari.shift_type,
+                sum(ari.duration) as total_duration
+            from
+                `tabAttendance Rapl` ar
+                JOIN `tabAttendance Rapl Item` ari on ari.parent = ar.name
+            where
+                ar.docstatus = 1
+                and ar.date between '{start_date}' and '{end_date}'
+        """
+        
+        if employee:
+            query += ' and ar.employee = "{}"'.format(employee)
+        
+        if shift_type:
+            query += ' and ari.shift_type = "{}"'.format(shift_type)
+
         query += """
             group by ari.employee
         """
@@ -55,23 +74,28 @@ def attendance_data(filters, detailed):
 
     data = []
     for record in attendance_records:
-        data.append({
-            "Employee": record.employee_name,
-            "Date": record.date,
-            "Check In": record.check_in,
-            "Check Out": record.check_out,
-            "Duration": record.duration,
-            "Attendance": record.attendance,
-            "Shift Type": record.shift_type
-        })
+        if detailed:
+            data.append({
+                "Employee": record.employee_name,
+                "Date": record.date,
+                "Duration": record.duration,
+                "Attendance": record.attendance,
+                "Shift Type": record.shift_type
+            })
+        else:
+            data.append({
+                "Employee": record.employee_name,
+                "Date": None,
+                "Duration": record.total_duration,
+                "Attendance": record.attendance,
+                "Shift Type": record.shift_type
+            })
     return data
 
 def get_columns(filters):
     return [
         {"label": "Employee Name", "fieldname": "Employee", "fieldtype": "Link", "options": "Employee"},
         {"label": "Date", "fieldname": "Date", "fieldtype": "Date"},
-        {"label": "Check In", "fieldname": "Check In", "fieldtype": "Time"},
-        {"label": "Check Out", "fieldname": "Check Out", "fieldtype": "Time"},
         {"label": "Duration", "fieldname": "Duration", "fieldtype": "Duration"},
         {"label": "Attendance", "fieldname": "Attendance", "fieldtype": "Select"},
         {"label": "Shift Type", "fieldname": "Shift Type", "fieldtype": "Link", "options": "Shift Type"}
