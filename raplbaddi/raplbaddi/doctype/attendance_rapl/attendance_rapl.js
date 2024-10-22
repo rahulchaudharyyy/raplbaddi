@@ -4,28 +4,28 @@
 frappe.ui.form.on("Attendance Rapl", {
     onload: function(frm) {
         if(!frm.doc.docstatus) {
-            frm.events.fill_items_onload(frm)
+            fill_items_onload(frm)
         }
     },
-    fill_items_onload(frm) {
-        frappe.call({
-            method: 'frappe.client.get_list',
-            args: {
-                doctype: 'Employee',
-                fields: ['name', 'employee_name']
-            },
-            callback: function(response) {
-                if (response.message) {
-                    const employees = response.message;
-                    frm.clear_table('items');
-                    employees.forEach(employee => {
-                        const row = frm.add_child('items');
-                        row.employee = employee.name;
-                        row.employee_name = employee.employee_name;
-                    });
-                    frm.refresh_field('items');
-                }
-            }
-        });
-    }
 });
+
+function fill_items_onload(frm) {
+    frappe.call({
+        method: 'raplbaddi.raplbaddi.doctype.attendance_rapl.attendance_rapl.get_employee_shift_info',
+        frm: frm,
+        callback: function(response) {
+            if (response.message) {
+                frm.clear_table('items');
+                response.message.forEach(info => {
+                    const row = frm.add_child('items');
+                    row.employee = info.employee;
+                    row.employee_name = info.employee_name;
+                    row.shift_type = info.default_shift;
+                    row.check_in = info.start_time;
+                    row.check_out = info.end_time;
+                });
+                frm.refresh_field('items');
+            }
+        }
+    });
+}

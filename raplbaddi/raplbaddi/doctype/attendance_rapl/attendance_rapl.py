@@ -1,8 +1,9 @@
 # Copyright (c) 2024, Nishant Bhickta and contributors
 # For license information, please see license.txt
 
-# import frappe
+import frappe
 from frappe.model.document import Document
+from datetime import datetime
 
 
 class AttendanceRapl(Document):
@@ -20,3 +21,24 @@ class AttendanceRapl(Document):
 		items: DF.Table[AttendanceRaplItem]
 	# end: auto-generated types
 	pass
+
+@frappe.whitelist()
+def get_employee_shift_info():
+	employees = frappe.get_all('Employee', fields=['name', 'employee_name', 'default_shift'])
+	shift_info = []
+
+	for employee in employees:
+		shift = frappe.get_value('Shift Type', employee.default_shift, ['start_time', 'end_time'])
+		if shift:
+			start_time = shift[0]
+			end_time = shift[1]
+
+			shift_info.append({
+				'employee': employee.name,
+				'employee_name': employee.employee_name,
+				'default_shift': employee.default_shift,
+				'start_time': start_time,
+				'end_time': end_time,
+			})
+
+	return shift_info

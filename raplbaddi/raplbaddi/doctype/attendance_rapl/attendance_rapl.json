@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:{date}",
  "creation": "2024-10-22 20:13:55.501819",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -50,10 +51,11 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-22 20:23:17.260807",
+ "modified": "2024-10-22 20:50:08.207881",
  "modified_by": "Administrator",
  "module": "Raplbaddi",
  "name": "Attendance Rapl",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

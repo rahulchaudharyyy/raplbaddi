@@ -22,5 +22,6 @@ class AttendanceRaplItem(Document):
 		parent: DF.Data
 		parentfield: DF.Data
 		parenttype: DF.Data
+		shift_type: DF.Link | None
 	# end: auto-generated types
 	pass
