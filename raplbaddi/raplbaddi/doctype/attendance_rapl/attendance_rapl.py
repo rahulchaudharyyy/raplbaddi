@@ -49,8 +49,18 @@ class AttendanceRapl(Document):
 			print(item.duration)
 
 @frappe.whitelist()
-def get_employee_shift_info():
-	employees = frappe.get_all('Employee', fields=['name', 'employee_name', 'default_shift'])
+def get_employee_shift_info(doc):
+	doc = frappe.parse_json(doc)
+	filters = {
+		'status': 'Active',
+	}
+	for field in ["branch", "department"]:
+		if field in doc:
+			filters.update({
+				field: doc.get(field)
+			})
+	
+	employees = frappe.get_all('Employee', fields=['name', 'employee_name', 'default_shift'], filters=filters)
 	shift_info = []
 
 	for employee in employees:
