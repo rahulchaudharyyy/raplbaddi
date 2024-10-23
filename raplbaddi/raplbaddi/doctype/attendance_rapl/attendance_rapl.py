@@ -18,10 +18,25 @@ class AttendanceRapl(Document):
 		from raplbaddi.raplbaddi.doctype.attendance_rapl_item.attendance_rapl_item import AttendanceRaplItem
 
 		amended_from: DF.Link | None
+		branch: DF.Link
 		date: DF.Date
+		department: DF.Link
 		items: DF.Table[AttendanceRaplItem]
 	# end: auto-generated types
 	pass
+
+	def autoname(self):
+		"""Auto name the document using branch, department, and date."""
+		branch_name = self.branch
+		if self.branch == "Real Appliances Private Limited":
+			branch_name = "RAPL"
+		elif self.branch == "Red Star Unit 2":
+			branch_name = "RSI"
+
+		department_abbreviation = frappe.get_value("Department", self.department, "abbriviation") or self.department[:4]
+		formatted_date = self.date
+
+		self.name = f"{branch_name} {department_abbreviation} {formatted_date}"
 
 	def validate(self):
 		self.validate_employee_duration()
