@@ -33,7 +33,7 @@ class AttendanceRapl(Document):
 		elif self.branch == "Red Star Unit 2":
 			branch_name = "RSI"
 
-		department_abbreviation = frappe.get_value("Department", self.department, "abbriviation") or self.department[:4]
+		department_abbreviation = frappe.get_value("Department", self.department, "abbriviation") or self.department[:3]
 		formatted_date = self.date
 
 		self.name = f"{branch_name} {department_abbreviation} {formatted_date}"
