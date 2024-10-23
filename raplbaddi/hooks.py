@@ -144,6 +144,11 @@ doc_events = {
             "raplbaddi.overrides.purchase_receipt.before_insert",
         ],
     },
+    "Employee": {
+        "autoname": [
+            "raplbaddi.overrides.employee.autoname",
+        ],
+    },
 }
 
 # Scheduled Tasks
