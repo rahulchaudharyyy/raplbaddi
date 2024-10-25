@@ -7,29 +7,34 @@ def autoname(doc, method):
     if not doc.department or doc.branch == None:
         frappe.throw("Department and branch is Mandatory")
 
-    department_abbriviation = (
-        frappe.get_value("Department", doc.department, "abbriviation")
-        or doc.department[:3]
-    )
+    last_employee = frappe.get_last_doc("Employee").name.split("-")
+    try:
+        middle_no = get_middle_no(last_employee[1])
+        if int(last_employee[2]) == 30:
+            middle_no += + 1
+    except ValueError as e:
+        middle_no = 0
 
-    branch_name = doc.branch
-    if doc.branch == "Real Appliances Private Limited":
-        branch_name = "RAPL"
-    elif doc.branch == "Red Star Unit 2":
-        branch_name = "RSI"
+    doc.naming_series = f"E-{get_middle_no(middle_no)}-.#"
 
-    doc.naming_series = "E-" + branch_name + "-" + department_abbriviation + "-.#"
-    inactive_employee_in_department = frappe.get_list(
-        "Employee", filters={"status": "Left"}, pluck="name", order_by="creation desc"
-    )
-    if inactive_employee_in_department:
-        for employee in inactive_employee_in_department:
-            active_employee_having_inactive_series = frappe.get_list(
-                "Employee",
-                filters={"status": "Active", "naming_series": ["like", "%"  + employee + "%"]},
-                pluck="name",
-            )
-            if active_employee_having_inactive_series:
-                continue
-            else:
-                doc.naming_series = employee + "-.#"
+def get_middle_no(value):
+    if isinstance(value, int):
+        if value < 1:
+            raise ValueError("Input must be a positive integer.")
+        
+        result = ""
+        
+        while value > 0:
+            value -= 1
+            result = chr(value % 26 + ord('A')) + result
+            value //= 26
+        
+        return result
+    
+    elif isinstance(value, str):
+        result = 0
+        for char in value:
+            result = result * 26 + (ord(char) - ord('A') + 1)
+        return result
+    else:
+        raise ValueError("Input must be an integer or a string.")
