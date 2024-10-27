@@ -78,7 +78,8 @@ def build_attendance_query(start_date, end_date, employee, shift_type):
 def add_salary_to_data(attendance_records):
     data = []
     for record in attendance_records:
-        hourly_rate = get_hourly_rate(record.employee, record.date)
+        is_holiday = is_holiday_for_employee(record.employee, record.date)
+        hourly_rate = get_hourly_rate(record.employee, record.date, is_holiday)
         salary = (record.duration/3600 or 0) * hourly_rate
         entry = {
             "Employee": record.employee_name,
@@ -87,7 +88,8 @@ def add_salary_to_data(attendance_records):
             "Attendance": record.attendance,
             "Shift Type": record.shift_type,
             "Hourly Rate": hourly_rate,
-            "Salary": salary
+            "Salary": salary,
+            "Is Holiday": int(is_holiday),
         }
         data.append(entry)
     return data
@@ -96,7 +98,7 @@ def get_monthly_salary_dict_employee(employee, year):
     salary_doc = frappe.get_doc("Employee Salary", f"{employee} {year}")
     return salary_doc.items if salary_doc else []
 
-def get_hourly_rate(employee, date):
+def get_hourly_rate(employee, date, is_holiday):
     year, month = date.year, date.strftime("%B")
     salary_items = get_monthly_salary_dict_employee(employee, year)
     monthly_salary = {item.month: item.value for item in salary_items}
@@ -105,7 +107,10 @@ def get_hourly_rate(employee, date):
         return 0.0
 
     days_in_month = calendar.monthrange(year, date.month)[1]
-    return monthly_salary.get(month, 0.0) / days_in_month if days_in_month else 0.0
+    salary = monthly_salary.get(month, 0.0) / days_in_month if days_in_month else 0.0
+    if is_holiday:
+        salary *= 2
+    return salary
 
 def get_columns():
     return [
@@ -115,5 +120,31 @@ def get_columns():
         {"label": "Attendance", "fieldname": "Attendance", "fieldtype": "Select"},
         {"label": "Shift Type", "fieldname": "Shift Type", "fieldtype": "Link", "options": "Shift Type"},
         {"label": "Hourly Rate", "fieldname": "Hourly Rate", "fieldtype": "Currency"},
-        {"label": "Salary", "fieldname": "Salary", "fieldtype": "Currency"}
+        {"label": "Salary", "fieldname": "Salary", "fieldtype": "Currency"},
+        {"label": "Is Holiday", "fieldname": "Is Holiday", "fieldtype": "Int"},
     ]
+
+def get_holiday_list_for_employee(employee, raise_exception=True):
+    if employee:
+        holiday_list, company = frappe.get_cached_value("Employee", employee, ["holiday_list", "company"])
+    else:
+        holiday_list = ""
+        company = frappe.db.get_single_value("Global Defaults", "default_company")
+
+    if not holiday_list:
+        holiday_list = frappe.get_cached_value("Company", company, "default_holiday_list")
+
+    if not holiday_list and raise_exception:
+        frappe.throw(
+            ("Please set a default Holiday List for Employee {0} or Company {1}").format(employee, company)
+        )
+
+    holidays = frappe.get_all("Holiday", filters={"parent": holiday_list}, fields=["holiday_date", "description"])
+    ret = {holiday["holiday_date"]: holiday["description"] for holiday in holidays}
+    
+    return ret
+
+import datetime
+def is_holiday_for_employee(employee, date: datetime.date):
+    holiday_list = get_holiday_list_for_employee(employee)
+    return date in holiday_list
