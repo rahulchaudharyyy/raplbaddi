@@ -5,7 +5,7 @@
 from frappe.model.document import Document
 
 
-class AttendanceRaplItem(Document):
+class AttendanceSalaryBundleItem(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 
@@ -14,18 +14,15 @@ class AttendanceRaplItem(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
-		attendance: DF.Literal["Present", "Absent", "On Leave", "Half Day", "Work From Home"]
-		check_in: DF.Time
-		check_out: DF.Time
+		attendance: DF.Link | None
+		attendance_item: DF.Data | None
 		date: DF.Date | None
-		duration: DF.Duration | None
-		employee: DF.Link
-		employee_name: DF.Data
-		end_time: DF.Time | None
+		hourly_rate: DF.Float
+		is_holiday: DF.Check
 		parent: DF.Data
 		parentfield: DF.Data
 		parenttype: DF.Data
-		shift_type: DF.Link
-		start_time: DF.Time | None
+		salary: DF.Float
+		shift_duration: DF.Duration | None
 	# end: auto-generated types
 	pass

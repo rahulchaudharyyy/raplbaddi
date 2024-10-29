@@ -46,7 +46,7 @@ class AttendanceRapl(Document):
 			if item.duration and item.duration < 0:
 				frappe.throw(_("Duration of {0} must be greater than or equal to 0").format(item.name))
 			item.duration = time_diff_in_seconds(item.check_out, item.check_in)
-			print(item.duration)
+			item.date = self.date
 
 @frappe.whitelist()
 def get_employee_shift_info(doc):
