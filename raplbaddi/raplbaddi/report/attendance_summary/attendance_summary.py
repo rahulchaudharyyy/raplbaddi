@@ -126,7 +126,9 @@ def get_columns():
 
 def get_holiday_list_for_employee(employee, raise_exception=True):
     if employee:
-        holiday_list, company = frappe.get_cached_value("Employee", employee, ["holiday_list", "company"])
+        holiday_list, company, default_shift = frappe.get_cached_value("Employee", employee, ["holiday_list", "company", "default_shift"])
+        if not holiday_list and default_shift:
+            holiday_list = frappe.get_cached_value("Shift Type", default_shift, "holiday_list")
     else:
         holiday_list = ""
         company = frappe.db.get_single_value("Global Defaults", "default_company")
