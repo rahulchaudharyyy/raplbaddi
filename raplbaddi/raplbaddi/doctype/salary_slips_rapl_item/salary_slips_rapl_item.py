@@ -16,6 +16,7 @@ class SalarySlipsRaplItem(Document):
 
 		attendance_salary_bundle: DF.Link | None
 		employee: DF.Link | None
+		employee_name: DF.Data | None
 		holidays: DF.Float
 		parent: DF.Data
 		parentfield: DF.Data

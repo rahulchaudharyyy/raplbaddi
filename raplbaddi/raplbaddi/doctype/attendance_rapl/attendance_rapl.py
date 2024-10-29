@@ -46,6 +46,10 @@ class AttendanceRapl(Document):
 			if item.duration and item.duration < 0:
 				frappe.throw(_("Duration of {0} must be greater than or equal to 0").format(item.name))
 			item.duration = time_diff_in_seconds(item.check_out, item.check_in)
+			if not item.duration:
+				item.attendance = "Absent"
+			else:
+				item.attendance = "Present"
 			item.date = self.date
 
 @frappe.whitelist()

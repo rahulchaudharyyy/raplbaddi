@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "employee",
+  "employee_name",
   "salary",
   "column_break_bgfs",
   "holidays",
@@ -31,6 +32,7 @@
    "fieldname": "attendance_salary_bundle",
    "fieldtype": "Link",
    "label": "Attendance Salary Bundle",
+   "no_copy": 1,
    "options": "Attendance Salary Bundle"
   },
   {
@@ -52,12 +54,23 @@
    "label": "Holidays",
    "non_negative": 1,
    "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Employee Name",
+   "options": "Employee",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-10-29 22:44:44.785902",
+ "modified": "2024-10-29 23:26:14.525906",
  "modified_by": "Administrator",
  "module": "Raplbaddi",
  "name": "Salary Slips Rapl Item",

@@ -16,22 +16,27 @@ class SalarySlipsRapl(Document):
 
     if TYPE_CHECKING:
         from frappe.types import DF
-        from raplbaddi.raplbaddi.doctype.items.items import SalarySlipsRaplItem
+        from raplbaddi.raplbaddi.doctype.salary_slips_rapl_item.salary_slips_rapl_item import SalarySlipsRaplItem
 
         amended_from: DF.Link | None
         branch: DF.Link | None
         department: DF.Link | None
-        from_date: DF.Date | None
+        from_date: DF.Date
         items: DF.Table[SalarySlipsRaplItem]
-        to_date: DF.Date | None
+        naming_series: DF.Literal[None]
+        to_date: DF.Date
     # end: auto-generated types
 
     def validate(self):
         for item in self.items:
             attendance_salary_bundle = self.create_attendance_salary_bundle(item)
+            is_salary_created_for_employee(item.employee, self.from_date, self.to_date)
             item.attendance_salary_bundle = attendance_salary_bundle.name
             item.salary = attendance_salary_bundle.total_salary
             item.holidays = attendance_salary_bundle.total_holiday
+    
+    def autoname(self):
+        self.naming_series = "SSR-.YY.-.#"
 
     def on_submit(self):
         self.submit_salary_bundles()
@@ -130,6 +135,7 @@ class SalarySlipsRapl(Document):
     def delete_salary_bundles(self):
         pass
 
+
 def hr(seconds: int) -> float:
     return seconds / 3600
 
@@ -150,9 +156,7 @@ def get_hourly_rate(
     if not monthly_salary:
         frappe.throw(f"Please set monthly salary for employee {employee}")
     no_of_days = calendar.monthrange(year, date.month)[1]
-    daily_salary = (
-        (monthly_salary[month] / no_of_days)
-    )
+    daily_salary = monthly_salary[month] / no_of_days
     hourly_salary = daily_salary / shift_duration
 
     return hourly_salary * 2 if is_holiday else hourly_salary
@@ -204,6 +208,20 @@ def get_holiday_list_for_employee(employee: str, raise_exception: bool = True) -
     return {holiday["holiday_date"]: holiday["description"] for holiday in holidays}
 
 
-def is_holiday_for_employee(employee: str, date) -> bool:
+def is_holiday_for_employee(employee: str, date):
     holiday_list = get_holiday_list_for_employee(employee)
     return date in holiday_list
+
+
+def is_salary_created_for_employee(employee, from_date, to_date):
+    asbi = frappe.db.sql(
+        f"""
+            SELECT asb.name
+            FROM `tabAttendance Salary Bundle Item` asbi
+            JOIN `tabAttendance Salary Bundle` asb ON asb.name = asbi.parent
+            WHERE asb.employee = '{employee}'
+            AND asbi.date between '{from_date}' and '{to_date}'
+            AND asb.docstatus = 1"""
+    )
+    if asbi:
+        frappe.throw(f"Salary is already created for the employee {employee} between {from_date} and {to_date} </br>" + "</br>".join([item[0] for item in asbi]))
