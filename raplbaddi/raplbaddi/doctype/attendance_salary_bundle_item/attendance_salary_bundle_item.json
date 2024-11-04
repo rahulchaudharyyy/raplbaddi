@@ -10,6 +10,7 @@
   "salary",
   "section_break_akvz",
   "hourly_rate",
+  "monthly_salary",
   "date",
   "column_break_ngdh",
   "is_holiday",
@@ -80,12 +81,20 @@
    "fieldtype": "Date",
    "label": "Date",
    "read_only": 1
+  },
+  {
+   "fieldname": "monthly_salary",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Monthly Salary",
+   "non_negative": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-10-29 22:36:58.324078",
+ "modified": "2024-11-04 07:38:07.318917",
  "modified_by": "Administrator",
  "module": "Raplbaddi",
  "name": "Attendance Salary Bundle Item",

@@ -11,7 +11,8 @@
   "column_break_bjbb",
   "year",
   "section_break_uacx",
-  "items"
+  "items",
+  "amended_from"
  ],
  "fields": [
   {
@@ -50,11 +51,22 @@
    "fieldname": "data_wlnj",
    "fieldtype": "Data",
    "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Employee Salary",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2024-10-25 20:53:46.533881",
+ "modified": "2024-11-04 07:14:10.231600",
  "modified_by": "Administrator",
  "module": "Raplbaddi",
  "name": "Employee Salary",
@@ -76,5 +88,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }

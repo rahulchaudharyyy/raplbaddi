@@ -103,6 +103,9 @@ class SalarySlipsRapl(Document):
         salary = self.calculate_salary(hourly_rate, attendance.duration)
         return {
             "hourly_rate": hourly_rate,
+            "monthly_salary": get_monthly_salary_dict_employee(
+                attendance.employee, attendance.date.year
+            )[attendance.date.strftime("%B")],
             "date": attendance.date,
             "salary": salary,
             "is_holiday": is_holiday,
@@ -141,18 +144,24 @@ def hr(seconds: int) -> float:
 
 
 def get_monthly_salary_dict_employee(employee: str, year: int) -> List[Dict]:
-    salary_doc = frappe.get_doc("Employee Salary", f"{employee} {year}")
-    return salary_doc.items if salary_doc else []
+    salary_doc = frappe.get_all("Employee Salary", filters={"employee": employee, "year": year, "docstatus": 1}, pluck="name")
+    if not salary_doc:
+        frappe.throw(f"Please set monthly salary for employee {employee}")
+    if len(salary_doc) > 1:
+        frappe.throw(f"Please set only one monthly salary for employee {employee}")
+    salary_doc = frappe.get_doc("Employee Salary", salary_doc[0])
+    monthly_salary_dict = {
+        item.month: item.value
+        for item in salary_doc.items
+    }
+    return monthly_salary_dict
 
 
 def get_hourly_rate(
     employee: str, date: str, is_holiday: bool, shift_duration: float
 ) -> float:
     year, month = date.year, date.strftime("%B")
-    monthly_salary = {
-        item.month: item.value
-        for item in get_monthly_salary_dict_employee(employee, year)
-    }
+    monthly_salary = get_monthly_salary_dict_employee(employee, year)
     if not monthly_salary:
         frappe.throw(f"Please set monthly salary for employee {employee}")
     no_of_days = calendar.monthrange(year, date.month)[1]

@@ -15,6 +15,7 @@ class EmployeeSalary(Document):
 		from frappe.types import DF
 		from raplbaddi.raplbaddi.doctype.month_item.month_item import MonthItem
 
+		amended_from: DF.Link | None
 		data_wlnj: DF.Data | None
 		employee: DF.Link
 		items: DF.Table[MonthItem]
